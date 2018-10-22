@@ -7,4 +7,5 @@ php artinsan serve
 **vào thư mục angular-web
 ng serve
 http://localhost:4200/
+yasuminasai
 

@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+//Route::resource('stylists', 'StylistController');
+Route::post('stylists','StylistController@store');
+Route::put('stylists/{id}','StylistController@update');
+Route::get('stylists','StylistController@index');
+Route::get('stylists/{id}','StylistController@show');
+Route::delete('stylists/{id}','StylistController@destroy');

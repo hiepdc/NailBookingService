@@ -17,5 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 //api for stylists
-//Route::Resource('stylists', 'StylistController');
-//Route::put('stylists','StylistController@store');
+Route::post('stylists','StylistController@store');
+Route::put('stylists/{id}','StylistController@update');
+Route::get('stylists','StylistController@index');
+Route::get('stylists/{id}','StylistController@show');
+Route::delete('stylists/{id}','StylistController@destroy');

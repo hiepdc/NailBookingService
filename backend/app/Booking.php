@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    //
+    protected $fillable = [
+        'shift_id', 'service_id', 'customer_id', 'start_time', 'status'
+    ];
+
     public function customer(){
         return $this->belongsTo(Customer::class);
     }

@@ -36,8 +36,8 @@ class StylistController extends Controller
     public function store(Request $request)
     {
         $stylist = new Stylist();
-        $stylist->stylist_name = $request->stylistname;
-        $stylist->phone_number = $request->phonenumber;
+        $stylist->stylist_name = $request->stylist_name;
+        $stylist->phone_number = $request->phone_number;
         $stylist->information = $request->information;
 //        $stylist->stylist_name ="hiepdeptrai";
 //        $stylist->phone_number = "0796522236";
@@ -53,7 +53,7 @@ class StylistController extends Controller
      */
     public function show($id)
     {
-       // $showStylistByID = Stylist::with(['shifts'])->find($id);
+        // $showStylistByID = Stylist::with(['shifts'])->find($id);
         $showStylistByID = Stylist::find($id);
         return $showStylistByID;
     }

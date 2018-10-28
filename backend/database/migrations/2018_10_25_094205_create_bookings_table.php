@@ -23,7 +23,7 @@ class CreateBookingsTable extends Migration
                 $table->foreign('service_id')->references('id')->on('services');
                 $table->integer('customer_id')->unsigned();
                 $table->foreign('customer_id')->references('id')->on('customers');
-                $table->datetime('start_time');
+                $table->dateTime('start_time');
                 $table->string('status');
             });
         }

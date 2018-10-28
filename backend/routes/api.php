@@ -22,3 +22,20 @@ Route::put('stylists/{id}','StylistController@update');
 Route::get('stylists','StylistController@index');
 Route::get('stylists/{id}','StylistController@show');
 Route::delete('stylists/{id}','StylistController@destroy');
+
+Route::get('bookings/{phonenumber}','BookingController@showBookingForm');
+//delete booking
+Route::delete('bookings/{phonenumber}','BookingController@deleteBooking');
+
+//display shift of stylist
+Route::post('bookings/shiftofstylist','BookingController@getShiftDefaultByStylistID');
+
+//add new booking
+Route::post('bookings/add-new-booking','BookingController@addNewBooking');
+
+//edit booking
+Route::post('bookings/edit-booking','BookingController@editBooking');
+
+//delete booking
+Route::delete('bookings/delete-booking/{phonenumber}','BookingController@deleteBooking');
+

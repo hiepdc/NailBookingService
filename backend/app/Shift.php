@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class Shift extends Model
 {
     protected $fillable = [
@@ -15,4 +15,27 @@ class Shift extends Model
     }
 
     public $timestamps = false;
+
+    public function getStatusByStylistID($stylistID, $date){
+        $status = DB::table('shifts')
+            ->select('status')
+            ->where([
+                ['stylist_id' , $stylistID],
+                ['date' , $date]
+            ])
+            ->first();
+        return $status;
+
+    }
+    public function getShiftIDByStylistID($stylistID, $date){
+        $id = DB::table('shifts')
+            ->select('id')
+            ->where([
+                ['stylist_id' , $stylistID],
+                ['date' , $date],
+            ])
+            ->first();
+        return $id;
+
+    }
 }

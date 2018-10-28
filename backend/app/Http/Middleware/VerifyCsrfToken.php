@@ -22,6 +22,8 @@ class VerifyCsrfToken extends Middleware
         '/stylists',
         '/stylists/*',
         '/users',
-        '/users/*'
+        '/users/*',
+        '/bookings',
+        '/bookings/*'
     ];
 }

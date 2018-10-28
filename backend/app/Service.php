@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
 class Service extends Model
 {
     protected $fillable = [
@@ -14,5 +14,17 @@ class Service extends Model
 
     public function bookings(){
         return $this->hasMany(Booking::class);
+    }
+
+    public function getTimeSerivce($serviceID){
+        $time_services = DB::table('services')
+            ->select('time_service')
+            ->where('id', $serviceID)
+            ->get();
+        $time = $time_services[0]->time_service;
+//        $time_service =  Service::find($serviceID)
+//            ->where('id', $serviceID)
+//            ->select('time_service')->get();
+        return $time;
     }
 }

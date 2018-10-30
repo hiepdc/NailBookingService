@@ -45,5 +45,5 @@ Route::get('bookings','BookingController@index');
 Route::get('shifts','ShiftController@index');
 //long do
 //get shift default
-Route::post('bookings/shift-default','BookingController@showDefaultStatus');
+Route::post('bookings/shift-default','BookingController@getShiftDefault');
 

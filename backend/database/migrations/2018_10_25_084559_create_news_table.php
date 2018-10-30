@@ -13,11 +13,14 @@ class CreateNewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
-            $table->increments('id');
-            $table->text('content');
-            $table->string('image_link');
-        });
+        if(!Schema::hasTable('news'))
+        {
+            Schema::create('news', function (Blueprint $table) {
+                $table->increments('id');
+                $table->text('content');
+                $table->string('image_link');
+            });
+        }
     }
     /**
      * Reverse the migrations.

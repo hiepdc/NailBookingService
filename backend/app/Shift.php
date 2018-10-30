@@ -16,25 +16,36 @@ class Shift extends Model
 
     public $timestamps = false;
 
+    public function getStatusByDate($date){
+        $status = DB::table('shifts')
+        ->select('status')
+        ->where([
+            ['date' , $date]
+        ])
+        ->get();
+        return $status;
+
+    }
+
     public function getStatusByStylistID($stylistID, $date){
         $status = DB::table('shifts')
-            ->select('status')
-            ->where([
-                ['stylist_id' , $stylistID],
-                ['date' , $date]
-            ])
-            ->first();
+        ->select('status')
+        ->where([
+            ['stylist_id' , $stylistID],
+            ['date' , $date]
+        ])
+        ->first();
         return $status;
 
     }
     public function getShiftIDByStylistID($stylistID, $date){
         $id = DB::table('shifts')
-            ->select('id')
-            ->where([
-                ['stylist_id' , $stylistID],
-                ['date' , $date],
-            ])
-            ->first();
+        ->select('id')
+        ->where([
+            ['stylist_id' , $stylistID],
+            ['date' , $date],
+        ])
+        ->first();
         return $id;
 
     }

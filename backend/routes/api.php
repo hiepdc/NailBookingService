@@ -28,7 +28,7 @@ Route::get('bookings/{phonenumber}','BookingController@showBookingForm');
 Route::delete('bookings/{phonenumber}','BookingController@deleteBooking');
 
 //display shift of stylist
-Route::post('bookings/shiftofstylist','BookingController@getShiftDefaultByStylistID');
+Route::post('bookings/shift-of-stylist','BookingController@getShiftDefaultByStylistID');
 
 //add new booking
 Route::post('bookings/add-new-booking','BookingController@addNewBooking');
@@ -38,4 +38,6 @@ Route::post('bookings/edit-booking','BookingController@editBooking');
 
 //delete booking
 Route::delete('bookings/delete-booking/{phonenumber}','BookingController@deleteBooking');
+
+Route::post('bookings/show-default-status','BookingController@showDefaultStatus');
 

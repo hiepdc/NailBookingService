@@ -229,27 +229,15 @@ class BookingController extends Controller
     public function deleteBooking($phonenumber)
     {
         try {
-            $customer = new Customer();
-            $customer_id = $customer->getIDByPhonenumber($phonenumber);
-            $testdele = Booking::where([
-                ['customer_id', $customer_id],
-                ['status', 'booked']
-            ])->get();
-            $deteteBooking = Booking::where([
-                ['customer_id', $customer_id],
-                ['status', 'booked']
-            ])
-                ->delete();
-//            $booking = new Booking();
-//            $success = $booking->deleteBookingByPhonenumber($phonenumber);
-//            if (!$success) {
-//                return response()->error('Bạn chưa có lịch đặt nào');
-//            }
-            return response()->success($testdele, 'Bạn vừa xóa thành công lịch đặt');
+            $booking = new Booking();
+            $success = $booking->deleteBookingByPhonenumber($phonenumber);
+            if(!$success){
+                return response()->error('bạn chưa có lịch đặt nào');
+            }
+            return response()->success($success, 'Bạn vừa xóa thành công lịch');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
-
         //note updateStatusOfShift
     }
 

@@ -42,7 +42,7 @@ class Booking extends Model
         return $statusBooking;
     }
 
-    public function deleteBookingByPhonenumber($phonenumber)
+   /* public function deleteBookingByPhonenumber($phonenumber)
     {
         $customer = new Customer();
         $customer_id = $customer->getIDByPhonenumber($phonenumber);
@@ -56,6 +56,18 @@ class Booking extends Model
             ])
             ->delete();
         return $testdele;
+    }*/
+    public function deleteBookingByPhonenumber($phonenumber)
+    {
+        $customer = new Customer();
+        $customer_id = $customer->getIDByPhonenumber($phonenumber);
+        $deteteBooking = Booking::where([
+            ['customer_id', $customer_id],
+            ['status', 'booked'],
+        ])->select('id')
+        ->get();
+            //->delete();
+        return $deteteBooking;
     }
 
     public function addNewBooking($shift_id, $service_id, $customer_id, $start_time, $status = "booked")

@@ -16,41 +16,51 @@ class ResponseMacroServiceProvider extends ServiceProvider
     {
         Response::macro('success', function ($data, $message = 'successfully') {
             return Response::json([
-                'message' => [$message],
+                'success' => true,
+                'message' => $message,
                 'data' => $data,
                 'status_code' => 200,
             ]);
         });
         Response::macro('error', function ($message, $status = 400) {
             return Response::json([
-                'message' => $status . ' error',
+                'success' => false,
+                'message' => [$message],
                 'errors' => [
-                    'message' => [$message],
+                    'message' => $status . ' error',
                 ],
                 'status_code' => $status,
             ], $status);
         });
         Response::macro('exception', function ($message, $status = 400) {
             return Response::json([
-                'message' => $status . ' error',
+                'success' => false,
+                'message' => [$message],
                 'errors' => [
-                    'message' => [$message],
+                    'message' => $status . ' error',
                 ],
                 'status_code' => $status,
             ], $status);
         });
         Response::macro('notFound', function ($message, $status = 404) {
             return Response::json([
-                'message' => $status . ' error',
+                'success' => false,
                 'data' => null,
+                'message' => [$message],
+                'errors' => [
+                    'message' => $status . ' error',
+                ],
                 'status_code' => $status,
             ], $status);
         });
         Response::macro('validationError', function ($errors) {
             return Response::json([
-                'status_code' => 422,
-                'errors' => $errors,
+                'success' => false,
                 'message' => '422 Unprocessable Entity',
+                'errors' => [
+                    'message' => $errors . ' error',
+                ],
+                'status_code' => 422,
             ], 422);
         });
     }

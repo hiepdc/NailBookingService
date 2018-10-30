@@ -16,7 +16,8 @@ class StylistController extends Controller
     public function index()
     {
         try {
-            $listStylist = Stylist::paginate(3);
+            //$listStylist = Stylist::paginate(3);
+            $listStylist = Stylist::all();
             return response()->success($listStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -110,7 +111,7 @@ class StylistController extends Controller
                 return response()->error("stylist does not exist");
             }
             $stylist->update($request->only(['stylist_name', 'phone_number', 'information']));
-            return new StylistResource($stylist);
+            return response()->success($stylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -126,7 +127,8 @@ class StylistController extends Controller
     public function destroy($id)
     {
         try {
-            $deletebyid = Stylist::findOrFail($id);
+           // $deletebyid = Stylist::find($id);
+            $deletebyid = Stylist::where(['stylist_name', '1vợ2con3nha'])->get();
             if(!$deletebyid){
                 return response()->error("stylist does not exist");
             }

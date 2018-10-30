@@ -16,7 +16,7 @@ class Service extends Model
         return $this->hasMany(Booking::class);
     }
 
-    public function getTimeSerivce($serviceID){
+    public function getTimeService($serviceID){
         $time_services = DB::table('services')
             ->select('time_service')
             ->where('id', $serviceID)

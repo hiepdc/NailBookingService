@@ -20,8 +20,8 @@ class CreateShiftsTable extends Migration
                 $table->integer('stylist_id')->unsigned();
                 $table->foreign('stylist_id')->references('id')->on('stylists');
                 $table->date('date');
-                $table->dateTime('start_time');
-                $table->dateTime('end_time');
+                $table->integer('start_time');
+                $table->integer('end_time');
                 $table->string('status');
             });
         }

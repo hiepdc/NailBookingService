@@ -46,12 +46,16 @@ class Booking extends Model
     {
         $customer = new Customer();
         $customer_id = $customer->getIDByPhonenumber($phonenumber);
+        $testdele = Booking::where([
+            ['customer_id', $customer_id],
+            ['status', 'booked']
+        ])->get();
         $deteteBooking = Booking::where([
                 ['customer_id', $customer_id],
-                ['status', 'booked'],
+                ['status', 'booked']
             ])
             ->delete();
-        return $deteteBooking;
+        return $testdele;
     }
 
     public function addNewBooking($shift_id, $service_id, $customer_id, $start_time, $status = "booked")

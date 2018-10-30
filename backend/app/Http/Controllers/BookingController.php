@@ -23,6 +23,7 @@ class BookingController extends Controller
 //            $status = 'true';
 //        return $status;
 //    }
+    //demo
     public function showBookingForm($phonenumber){
         try{
             //$value = session('phone_number', $phonenumber);
@@ -62,11 +63,6 @@ class BookingController extends Controller
             }
         }
         return $statusArr;
-        /*echo "<br>Khung gio ranh (Status): ".$status."<br>";
-        echo "n = ".$sizeOfTime." , Mau Xanh hien thi: ";
-        foreach ($statusArr as $key => $value) {
-            echo $value." ";
-        }*/
     }
 
     //###return list of stylist
@@ -74,7 +70,7 @@ class BookingController extends Controller
     //return array các thời gian rảnh khi mà customer chỉ chọn dịch vụ và mặc định default stylist theo ngày
     public function getShiftDefault($serviceID, $date)
     {
-
+        return 0;
     }
 
     //return array các thời gian rảnh khi mà customer chọn dịch vụ và stylist theo ngày

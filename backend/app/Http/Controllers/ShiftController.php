@@ -17,4 +17,16 @@ class ShiftController extends Controller
             return response()->exception($e->getMessage(), $e->getCode());
         }
     }
+
+    public function show($id){
+        try {
+            $shift = Shift::find($id);
+            if (!$shift) {
+                return response()->error("Shift does not exist");
+            }
+            return response()->success($shift);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
 }

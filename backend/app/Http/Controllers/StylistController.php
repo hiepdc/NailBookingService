@@ -69,21 +69,32 @@ class StylistController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+  public function show($id)
+       {
+           try {
+               $showStylistByID = Stylist::where('phone_number', $id)->paginate(5);
+               //$dm = $showStylistByID[phone_number];
+               if(!$showStylistByID){
+                   return response()->error("stylist does not exist");
+               }
+               return response()->success($showStylistByID);
+           } catch (Exception $e) {
+               return response()->exception($e->getMessage(), $e->getCode());
+           }
+       }
+/*    public function show($id)
     {
-        // $showStylistByID = Stylist::with(['shifts'])->find($id);
         try {
-            $showStylistByID = Stylist::find($id);
-            if(!$showStylistByID){
+            $showStylistByID = Stylist::find($id)->shifts()->first();
+            if (!$showStylistByID) {
                 return response()->error("stylist does not exist");
             }
             return response()->success($showStylistByID);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
-        //return  $showStylistByID;
-//        return new StylistResource($showStylistByID);
-    }
+    }*/
+
 
     /**
      * Show the form for editing the specified resource.
@@ -107,7 +118,7 @@ class StylistController extends Controller
     {
         try {
             $stylist = Stylist::find($id);
-            if(!$stylist){
+            if (!$stylist) {
                 return response()->error("stylist does not exist");
             }
             $stylist->update($request->only(['stylist_name', 'phone_number', 'information']));
@@ -127,9 +138,9 @@ class StylistController extends Controller
     public function destroy($id)
     {
         try {
-           // $deletebyid = Stylist::find($id);
+            // $deletebyid = Stylist::find($id);
             $deletebyid = Stylist::where(['stylist_name', '1vợ2con3nha'])->get();
-            if(!$deletebyid){
+            if (!$deletebyid) {
                 return response()->error("stylist does not exist");
             }
             $deletebyid->delete();

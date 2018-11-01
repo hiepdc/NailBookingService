@@ -1,7 +1,5 @@
 <?php
-
 namespace App;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 class Service extends Model
@@ -9,13 +7,10 @@ class Service extends Model
     protected $fillable = [
         'service_name', 'description', 'time_service', 'price'
     ];
-
     public $timestamps = false;
-
     public function bookings(){
         return $this->hasMany(Booking::class);
     }
-
     public function getTimeService($serviceID){
         $time_services = DB::table('services')
             ->select('time_service')

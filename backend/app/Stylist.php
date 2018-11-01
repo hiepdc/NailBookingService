@@ -16,7 +16,7 @@ class Stylist extends Model
     }
 
     public function shifts(){
-        $this->hasMany(Stylist::class);
+        $this->hasMany('App\Shift');
     }
     public $timestamps = false;
 }

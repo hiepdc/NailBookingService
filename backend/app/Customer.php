@@ -51,8 +51,8 @@ class Customer extends Model
 
     public function getIDByPhonenumber($phone_number){
         $id = Customer::where('phone_number', $phone_number)
-            ->select('id')
+//            ->select('id')
             ->first();
-        return $id;
+        return $id->id;
     }
 }

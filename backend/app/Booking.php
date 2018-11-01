@@ -2,7 +2,6 @@
 
 namespace App;
 
-use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -42,21 +41,22 @@ class Booking extends Model
         return $statusBooking;
     }
 
-   /* public function deleteBookingByPhonenumber($phonenumber)
-    {
-        $customer = new Customer();
-        $customer_id = $customer->getIDByPhonenumber($phonenumber);
-        $testdele = Booking::where([
-            ['customer_id', $customer_id],
-            ['status', 'booked']
-        ])->get();
-        $deteteBooking = Booking::where([
-                ['customer_id', $customer_id],
-                ['status', 'booked']
-            ])
-            ->delete();
-        return $testdele;
-    }*/
+    public function getDetailBookingByPhonenumber($phonenumber){
+        $detailBooking = DB::table('customers')
+            ->select('customers.id'
+            , 'customers.customer_name'
+            , 'bookings.start_time'
+            , 'bookings.service_id'
+            , 'bookings.shift_id'
+            , 'shifts.status')
+            ->join('bookings', 'customer.id', '=', 'bookings.customer_id')
+            ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
+            ->where([
+                ['phone_number', '=', $phonenumber],
+                ['status', '=', 'booked']
+            ])->get();
+        return $detailBooking;
+    }
     public function deleteBookingByPhonenumber($phonenumber)
     {
         $customer = new Customer();
@@ -64,9 +64,8 @@ class Booking extends Model
         $deteteBooking = Booking::where([
             ['customer_id', $customer_id],
             ['status', 'booked'],
-        ])->select('id')
-        ->get();
-            //->delete();
+        ])
+            ->delete();
         return $deteteBooking;
     }
 
@@ -92,10 +91,6 @@ class Booking extends Model
             'service_id' => $service_id,
             'start_time' => $start_time
         ]);
-//        $booking->shift_id = $shift_id;
-//        $booking->service_id = $service_id;
-//        $booking->start_time = $start_time;
-//        $booking->save();
         return $booking;
     }
 }

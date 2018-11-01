@@ -1,11 +1,10 @@
 ﻿tải vào trong xampp/htdocs:
-**vào thư mục 1-N:
-vào phpmyadmin tạo database tên 1-n
+**vào thư mục backend:
+vào phpmyadmin tạo database tên nailbookingservice
 php artisan migrate
 php artisan db:seed
 php artinsan serve
-**vào thư mục angular-web
+**vào thư mục frontend
 ng serve
-http://localhost:4200/
-yasuminasai
+
 

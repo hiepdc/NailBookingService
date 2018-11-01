@@ -43,18 +43,18 @@ class Booking extends Model
 
     public function getDetailBookingByPhonenumber($phonenumber){
         $detailBooking = DB::table('customers')
-            ->select('customers.id'
-            , 'customers.customer_name'
-            , 'bookings.start_time'
-            , 'bookings.service_id'
-            , 'bookings.shift_id'
-            , 'shifts.status')
-            ->join('bookings', 'customer.id', '=', 'bookings.customer_id')
+            ->join('bookings', 'customers.id', '=', 'bookings.customer_id')
             ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
+            ->select('customers.id'
+                , 'customers.customer_name'
+                , 'bookings.start_time'
+                , 'bookings.service_id'
+                , 'bookings.shift_id'
+                , 'shifts.status')
             ->where([
                 ['phone_number', '=', $phonenumber],
-                ['status', '=', 'booked']
-            ])->get();
+                ['bookings.status', '=', 'booked']
+            ])->first();
         return $detailBooking;
     }
     public function deleteBookingByPhonenumber($phonenumber)

@@ -8,7 +8,7 @@ class Stylist extends Model
 {
     //
     protected $fillable = [
-        'stylist_name', 'phone_number', 'information'
+        'stylist_name', 'phone_number', 'information','image_link'
     ];
 
     public function bookings(){

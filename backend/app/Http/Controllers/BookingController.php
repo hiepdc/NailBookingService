@@ -117,40 +117,36 @@ class BookingController extends Controller
 
     public function editBooking(Request $request)
     {
-        //update status khi xóa
-        // update lịch
-        // update status khi update
         try {
             $booking = new Booking();
-            if ($booking->getStatusBookedByPhonenumber($request->phone_number) < 1) {
-                // $dm = $request->phone_number;
+            if ($booking->getStatusBookedByPhonenumber($request->phone_number) ==0) {
                 return response()->error('Bạn chưa đặt lịch, tạo một lịch mới');
             }
-
-//            $booking = new Booking();
-//            if ($booking->getStatusBookedByPhonenumber($request->phone_number) > 0) {
-//                return response()->error('Bạn có chắc chắn muốn đổi lịch');
-//            }
-            $coinUpdate = 10;
             $customer = new Customer();
-            //add booking
             $shift = new Shift();
             $shift_id_arr = $shift->getShiftIDByStylistID($request->stylist_id, $request->date);
-            if (!$shift_id_arr) {
-                return response()->error('chưa có lịch');
-            }
-            $shift_id = $shift_id_arr->id;
-            $service_id = $request->service_id;
-            $customer_id_arr = $customer->getIDByPhonenumber($request->phone_number);
-            $customer_id = $customer_id_arr->id;
-            $start_time = $request->start_time;
+            $updateShift_id = $shift_id_arr->id;
+            $updateService_id = $request->service_id;
+            $updateCustomer_id = $customer->getIDByPhonenumber($request->phone_number);
+            $updateStart_time = $request->start_time;
+            //update status
+            $detailBooking = $booking->getDetailBookingByPhonenumber($request->phone_number);
+            $oldStatus = $detailBooking->status;
+            $oldStartTime = $detailBooking->start_time;
+            $service = new Service();
+            $oldService_id = $detailBooking->service_id;
+            $sizeOfTime = $service->getTimeService($oldService_id)*4;
+           // $shiftID = $detailBooking->shift_id;
+            $newStatus = $this->updateShiftStatusAfterDeleteBooking($oldStatus, $oldStartTime, $sizeOfTime);
+            $updateSizeOfTime = $service->getTimeService($updateService_id)*4;
+            $updateStatus = $this->updateShiftStatusAfterBooking($newStatus, $updateStart_time, $updateSizeOfTime);
+            $shift->updateStatusByShiftID($updateShift_id, $updateStatus);
             // update booking  note:cập nhật lịch cũ và mới
-            $newBooking = $booking->updateBooking($shift_id, $service_id, $customer_id, $start_time);
-            if ($newBooking == 0) {
+            $newBooking = $booking->updateBooking($updateShift_id, $updateService_id, $updateCustomer_id, $updateStart_time);
+            if ($newBooking ==0) {
                 return response()->success($newBooking, "không có sự thay dổi nào");
             }
-            //update status
-            return response()->success($newBooking, 'Bạn đã dặt lại lịch thành công');
+            return response()->success($newBooking,'Bạn đã đặt lại lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -160,22 +156,19 @@ class BookingController extends Controller
     {
         try {
             $booking = new Booking();
-            // return 0-fail 1-success
-            // $success = $booking->deleteBookingByPhonenumber($phonenumber);
-//            if (!$success) {
-//                return response()->error('Bạn chưa có lịch đặt nào');
-//            }
             $shift = new Shift();
-            //update status of shift
-            $booking = new Booking();
             $detailBooking = $booking->getDetailBookingByPhonenumber($phonenumber);
-//            $oldStatus = $detailBooking->status;
-//            $startTime= $detailBooking->start_time ;
-//            $service = new Service();
-//            $sizeOfTime = $service->getTimeService($detailBooking->service_id);
-//            $shiftID=$detailBooking->shift_id;
-//            $newstatus = $this->updateShiftStatusAfterDeleteBooking($oldStatus, $startTime, $sizeOfTime);
-//            $shift->updateStatusByStylistID($shiftID, $newstatus);
+            $oldStatus = $detailBooking->status;
+            $startTime = $detailBooking->start_time;
+            $service = new Service();
+            $sizeOfTime = $service->getTimeService($detailBooking->service_id)*4;
+            $shiftID = $detailBooking->shift_id;
+            $success = $booking->deleteBookingByPhonenumber($phonenumber);
+            if (!$success) {
+                return response()->error('Bạn chưa có lịch đặt nào');
+            }
+            $newstatus = $this->updateShiftStatusAfterDeleteBooking($oldStatus, $startTime, $sizeOfTime);
+            $shift->updateStatusByShiftID($shiftID, $newstatus);
             return response()->success($detailBooking, 'Bạn vừa xóa thành công lịch đặt');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -237,9 +230,10 @@ class BookingController extends Controller
         $bookedTime = trim($bookedTime, ",");
         $status = str_replace($bookedTime, "", $status);
         $status = str_replace(",,", ",", $status);
-        //$status = trim($status, ",");
+        $status = trim($status, ",");
         return $status;
     }
+
     //tuần 8
     public function updateShiftStatusAfterDeleteBooking($status, $startTime, $sizeOfTime)
     {
@@ -308,13 +302,14 @@ class BookingController extends Controller
     }
 
     //trả về array các shift mà shift đó có thể được book vào khoảng thời gian bookingTime
-    public function getShiftContainBookingTime($startTime, $sizeOfTime, $date) {
+    public function getShiftContainBookingTime($startTime, $sizeOfTime, $date)
+    {
         $bookedTime = $this->getBookingTime($startTime, $sizeOfTime);
         $shiftList = App\Shift::all();
         $myShiftList = array();
         foreach ($shiftList as $key => $value) {
             # code...
-            if(!strpos($value->status,$bookedTime)) {
+            if (!strpos($value->status, $bookedTime)) {
                 //$myShiftList += array($value->shift_id=>strlen($value->status));
                 array_push($myShiftList, $value);
             }
@@ -323,13 +318,14 @@ class BookingController extends Controller
         //###return list of stylist
     }
 
-    public function randomShift($startTime, $sizeOfTime, $date){
+    public function randomShift($startTime, $sizeOfTime, $date)
+    {
         $shiftList = $this->getShiftContainBookingTime($startTime, $sizeOfTime, $date);
         $myShiftList = array();
         $myArray = array();
         foreach ($shiftList as $key => $value) {
             # code...
-            $myArray += array($value=>strlen($value->status));
+            $myArray += array($value => strlen($value->status));
         }
         sort($myArray);
         return array_key_first($myArray);

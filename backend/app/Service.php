@@ -15,8 +15,8 @@ class Service extends Model
         $time_services = DB::table('services')
             ->select('time_service')
             ->where('id', $serviceID)
-            ->get();
-        $time = $time_services[0]->time_service;
+            ->first();
+        $time = $time_services->time_service;
 //        $time_service =  Service::find($serviceID)
 //            ->where('id', $serviceID)
 //            ->select('time_service')->get();

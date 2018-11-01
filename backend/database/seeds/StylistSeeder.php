@@ -17,16 +17,19 @@ class StylistSeeder extends Seeder
             'stylist_name' => 'hiepdc',
             'phone_number' => '0976420019',
             'information' => $faker->paragraph($nbSentences = 1),
+            'image_link' => str_random(5).".png",
         ],
             [
                 'stylist_name' => 'longdq',
                 'phone_number' => '0126420123',
                 'information' => $faker->paragraph($nbSentences = 1),
+                'image_link' => str_random(5).".png",
             ],
             [
                 'stylist_name' => 'hungxoi',
                 'phone_number' => '0127420456',
                 'information' => $faker->paragraph($nbSentences = 1),
+                'image_link' => str_random(5).".png",
             ]
         ]);
         foreach (range(1, 7) as $index) {
@@ -34,6 +37,7 @@ class StylistSeeder extends Seeder
                 'stylist_name' => $faker->name,
                 'phone_number' => "0976" . rand(123456, 999999),
                 'information' => $faker->paragraph($nbSentences = 1),
+                'image_link' => str_random(5).".png",
             ]);
         }
     }

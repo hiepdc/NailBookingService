@@ -44,4 +44,8 @@ Route::get('bookings','BookingController@index');
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
 
+//LongDo
+
+Route::post('bookings/random-shift','BookingController@randomShift');
+
 

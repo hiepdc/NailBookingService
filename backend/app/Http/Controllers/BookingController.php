@@ -7,6 +7,7 @@ use App\Customer;
 use App\Service;
 use App\Shift;
 use App\Stylist;
+use App\SpeedSMSAPI;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -82,12 +83,13 @@ class BookingController extends Controller
                 ->first();
             $stylist_name = $stylist_name_arr->stylist_name;
 
-            // nếu gửi tin nhắn thành công
+            // check gửi tin nhắn
             $message = 'Cảm ơn chị ' . $request->customer_name .
-                ' đã đặt lịch vào ' . $request->start_time .
+                ' đã đặt lịch vào lúc ' . $request->start_time .
+                ' ngày '.$request->date.
                 ' cho gói dịch vụ ' . $service_name .
-                ' được phục vụ bởi ' . $stylist_name;
-            // '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
+                ' được phục vụ bởi ' . $stylist_name .
+                '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
             // try{
             //  $sentMessage = $this->sendMessageToCustomer($message);
             // }catch(Exception $e){
@@ -95,8 +97,12 @@ class BookingController extends Controller
             // return response()->exception($e->getMessage(), $e->getCode());
             // }
 
-            // $sentMessage = $this->sendMessageToCustomer($message);
-
+            /*
+            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            $messageStatus = $sentMessage['status'];
+            if($messageStatus != 'success'){
+                return response()->error('Chị vui lòng kiểm tra lại số điện thoại');
+            }*/
             //add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
 
@@ -108,7 +114,7 @@ class BookingController extends Controller
             $status = $this->updateShiftStatusAfterBooking($sts, $request->start_time, $sizeOfTime);
             $shift->updateStatusByStylistID($request->stylist_id, $request->date, $status);
 
-            return response()->success($newBooking, 'Bạn đã đặt lịch thành công');
+            return response()->success($message, 'Bạn đã đặt lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -255,7 +261,7 @@ class BookingController extends Controller
         return $bookedTime;
     }
 
-    public function sendMessageToCustomer($mes)
+ /*   public function sendMessageToCustomer($mes)
     {
         $basic = new \Nexmo\Client\Credentials\Basic('dcf3a319', '2Xp71hhgAblZWEvq');
         try {
@@ -269,8 +275,26 @@ class BookingController extends Controller
         } catch (Exception $e) {
             return response()->error('Chị vui lòng kiểm tra lại số điện thoại');
         }
-
-
+    }*/
+    public function sendMessageToCustomer($mes, $phone_number)
+    {
+        try {
+          //  require("SpeedSMSAPI.php");
+            $smsAPI = new SpeedSMSAPI("ELbKeZ2tcowwByKJDv0Tm0ZBBw51-cSh");
+            /** Để gửi SMS bạn sử dụng hàm sendSMS như sau:
+             */
+            $phones = array();
+            $phones[] = $phone_number;
+           // $phones = ["8491xxxxx", "8498xxxxxx"];
+            /* tối đa 100 số cho 1 lần gọi API */
+            $content = $mes;
+            $type = 2;
+            $sender = "nailbookingservice";
+            $response = $smsAPI->sendSMS($phones, $content, $type, $sender);
+            return response()->success($response, 'Bạn đã đặt lịch thành công đó.');
+        } catch (Exception $e) {
+            return response()->error('Chị vui lòng kiểm tra lại số điện thoại');
+        }
     }
 
     public function show($id)
@@ -319,8 +343,13 @@ class BookingController extends Controller
     }
 
 //Tra ve Shift ma random theo tieu chi con nhieu thoi gian ranh
-    public function randomShift($startTime, $sizeOfTime, $date)
+    public function randomShift(Request $request)
     {
+        $startTime = $request->startTime;
+        $serviceID = $request->service_id;
+        $date = $request->date;
+        $service = new Service();
+        $sizeOfTime = $service->getTimeService($serviceID)*4;
         $availableShiftList = $this->getShiftContainBookingTime($startTime,
             $sizeOfTime, $date);
         $myArray = array();
@@ -338,5 +367,8 @@ class BookingController extends Controller
                 return $value;
             }
         }
+    }
+    public function formatToTrueTime($time){
+        $fakeTime = array();
     }
 }

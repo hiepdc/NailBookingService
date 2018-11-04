@@ -8,6 +8,7 @@ use App\Service;
 use App\Shift;
 use App\Stylist;
 use App\SpeedSMSAPI;
+use App\TwoFactorAPI;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -22,7 +23,7 @@ class BookingController extends Controller
         }
     }
 
-    function showStatus($status, $sizeOfTime)
+    function getAvailableBookingTime($status, $sizeOfTime)
     {
         $arr = explode(',', $status);
         sort($arr);
@@ -63,58 +64,56 @@ class BookingController extends Controller
             }
             //add customer
             $customer = new Customer();
+            //kiểm tra khách hàng đã có trong hệ thống chưa
             if ($customer->getCustomerByPhonenumber($request->phone_number) == 0) {
                 $customer->addNewCustomer($request->customer_name, $request->phone_number);
             }
-
             $shift = new Shift();
-            $shift_id_arr = $shift->getShiftIDByStylistID($request->stylist_id, $request->date);
-            $shift_id = $shift_id_arr->id;
             $service_id = $request->service_id;
             $customer_id = $customer->getIDByPhonenumber($request->phone_number);
             $start_time = $request->start_time;
+            //check có chọn stylist hay không
+            if (!$request->has('stylist_id')) {
+                $shift = $this->randomShift($start_time, $service_id, $request->date);
+                $shift_id = $shift->id;
+                $stylist_id = $shift->stylist_id;
+            } else {
+                $shift_id_arr = $shift->getShiftIDByStylistID($request->stylist_id, $request->date);
+                $shift_id = $shift_id_arr->id;
+                $stylist_id = $request->stylist_id;
+            }
             //mesage to client
             $service_name_arr = Service::find($request->service_id)
                 ->select('service_name')
                 ->first();
             $service_name = $service_name_arr->service_name;
-            $stylist_name_arr = Stylist::find($request->stylist_id)
-                ->select('stylist_name')
-                ->first();
+            $stylist_name_arr = Stylist::find($stylist_id);
             $stylist_name = $stylist_name_arr->stylist_name;
-
             // check gửi tin nhắn
-            $message = 'Cảm ơn chị ' . $request->customer_name .
-                ' đã đặt lịch vào lúc ' . $request->start_time .
-                ' ngày '.$request->date.
-                ' cho gói dịch vụ ' . $service_name .
-                ' được phục vụ bởi ' . $stylist_name .
-                '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
+            $message = 'Cảm ơn anh/chị ' . $request->customer_name;
+//                ' đã đặt lịch vào lúc ' . $request->start_time .
+//                ' ngày ' . $request->date .
+//                ' cho gói dịch vụ ' . $service_name;
+//                ' được phục vụ bởi ' . $stylist_name .
+//                '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
             // try{
             //  $sentMessage = $this->sendMessageToCustomer($message);
             // }catch(Exception $e){
             //  return response()->error('Chị vui lòng kiểm tra lại số điện thoại');
             // return response()->exception($e->getMessage(), $e->getCode());
             // }
-
-            /*
-            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
-            $messageStatus = $sentMessage['status'];
-            if($messageStatus != 'success'){
-                return response()->error('Chị vui lòng kiểm tra lại số điện thoại');
-            }*/
-            //add new booking
+            // $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            /*//add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
 
             //update status of shift
-            $oldStatus = $shift->getStatusByStylistID($request->stylist_id, $request->date);
+            $oldStatus = $shift->getStatusByStylistID($stylist_id, $request->date);
             $sts = $oldStatus->status;
             $service = new Service();
             $sizeOfTime = $service->getTimeService($request->service_id) * 4;
             $status = $this->updateShiftStatusAfterBooking($sts, $request->start_time, $sizeOfTime);
-            $shift->updateStatusByStylistID($request->stylist_id, $request->date, $status);
-
-            return response()->success($message, 'Bạn đã đặt lịch thành công');
+            $shift->updateStatusByStylistID($stylist_id, $request->date, $status);*/
+            return response()->success($createPin, 'Bạn đã đặt lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -164,18 +163,18 @@ class BookingController extends Controller
             $booking = new Booking();
             $shift = new Shift();
             $detailBooking = $booking->getDetailBookingByPhonenumber($phonenumber);
+            if (!$detailBooking) {
+                return response()->error('Bạn chưa có lịch đặt nào.');
+            }
             $oldStatus = $detailBooking->status;
             $startTime = $detailBooking->start_time;
             $service = new Service();
             $sizeOfTime = $service->getTimeService($detailBooking->service_id) * 4;
             $shiftID = $detailBooking->shift_id;
             $success = $booking->deleteBookingByPhonenumber($phonenumber);
-            if (!$success) {
-                return response()->error('Bạn chưa có lịch đặt nào');
-            }
             $newstatus = $this->updateShiftStatusAfterDeleteBooking($oldStatus, $startTime, $sizeOfTime);
             $shift->updateStatusByShiftID($shiftID, $newstatus);
-            return response()->success($detailBooking, 'Bạn vừa xóa thành công lịch đặt');
+            return response()->success($newstatus, 'Bạn vừa xóa thành công lịch đặt');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -195,7 +194,7 @@ class BookingController extends Controller
             $shift = new Shift();
             $status = $shift->getStatusByStylistID($stylistID, $date);
             $sts = $status->status;
-            $shiftDefaultByStylistID = $this->showStatus($sts, $sizeOfTime);
+            $shiftDefaultByStylistID = $this->getAvailableBookingTime($sts, $sizeOfTime);
             return response()->success($shiftDefaultByStylistID);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -216,13 +215,15 @@ class BookingController extends Controller
 
             foreach ($allStatus as $key => $value) {
                 $arr01 = array();
-                //$arr01 = $this->showStatus((string)$value, $sizeOfTime);
+                //$arr01 = $this->getAvailableBookingTime((string)$value, $sizeOfTime);
                 $myObject = get_object_vars($value);
-                $arr01 = $this->showStatus(implode(",", $myObject), $sizeOfTime * 4);
+                $arr01 = $this->getAvailableBookingTime(implode(",", $myObject), $sizeOfTime * 4);
                 foreach ($arr01 as $key2 => $value2) {
                     array_push($defaultStatus, $value2);
                 }
             }
+            $defaultStatus = array_unique($defaultStatus);
+            sort($defaultStatus);
             return response()->success(array_unique($defaultStatus));
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -239,7 +240,7 @@ class BookingController extends Controller
         $status = trim($status, ",");
         return $status;
     }
-    
+
     public function updateShiftStatusAfterDeleteBooking($status, $startTime, $sizeOfTime)
     {
         $bookedTime = $this->getBookingTime($startTime, $sizeOfTime);
@@ -261,42 +262,68 @@ class BookingController extends Controller
         return $bookedTime;
     }
 
- /*   public function sendMessageToCustomer($mes)
-    {
-        $basic = new \Nexmo\Client\Credentials\Basic('dcf3a319', '2Xp71hhgAblZWEvq');
-        try {
-            $client = new \Nexmo\Client($basic);
-            $message = $client->message()->send([
-                'to' => '84976420019',
-                'from' => '84369546356',
-                'text' => ' ' . $mes,
-            ]);
-            return response()->success($mes, 'Bạn đã đặt lịch thành công');
-        } catch (Exception $e) {
-            return response()->error('Chị vui lòng kiểm tra lại số điện thoại');
-        }
-    }*/
-    public function sendMessageToCustomer($mes, $phone_number)
+    function sendMessageToCustomer($mes, $phone_number)
     {
         try {
-          //  require("SpeedSMSAPI.php");
+            //  require("SpeedSMSAPI.php");
             $smsAPI = new SpeedSMSAPI("ELbKeZ2tcowwByKJDv0Tm0ZBBw51-cSh");
             /** Để gửi SMS bạn sử dụng hàm sendSMS như sau:
              */
             $phones = array();
             $phones[] = $phone_number;
-           // $phones = ["8491xxxxx", "8498xxxxxx"];
+            // $phones = ["8491xxxxx", "8498xxxxxx"];
             /* tối đa 100 số cho 1 lần gọi API */
             $content = $mes;
             $type = 2;
             $sender = "nailbookingservice";
             $response = $smsAPI->sendSMS($phones, $content, $type, $sender);
-            return response()->success($response, 'Bạn đã đặt lịch thành công đó.');
+            return $response;
         } catch (Exception $e) {
             return response()->error('Chị vui lòng kiểm tra lại số điện thoại');
         }
     }
 
+    function createPIN(Request $request)
+    {
+        try {
+            $phone = $request->phone_number;
+            $content = 'Mã xác nhận của bạn là: {pin_code}';
+            $appId = 'RopBbVFdrExlpDOhli_JPkEyE58fJkAT';
+            $twoFA = new TwoFactorAPI("ELbKeZ2tcowwByKJDv0Tm0ZBBw51-cSh");
+            $customer = new Customer();
+            //khách hàng đã có trong hệ thống
+            if ($customer->getCustomerByPhonenumber($phone) != 0) {
+                $availableCustomer = $customer->getCustomer($phone);
+                return response()->success($availableCustomer,'Khách hàng đã có trong hệ thống');
+            }
+            $result = $twoFA->pinCreate($phone, $content, $appId);
+            return response()->error('Đã gửi mã pin đến cho khách hàng');
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+
+    }
+
+    public function verifyPIN(Request $request)
+    {
+        try {
+            $phone = $request->phone_number;
+            $pinCode = $request->pin_code;
+            $appId = "RopBbVFdrExlpDOhli_JPkEyE58fJkAT";
+            $twoFA = new TwoFactorAPI("ELbKeZ2tcowwByKJDv0Tm0ZBBw51-cSh");
+            $result = $twoFA->pinVerify($phone, $pinCode, $appId);
+            $status = $result['status'];
+            if($status == 'error'){
+                return response()->error('Mã xác nhận đã hết hạn');
+            }
+            $verified = $result['data'];
+            //return var_dump($result);
+            return response()->success($verified);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+
+    }
     public function show($id)
     {
         // $showStylistByID = Stylist::with(['shifts'])->find($id);
@@ -342,14 +369,14 @@ class BookingController extends Controller
 
     }
 
-//Tra ve Shift ma random theo tieu chi con nhieu thoi gian ranh
-    public function randomShift(Request $request)
+    //Tra ve Shift ma random theo tieu chi con nhieu thoi gian ranh
+    public function randomShift($startTime, $serviceID, $date)
     {
-        $startTime = $request->startTime;
-        $serviceID = $request->service_id;
-        $date = $request->date;
+//        $startTime = $request->startTime;
+//        $serviceID = $request->service_id;
+//        $date = $request->date;
         $service = new Service();
-        $sizeOfTime = $service->getTimeService($serviceID)*4;
+        $sizeOfTime = $service->getTimeService($serviceID) * 4;
         $availableShiftList = $this->getShiftContainBookingTime($startTime,
             $sizeOfTime, $date);
         $myArray = array();
@@ -368,7 +395,9 @@ class BookingController extends Controller
             }
         }
     }
-    public function formatToTrueTime($time){
+
+    public function formatToTrueTime($time)
+    {
         $fakeTime = array();
     }
 }

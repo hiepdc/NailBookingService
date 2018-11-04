@@ -4,13 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TwoFactorAPI{
+class TwoFactorAPI extends Model
+{
+
     private $ROOT_URL = "https://api.speedsms.vn/index.php";
     private $accessToken = "Your API Access Token";
-	function __construct($api_key) {
-		$this->accessToken = $api_key;
-	}
-	
+    function __construct($api_key) {
+        $this->accessToken = $api_key;
+    }
+
     public function pinCreate($phoneNumber, $content, $appId) {
 
         $json = json_encode(array('to' => $phoneNumber, 'content' => $content, 'app_id' => $appId));
@@ -71,4 +73,4 @@ class TwoFactorAPI{
             return json_decode($result, true);
         }
     }
-} 
+}

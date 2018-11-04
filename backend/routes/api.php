@@ -25,6 +25,10 @@ Route::delete('stylists/{id}','StylistController@destroy');
 
 //api for booking
 Route::get('bookings/{phonenumber}','BookingController@showBookingForm');
+//create pin
+Route::post('bookings/create-pin','BookingController@createPIN');
+//verify pin
+Route::post('bookings/verify-pin','BookingController@verifyPIN');
 //add new booking
 Route::post('bookings/add-new-booking','BookingController@addNewBooking');
 //edit booking

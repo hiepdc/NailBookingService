@@ -23,37 +23,6 @@ class BookingController extends Controller
         }
     }
 
-    function getAvailableBookingTime($status, $sizeOfTime)
-    {
-        $arr = explode(',', $status);
-        sort($arr);
-        $arr2chieu = array();
-
-        for ($i = 0; $i <= sizeof($arr) - 1; $i++) {
-            $arr1chieu = array();
-            array_push($arr1chieu, $arr[$i]);
-            //@long trường hợp ko có giá trị nào
-            //@long xóa dấu ","
-            while ($i < sizeof($arr) - 1 && $arr[$i + 1] == $arr[$i] + 1) {
-                array_push($arr1chieu, $arr[$i + 1]);
-                $i++;
-            }
-            array_push($arr2chieu, $arr1chieu);
-            unset($arr1chieu);
-        }
-
-
-        $statusArr = array();
-        foreach ($arr2chieu as $key => $value) {
-            if (sizeof($value) >= $sizeOfTime) {
-                for ($i = 0; $i <= sizeof($value) - $sizeOfTime; $i++) {
-                    array_push($statusArr, $value[$i]);
-                }
-            }
-        }
-        return $statusArr;
-    }
-
     public function addNewBooking(Request $request)
     {
         try {
@@ -173,54 +142,6 @@ class BookingController extends Controller
             return response()->exception($e->getMessage(), $e->getCode());
         }
     }
-
-    public function getAvailableBookingTimeWithStylist(Request $request)
-    {
-        try {
-            $serviceID = $request->service_id;
-            $stylistID = $request->stylist_id;
-            $date = $request->date;
-            $service = new Service();
-            //sizeoftime bội số của 15'
-            $sizeOfTime = $service->getTimeService($serviceID) * 4;
-            $shift = new Shift();
-            $status = $shift->getStatusByStylistID($stylistID, $date);
-            $sts = $status->status;
-            $shiftDefaultByStylistID = $this->getAvailableBookingTime($sts, $sizeOfTime);
-            return response()->success($shiftDefaultByStylistID);
-        } catch (Exception $e) {
-            return response()->exception($e->getMessage(), $e->getCode());
-        }
-    }
-
-    public function getAvailableBookingTimeWithoutStylist(Request $request)
-    {
-        try {
-            $date = $request->date;
-            $serviceID = $request->service_id;
-            $service = new Service();
-            $sizeOfTime = $service->getTimeService($serviceID);
-            $shift = new Shift();
-            $allStatus = $shift->getStatusByDate($date);
-            $defaultStatus = array();
-            $returnStatus = array();
-            foreach ($allStatus as $key => $value) {
-                $arr01 = array();
-                //$arr01 = $this->getAvailableBookingTime((string)$value, $sizeOfTime);
-                $myObject = get_object_vars($value);
-                $arr01 = $this->getAvailableBookingTime(implode(",", $myObject), $sizeOfTime * 4);
-                foreach ($arr01 as $key2 => $value2) {
-                    array_push($defaultStatus, $value2);
-                }
-            }
-            $defaultStatus = array_unique($defaultStatus);
-            sort($defaultStatus);
-            return response()->success(array_unique($defaultStatus));
-        } catch (Exception $e) {
-            return response()->exception($e->getMessage(), $e->getCode());
-        }
-    }
-
     public function updateShiftStatusAfterBooking($status, $startTime, $sizeOfTime)
     {
         $bookedTime = $this->getBookingTime($startTime, $sizeOfTime);

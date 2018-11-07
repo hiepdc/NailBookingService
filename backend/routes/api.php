@@ -47,9 +47,9 @@ Route::get('bookings','BookingController@index');
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
 //display shift of stylist
-Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','StylistController@getAvailableBookingTimeWithStylist');
+Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBookingTimeWithStylist');
 //display shift default
-Route::get('shifts/default/{service_id}/{date}','StylistController@getAvailableBookingTimeWithoutStylist');
+Route::get('shifts/default/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 
 // @@@Admin@@@
 Route::post('login', 'AuthController@login');
@@ -60,8 +60,5 @@ Route::group(['middleware' => ['jwt.auth']], function() {
     Route::post('stylists','StylistController@store');
     Route::put('stylists/{id}','StylistController@update');
     Route::delete('stylists/{id}','StylistController@destroy');
-    Route::get('test', function(){
-        return response()->json(['foo'=>'bar']);
-    });
 });
 

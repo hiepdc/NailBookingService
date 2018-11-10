@@ -94,26 +94,22 @@
                 <div class="panel-body" id="choose-hours">
                   <div class="calendar-7" id="calendar-7">
                     <div class="days">
-                      <div *ngFor="let date of threeDate" class="calendar-7-day" [ngClass]="{active: date.id==0}"
+                      <div *ngFor="let date of threeDate" class="calendar-7-day" [ngClass]="{active: date.id==date_id}"
                         (click)="selectDate(date)">
                         <span class="text-date-1">{{date.label}}</span>
                         <span class="text-date-2">{{date.day}}, {{date.date|date:'dd'}}/{{date.date|date:'MM'}}</span>
                       </div>
                     </div>
 
-                    <!-- <div id="owl-one" class="col-md-12 margin2 owl-carousel owl-theme">
-                      <div class="owl-stage-outer">
-                        <div class="owl-stage"> -->
-                    <!-- <div class="owl-item" *ngFor="let row of status2; let i=index;"> -->
-                    <div class="row" *ngFor="let row of status2; let i=index;">
-                      <div class="col-3" *ngFor="let time of row; let j=index">
-                        <span class="calendar-7-hour" [ngClass]="{disabled: time!=statusSample2[i][j]}">{{changeTime(statusSample2[i][j])}}</span>
+                    <div id="owl-one" class="col-md-12 margin2 owl-carousel owl-theme">
+
+                      <div class="row" *ngFor="let row of status2; let i=index;">
+                        <div class="col-3" *ngFor="let time of row; let j=index">
+                          <span class="calendar-7-hour" [ngClass]="{disabled: time!=statusSample2[i][j]}">{{changeTime(statusSample2[i][j])}}</span>
+                        </div>
                       </div>
+
                     </div>
-                    <!-- </div> -->
-                    <!-- </div>
-                      </div>
-                    </div> -->
 
                   </div>
                 </div>

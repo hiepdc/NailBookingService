@@ -17,7 +17,7 @@ class StylistController extends Controller
     public function index()
     {
         try {
-            $listStylist = Stylist::paginate(10);
+            $listStylist = Stylist::all();
             return response()->success($listStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

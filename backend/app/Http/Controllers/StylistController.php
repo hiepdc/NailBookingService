@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\StylistResource;
 use Illuminate\Http\Request;
 use App\Stylist;
+use TomLingham\Searchy\Facades\Searchy;
 
 class StylistController extends Controller
 {
@@ -16,7 +17,7 @@ class StylistController extends Controller
     public function index()
     {
         try {
-            $listStylist = Stylist::paginate(5);
+            $listStylist = Stylist::paginate(10);
             return response()->success($listStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -64,8 +65,7 @@ class StylistController extends Controller
     public function show($id)
     {
         try {
-            $showStylistByID = Stylist::where('phone_number', $id)->paginate(5);
-            //$dm = $showStylistByID[phone_number];
+            $showStylistByID = Stylist::find($id);
             if(!$showStylistByID){
                 return response()->error("stylist does not exist");
             }
@@ -101,8 +101,8 @@ class StylistController extends Controller
             if (!$stylist) {
                 return response()->error("stylist does not exist");
             }
-            $stylist->update($request->only(['stylist_name', 'phone_number', 'information']));
-            return response()->success($stylist);
+            $updatedStylist = $stylist->update($request->only(['stylist_name', 'phone_number', 'information']));
+            return response()->success($updatedStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -118,13 +118,30 @@ class StylistController extends Controller
     public function destroy($id)
     {
         try {
-            // $deletebyid = Stylist::find($id);
-            $deletebyid = Stylist::where(['stylist_name', '1vợ2con3nha'])->get();
+           $deletebyid = Stylist::find($id);
             if (!$deletebyid) {
                 return response()->error("stylist does not exist");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function search(Request $request){
+        try {
+            $key = $request->key;
+            if(empty($key)){
+                $stylist = Stylist::paginate(10);
+            }else{
+                $stylist = Searchy::stylists('stylist_name', 'phone_number')->query($key)
+                    ->get();
+            }
+//            $stylist = Stylist::where('stylist_name','like','%'.$key.'%')
+//                ->orwhere('phone_number', 'like', '%'.$key.'%')
+//                ->paginate(10);
+            return response()->success($stylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

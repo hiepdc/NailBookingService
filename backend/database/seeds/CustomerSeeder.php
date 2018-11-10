@@ -17,11 +17,11 @@ class CustomerSeeder extends Seeder
             'phone_number' => "0976420019",
             'coin' => "50"
         ]);
-        foreach (range(1, 9) as $index) {
+        foreach (range(1, 70) as $index) {
             DB::table('customers')->insert([
                 'customer_name' => $faker->name,
                 'phone_number' => "0976".rand(123456,999999),
-                'coin' => random_int(1,100),
+                'coin' => 10*random_int(0,10),
             ]);
 
         }

@@ -21,9 +21,9 @@ class Booking extends Model
         return $this->belongsTo(Service::class);
     }
 
-    public function stylist()
+    public function shift()
     {
-        return $this->belongsTo(Stylist::class);
+        return $this->belongsTo(Shift::class);
     }
 
     public $timestamps = false;
@@ -41,7 +41,8 @@ class Booking extends Model
         return $statusBooking;
     }
 
-    public function getDetailBookingByPhonenumber($phonenumber){
+    public function getDetailBookingByPhonenumber($phonenumber)
+    {
         $detailBooking = DB::table('customers')
             ->join('bookings', 'customers.id', '=', 'bookings.customer_id')
             ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
@@ -57,6 +58,7 @@ class Booking extends Model
             ])->first();
         return $detailBooking;
     }
+
     public function deleteBookingByPhonenumber($phonenumber)
     {
         $customer = new Customer();
@@ -82,7 +84,9 @@ class Booking extends Model
         return $booking;
 
     }
-    public function updateBooking($shift_id, $service_id, $customer_id, $start_time){
+
+    public function updateBooking($shift_id, $service_id, $customer_id, $start_time)
+    {
         $booking = Booking::where([
             ['customer_id', $customer_id],
             ['status', 'booked']
@@ -92,5 +96,53 @@ class Booking extends Model
             'start_time' => $start_time
         ]);
         return $booking;
+    }
+
+    public function searchBooking($date, $stylist_name, $status)
+    {
+        $bookings = DB::table('bookings')
+            ->join('services', 'services.id', '=', 'bookings.service_id')
+            ->join('customers', 'customers.id', '=', 'bookings.customer_id')
+            ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
+            ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
+            ->select('customers.customer_name'
+                , 'customers.phone_number'
+                , 'customers.coin'
+                , 'services.service_name'
+                , 'stylists.stylist_name'
+                , 'shifts.date'
+                , 'bookings.start_time'
+                , 'bookings.status')
+            ->where([
+                ['shifts.date', '=', $date],
+                ['stylists.stylist_name', '=', $stylist_name],
+                ['bookings.status', '=', $status],
+            ])->orderBy('bookings.start_time')
+            ->orderBy('bookings.status')
+            ->paginate(10);
+        return $bookings;
+    }
+
+    public function listBooking($date)
+    {
+        $bookings = DB::table('bookings')
+            ->join('services', 'services.id', '=', 'bookings.service_id')
+            ->join('customers', 'customers.id', '=', 'bookings.customer_id')
+            ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
+            ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
+            ->select('customers.customer_name'
+                , 'customers.phone_number'
+                , 'customers.coin'
+                , 'services.service_name'
+                , 'stylists.stylist_name'
+                , 'shifts.date'
+                , 'bookings.start_time'
+                , 'bookings.status')
+            ->where([
+                ['date', '=', $date],
+            ])->orderBy('bookings.start_time')
+            ->orderBy('bookings.status')
+            ->paginate(10);
+        return $bookings;
     }
 }

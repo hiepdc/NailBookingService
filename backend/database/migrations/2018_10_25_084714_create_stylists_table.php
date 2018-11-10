@@ -21,6 +21,7 @@ class CreateStylistsTable extends Migration
                 $table->char('phone_number');
                 $table->string('information');
                 $table->string('image_link');
+                $table->softDeletes();
             });
         }
     }

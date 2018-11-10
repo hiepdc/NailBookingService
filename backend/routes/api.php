@@ -13,15 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
 //api for stylists
-Route::post('stylists','StylistController@store');
-Route::put('stylists/{id}','StylistController@update');
+//Route::post('stylists','StylistController@store');
+//Route::put('stylists/{id}','StylistController@update');
 Route::get('stylists','StylistController@index');
 Route::get('stylists/{id}','StylistController@show');
-Route::delete('stylists/{id}','StylistController@destroy');
+//Route::delete('stylists/{id}','StylistController@destroy');
+
+//create pin
+Route::post('bookings/create-pin','BookingController@createPIN');
+//verify pin
+Route::post('bookings/verify-pin','BookingController@verifyPIN');
 
 //api for booking
 Route::get('bookings/{phonenumber}','BookingController@showBookingForm');
@@ -31,17 +37,28 @@ Route::post('bookings/add-new-booking','BookingController@addNewBooking');
 Route::post('bookings/edit-booking','BookingController@editBooking');
 //delete booking
 Route::delete('bookings/{phonenumber}','BookingController@deleteBooking');
-//display shift of stylist
-Route::post('bookings/shift-of-stylist','BookingController@getAvailableBookingTimeWithStylist');
-//display shift default
-Route::post('bookings/show-default-status','BookingController@getAvailableBookingTimeWithoutStylist');
 //delete booking
 Route::delete('bookings/delete-booking/{phonenumber}','BookingController@deleteBooking');
 //show booking
 Route::get('bookings/show/{id}','BookingController@show');
 Route::get('bookings','BookingController@index');
+
 //show shift
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
+//display shift of stylist
+Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBookingTimeWithStylist');
+//display shift default
+Route::get('shifts/default/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 
+// @@@Admin@@@
+Route::post('login', 'AuthController@login');
+Route::post('register', 'AuthController@register');
+
+Route::group(['middleware' => ['jwt.auth']], function() {
+    Route::get('logout', 'AuthController@logout');
+    Route::post('stylists','StylistController@store');
+    Route::put('stylists/{id}','StylistController@update');
+    Route::delete('stylists/{id}','StylistController@destroy');
+});
 

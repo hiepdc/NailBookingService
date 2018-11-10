@@ -19,44 +19,44 @@ class BookingSeeder extends Seeder
                 'shift_id' => '1',
                 'service_id' => '1',
                 'customer_id' => '1',
-                'start_time' => '10',
+                'start_time' => '24',
                 'status' => 'booked',
             ],
             [
                 'shift_id' => '1',
                 'service_id' => '2',
                 'customer_id' => '2',
-                'start_time' => '22',
+                'start_time' => '24',
                 'status' => 'booked',
             ],
             [
                 'shift_id' => '1',
                 'service_id' => '1',
                 'customer_id' => '3',
-                'start_time'=>'25',
+                'start_time' => '24',
                 'status' => 'booked',
             ],
             [
                 'shift_id' => '1',
                 'service_id' => '2',
                 'customer_id' => '4',
-                'start_time'=>'15',
+                'start_time' => '24',
                 'status' => 'booked',
             ],
             [
                 'shift_id' => '1',
                 'service_id' => '2',
                 'customer_id' => '5',
-                'start_time'=>'12',
+                'start_time' => '24',
                 'status' => 'booked',
             ],
         ]);
-        foreach (range(1, 30) as $index) {
+        foreach (range(1, 15) as $index) {
             DB::table('bookings')->insert([
                 'shift_id' => rand(2, 15),
                 'service_id' => rand(1, 2),
-                'customer_id' => rand(1, 3),
-                'start_time'=>'25',
+                'customer_id' => rand(1, 10),
+                'start_time'=>'28',
                 'status' => $faker->randomElement(['booked']),
             ]);
         }

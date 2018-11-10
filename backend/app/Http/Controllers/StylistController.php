@@ -16,8 +16,7 @@ class StylistController extends Controller
     public function index()
     {
         try {
-            //$listStylist = Stylist::paginate(3);
-            $listStylist = Stylist::all();
+            $listStylist = Stylist::paginate(5);
             return response()->success($listStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -42,19 +41,12 @@ class StylistController extends Controller
      */
     public function store(Request $request)
     {
-//        $stylist = new Stylist();
-//        $stylist->stylist_name = $request->stylist_name;
-//        $stylist->phone_number = $request->phone_number;
-//        $stylist->information = $request->information;
-////        $stylist->stylist_name ="hiepdeptrai";
-////        $stylist->phone_number = "0796522236";
-////        $stylist->information = "hiepdeptrai";
-//        $stylist->save();
         try {
             $stylist = Stylist::create([
                 'stylist_name' => $request->stylist_name,
                 'phone_number' => $request->phone_number,
                 'information' => $request->information,
+                'image_link' => $request->image_link,
             ]);
             return response()->success($stylist);
         } catch (Exception $e) {
@@ -69,31 +61,19 @@ class StylistController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-  public function show($id)
-       {
-           try {
-               $showStylistByID = Stylist::where('phone_number', $id)->paginate(5);
-               //$dm = $showStylistByID[phone_number];
-               if(!$showStylistByID){
-                   return response()->error("stylist does not exist");
-               }
-               return response()->success($showStylistByID);
-           } catch (Exception $e) {
-               return response()->exception($e->getMessage(), $e->getCode());
-           }
-       }
-/*    public function show($id)
+    public function show($id)
     {
         try {
-            $showStylistByID = Stylist::find($id)->shifts()->first();
-            if (!$showStylistByID) {
+            $showStylistByID = Stylist::where('phone_number', $id)->paginate(5);
+            //$dm = $showStylistByID[phone_number];
+            if(!$showStylistByID){
                 return response()->error("stylist does not exist");
             }
             return response()->success($showStylistByID);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
-    }*/
+    }
 
 
     /**
@@ -149,4 +129,6 @@ class StylistController extends Controller
             return response()->exception($e->getMessage(), $e->getCode());
         }
     }
+
+
 }

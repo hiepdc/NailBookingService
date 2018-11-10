@@ -53,8 +53,8 @@ class Shift extends Model
 
     public function updateStatusByShiftID($shiftID, $status)
     {
-        $shiftAfterUpdate = Shift::find($shiftID);
-        $shiftAfterUpdate->update(['status' => $status]);
+        $shiftAfterUpdate = Shift::find($shiftID)
+            ->update(['status' => $status]);
         return $shiftAfterUpdate;
 
     }

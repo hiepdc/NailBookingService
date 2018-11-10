@@ -1,0 +1,133 @@
+<!-- ===== content starts  ===== -->
+<div id="content" class="col-md-10 split">
+  <!-- ===== Booking section starts  ===== -->
+  <div class="content-wrapper">
+    <div class="content-box container">
+      <div class="inside-wrapper container" id="inside-wrapper-bookings">
+        <div class="section-heading">
+          <h2>Đặt Lịch</h2>
+        </div>
+        <form id="booking">
+          <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <a role="button" class="item-question collapsed" data-toggle="collapse" href="#collapse1" aria-expanded="true"
+                  aria-controls="collapse1"> <span class="panel-number">1</span>
+                  Nhập Số Điện Thoại
+                </a>
+              </h4>
+              <div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
+                <div class="panel-body" id="enter-phone">
+                  <div class="form-group">
+                    <input type="tel" placeholder="0974372618" onkeypress="return isNumber(event)" onkeyup="numberWithCommas($(this))"
+                      onchange="numberWithCommas($(this))" class="form-control" maxlength="10" required pattern="(09|01[2|6|8|9])+([0-9]{8})\b">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <a role="button" class="item-question collapsed" data-toggle="collapse" href="#collapse2" aria-expanded="false"
+                  aria-controls="collapse2"> <span class="panel-number">2</span> Chọn Services
+                </a>
+              </h4>
+              <div id="collapse2" class="panel-collapse collapse in" role="tabpanel">
+                <div class="panel-body" id="choose-service">
+                  <label class="radio-inline"><input type="radio" name="optradio" value="1" (change)="radioChangeHandler($event)"
+                      checked>Cơ Bản</label>
+                  <label class="radio-inline"><input type="radio" name="optradio" value="2" (change)="radioChangeHandler($event)">Nâng
+                    Cao</label>
+                  <p>Selected: {{selectedService}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <a class="item-question collapsed" role="button" data-toggle="collapse" href="#collapse3" aria-expanded="true"
+                  aria-controls="collapse3"> <span class="panel-number">3</span>
+                  Chọn Stylist
+                </a>
+              </h4>
+              <div id="collapse3" class="panel-collapse collapse" role="tabpanel">
+                <div class="panel-body" id="choose-stylist">
+                  <!-- services carousel -->
+                  <div id="owl-services" class="col-md-12 owl-carousel owl-theme">
+
+                    <div class="col-md-12">
+                      <div class="serviceBox" onclick="choose_stylist($(this))" (click)="getShiftByDefault(selectedService,dateDefault)">
+                        <div class="service-icon">
+                          <img class="img-responsive img-circle border" src="../../assets/img/services/service1.jpg"
+                            alt="">
+                        </div>
+                        <div class="service-content">
+                          <h5>Châm trâm chọn cho bạn</h5>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12" *ngFor="let eachStylist of stylists">
+                      <div class="serviceBox" onclick="choose_stylist($(this))" (click)="getShiftByStylist(selectedService,eachStylist.id,dateDefault)">
+                        <!-- service icon -->
+                        <div class="service-icon">
+                          <img class="img-responsive img-circle" [src]="eachStylist.image_link" alt="">
+                        </div>
+                        <!-- service content -->
+                        <div class="service-content">
+                          <h5>{{eachStylist.stylist_name}}</h5>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <h4 class="panel-title">
+                <a class="item-question collapsed" role="button" data-toggle="collapse" href="#collapse4" aria-expanded="true"
+                  aria-controls="collapse4"> <span class="panel-number">4</span>
+                  Chọn ngày, giờ
+                </a>
+              </h4>
+              <div id="collapse4" class="panel-collapse collapse in" role="tabpanel">
+                <div class="panel-body" id="choose-hours">
+                  <div class="calendar-7" id="calendar-7">
+                    <div class="days">
+                      <div *ngFor="let date of threeDate" class="calendar-7-day" [ngClass]="{active: date.id==0}"
+                        (click)="selectDate(date)">
+                        <span class="text-date-1">{{date.label}}</span>
+                        <span class="text-date-2">{{date.day}}, {{date.date|date:'dd'}}/{{date.date|date:'MM'}}</span>
+                      </div>
+                    </div>
+
+                    <!-- <div id="owl-one" class="col-md-12 margin2 owl-carousel owl-theme">
+                      <div class="owl-stage-outer">
+                        <div class="owl-stage"> -->
+                    <!-- <div class="owl-item" *ngFor="let row of status2; let i=index;"> -->
+                    <div class="row" *ngFor="let row of status2; let i=index;">
+                      <div class="col-3" *ngFor="let time of row; let j=index">
+                        <span class="calendar-7-hour" [ngClass]="{disabled: time!=statusSample2[i][j]}">{{changeTime(statusSample2[i][j])}}</span>
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                    <!-- </div>
+                      </div>
+                    </div> -->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button id="button-next" name="singlebutton" class="btn">Tiếp theo</button>
+        </form>
+      </div>
+      <!-- /inside-wrapper -->
+    </div>
+    <!-- /content-box -->
+  </div>
+  <!-- / content-wrapper -->
+  <!-- /services ends -->
+</div>
+<!-- /content -->

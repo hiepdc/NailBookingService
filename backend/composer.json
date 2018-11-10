@@ -12,7 +12,8 @@
         "laravel/tinker": "^1.0",
         "nexmo/client": "^1.5",
         "nexmo/laravel": "^1.1",
-        "tymon/jwt-auth": "dev-develop"
+        "tymon/jwt-auth": "dev-develop",
+        "tom-lingham/searchy" : "2.*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

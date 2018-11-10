@@ -16,14 +16,16 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-
+//service
+Route::resource('services', 'ServiceController');
 //api for stylists
-//Route::post('stylists','StylistController@store');
-//Route::put('stylists/{id}','StylistController@update');
+Route::post('stylists','StylistController@store');
+Route::put('stylists/{id}','StylistController@update');
 Route::get('stylists','StylistController@index');
 Route::get('stylists/{id}','StylistController@show');
-//Route::delete('stylists/{id}','StylistController@destroy');
-
+Route::delete('stylists/{id}','StylistController@destroy');
+//search stylist by ame
+Route::post('stylists/search', 'StylistController@search');
 //create pin
 Route::post('bookings/create-pin','BookingController@createPIN');
 //verify pin
@@ -41,7 +43,8 @@ Route::delete('bookings/{phonenumber}','BookingController@deleteBooking');
 Route::delete('bookings/delete-booking/{phonenumber}','BookingController@deleteBooking');
 //show booking
 Route::get('bookings/show/{id}','BookingController@show');
-Route::get('bookings','BookingController@index');
+//list bookings
+Route::get('bookings','BookingController@listBooking');
 
 //show shift
 Route::get('shifts','ShiftController@index');
@@ -51,14 +54,16 @@ Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@ge
 //display shift default
 Route::get('shifts/default/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 
+//@@@Customers
+//list customers
+Route::get('customers','CustomerController@index');
+//search customer name
+Route::post('customers/search/','CustomerController@search');
 // @@@Admin@@@
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');
 
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('logout', 'AuthController@logout');
-    Route::post('stylists','StylistController@store');
-    Route::put('stylists/{id}','StylistController@update');
-    Route::delete('stylists/{id}','StylistController@destroy');
 });
 

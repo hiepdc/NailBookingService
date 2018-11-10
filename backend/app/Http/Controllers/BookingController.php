@@ -9,6 +9,7 @@ use App\Shift;
 use App\Stylist;
 use App\SpeedSMSAPI;
 use App\TwoFactorAPI;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -142,6 +143,7 @@ class BookingController extends Controller
             return response()->exception($e->getMessage(), $e->getCode());
         }
     }
+
     public function updateShiftStatusAfterBooking($status, $startTime, $sizeOfTime)
     {
         $bookedTime = $this->getBookingTime($startTime, $sizeOfTime);
@@ -248,7 +250,7 @@ class BookingController extends Controller
     public function index()
     {
         try {
-            $bookings = Booking::all();
+            $bookings = Booking::paginate(5);
             return response()->success($bookings);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -297,4 +299,50 @@ class BookingController extends Controller
             }
         }
     }
+
+    public function checkIn($phonenNumber)
+    {
+
+    }
+
+    public function checkOut($phonenNumber)
+    {
+
+    }
+
+    public function cancelBooking()
+    {
+        //@@ AUTO chuy?n tr?ng thái t? booked sang cancel khi quá th?i di?m checking 5 phút
+    }
+
+    public function searchBooking(Request $request)
+    {
+        //stylist
+        //timestart
+        //status
+        try {
+            $booking = new Booking();
+            $date = $request->date;
+            $stylistName = $request->stylist_name;
+            $status = $request->status;
+            $result = $booking->searchBooking($date, $stylistName, $status);
+            return response()->success($result);
+        } catch (Exception $e) {
+            response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function listBooking()
+    {
+        try {
+            $carbon = Carbon::now();
+            $date = $carbon->format('Y-m-d');
+            $booking = new Booking();
+            $listBooking = $booking->listBooking($date);
+            return response()->success($listBooking);
+        } catch (Exception $e) {
+            response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
 }

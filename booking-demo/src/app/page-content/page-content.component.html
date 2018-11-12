@@ -65,7 +65,7 @@
                         </div>
                       </div>
                     </div>
-
+                    
                     <div class="col-md-12" *ngFor="let eachStylist of stylists">
                       <div class="serviceBox" onclick="choose_stylist($(this))" (click)="getShiftByStylist(selectedService,eachStylist.id,dateDefault)">
                         <!-- service icon -->
@@ -104,9 +104,12 @@
                     <div id="owl-one" class="col-md-12 margin2 owl-carousel owl-theme">
 
                       <div class="row" *ngFor="let row of status2; let i=index;">
-                        <div class="col-3" *ngFor="let time of row; let j=index">
+                        <ng-container class="col-3" *ngFor="let time of row; let j=index">
                           <span class="calendar-7-hour" [ngClass]="{disabled: time!=statusSample2[i][j]}">{{changeTime(statusSample2[i][j])}}</span>
-                        </div>
+                        </ng-container>
+                        <!-- <div class="col-3" *ngFor="let time of row; let j=index">
+                          <span class="calendar-7-hour" [ngClass]="{disabled: time!=statusSample2[i][j]}">{{changeTime(statusSample2[i][j])}}</span>
+                        </div> -->
                       </div>
 
                     </div>

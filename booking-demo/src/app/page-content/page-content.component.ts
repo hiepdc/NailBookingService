@@ -19,15 +19,16 @@ export class PageContentComponent implements OnInit {
     this.selectedService = +event.target.value;
   }
 
-  //handle status of shift
+  //handle stylist
   stylist: Stylist;
   stylists: Stylist[];
+  stylistId: number;
 
   //handle shift
   shiftApi: ShiftApi;
   timeline: string[];
-  status1: string[];//giống như status sample nhưng là 0 và status
-  status2: string[][];//giống statusSample1
+  status1: string[];
+  status2: string[][];//giống statusSample2
   statusSample2: string[][] = [
     ['0', '1', '2', '3'], ['4', '5', '6', '7'], ['8', '9', '10', '11'], ['12', '13', '14', '15'],
     ['16', '17', '18', '19'], ['20', '21', '22', '23'], ['24', '25', '26', '27'], ['28', '29', '30', '31'],
@@ -36,14 +37,14 @@ export class PageContentComponent implements OnInit {
   ];
 
   //handle date
-  dateTime: DateTime;
+
   day_now = new Date();
   today = new Date();
   tomorrow = new Date(this.day_now.setDate(this.day_now.getDate() + 1));;
   afterTomorrow = new Date(this.day_now.setDate(this.day_now.getDate() + 1));
-  dateDefault: string = this.formatDate(this.today);
   weeksOfzhTW = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
   threeDay = ["Hôm nay", "Ngày mai", "Ngày kia"];
+  date_id:number = 0;
   threeDate = [
     {
       "label": "Hôm nay",
@@ -76,8 +77,6 @@ export class PageContentComponent implements OnInit {
     return [year, month, day].join('-');
   }
 
-
-
   getStylistFromService(): void {
     this.stylistService.getStylists().subscribe(
       stylistApi => this.stylists = stylistApi.data
@@ -89,8 +88,9 @@ export class PageContentComponent implements OnInit {
     this.stylistService.getShiftByDefault(serviceId, date).subscribe(
       (shiftApi) => {
         this.timeline = shiftApi.data;
+        this.stylistId = -1;
         console.log(`timeline default : ${this.timeline}`);
-
+        console.log(`stylistId default : ${this.stylistId}`);
         if (Array.isArray(this.timeline) && this.timeline.length) {
           this.status1 = [];
           var j: number = 0;
@@ -128,8 +128,9 @@ export class PageContentComponent implements OnInit {
     this.stylistService.getShiftByStylist(serviceId, stylistId, date).subscribe(
       (shiftApi) => {
         this.timeline = shiftApi.data;
+        this.stylistId = stylistId;
         console.log(`timeline: ${this.timeline}`);
-
+        console.log(`stylistId : ${this.stylistId}`);
         if(Array.isArray(this.timeline) && this.timeline.length){
           this.status1 = [];
           var j: number = 0;
@@ -162,9 +163,16 @@ export class PageContentComponent implements OnInit {
     );
   }
 
-  selectDate(dateTime: DateTime) {
-    this.dateTime = dateTime;
-    console.log(this.formatDate(this.dateTime.date));
+  dateId
+  selectDate(dateTime: DateTime):void{
+    //this.dateTime = dateTime;
+    this.date_id = dateTime.id;
+    if(this.stylistId == -1){
+      this.getShiftByDefault(this.selectedService,this.formatDate(dateTime.date));
+    }else{
+      this.getShiftByStylist(this.selectedService, this.stylistId, this.formatDate(dateTime.date));
+    }
+    console.log(this.formatDate(dateTime.date));
   }
 
   changeTime(status: string): string {
@@ -198,7 +206,7 @@ export class PageContentComponent implements OnInit {
   // }
   ngOnInit() {
     this.getStylistFromService();
-    this.getShiftByDefault(this.selectedService, this.dateDefault);
+    this.getShiftByDefault(this.selectedService, this.formatDate(this.today));
   }
 
 }

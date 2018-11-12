@@ -1,5 +1,5 @@
 //----------------------------------- Document ready -----------------------------------//
-$(document).ready(
+$(window).load(
 	function () {
 		"use strict";
 
@@ -144,7 +144,6 @@ $(window).load(function () {
 		});
 		return false;
 	});
-
 	setTimeout(function () {
 		$("#owl-one").owlCarousel(
 			{
@@ -171,7 +170,7 @@ $(window).load(function () {
 					}
 				}
 			});
-
+// 
 	}, 3000);
 
 	setTimeout(function () {
@@ -202,9 +201,6 @@ $(window).load(function () {
 			});
 
 	}, 3000);
-
-	// Page Preloader
-
 	$("#preloader").fadeOut("slow");
 
 }); // end window load function

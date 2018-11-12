@@ -21,6 +21,7 @@ class CreateServicesTable extends Migration
                 $table->text('description');
                 $table->integer('time_service');
                 $table->integer('price');
+                $table->integer('coin_service');
             });
         }
     }

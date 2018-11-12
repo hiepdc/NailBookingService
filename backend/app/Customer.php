@@ -31,15 +31,19 @@ class Customer extends Model
     }
 
     //update coin old customer
-    public function updateCoinCustomer($phone_number, $coin){
-        $oldCoin = DB::table('customers')
-            ->select('coin')
-            ->where('phone_number', $phone_number)
-            ->get();
-        $coinvalue = $oldCoin[0]->coin + $coin;
-        return DB::table('customers')
-            ->where('phone_number', $phone_number)
+    public function updateCoinCustomer($id, $coin){
+        $customer = Customer::find($id);
+        $coinvalue = $customer->coin + $coin;
+        return Customer::find($id)
             ->update(['coin' => $coinvalue]);
+    }
+
+  //use coin old customer
+    public function useCoinCustomer($id, $coin){
+        $customer = Customer::find($id);
+        $coinvalue = $customer->coin - $coin;
+        $customer->update(['coin' => $coinvalue]);
+        return $customer;
     }
 
     public function getCustomerByPhonenumber($phone_number){

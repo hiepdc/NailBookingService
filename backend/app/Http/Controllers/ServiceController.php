@@ -46,6 +46,7 @@ class ServiceController extends Controller
                 'description' => $request->description,
                 'time_service' => $request->time_service,
                 'price' => $request->price,
+                'coin_service' => $request->coin_service,
             ]);
             return response()->success($service);
         } catch (Exception $e) {
@@ -97,7 +98,7 @@ class ServiceController extends Controller
             if (!$service) {
                 return response()->error("service does not exist");
             }
-            $updatedService = $service->update($request->only(['service_name', 'description', 'time_service', 'price']));
+            $updatedService = $service->update($request->only(['service_name', 'description', 'time_service', 'price', 'coin_service']));
             return response()->success($updatedService);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

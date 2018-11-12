@@ -13,12 +13,10 @@ class CreateFeedbacksTable extends Migration
      */
     public function up()
     {
-        if(!Schema::hasTable('feedbacks'))
-        {
+        if (!Schema::hasTable('feedbacks')) {
             Schema::create('feedbacks', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('customer_id')->unsigned();
-                $table->foreign('customer_id')->references('id')->on('customers');
+                $table->string('title');
                 $table->text('content');
             });
         }

@@ -113,9 +113,12 @@ class Booking extends Model
                 , 'shifts.date'
                 , 'bookings.start_time'
                 , 'bookings.status')
-            ->where('shifts.date', '=', $date)
-            ->orWhere('stylists.stylist_name', 'like', '%' . $stylist_name . '%')
-            ->orWhere('bookings.status', '=', $status)
+            ->where([
+                ['shifts.date', '=', $date],
+                ['bookings.status', '=', $status]
+            ])
+//            ->where('bookings.status', '=', $status)
+            ->Where('stylists.stylist_name', 'like', '%' . $stylist_name . '%')
             ->orderBy('bookings.start_time')
             ->orderBy('bookings.status')
             ->paginate(10);

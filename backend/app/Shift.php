@@ -65,7 +65,7 @@ class Shift extends Model
             ->select('id')
             ->where([
                 ['stylist_id', $stylistID],
-                ['date', $date],
+                ['date', $date]
             ])
             ->first();
         return $id;

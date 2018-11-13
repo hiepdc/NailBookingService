@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GalleryController extends Controller
 {
@@ -14,6 +16,12 @@ class GalleryController extends Controller
     public function index()
     {
         //
+        try {
+            $galleries = Gallery::all();
+            return response()->success($galleries);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -35,6 +43,14 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            $gallery = Gallery::create([
+                'image_link' => $request->image_link
+            ]);
+            return response()->success($gallery);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -46,6 +62,15 @@ class GalleryController extends Controller
     public function show($id)
     {
         //
+
+        try {
+            $gallery = Gallery::find($id);
+            if(!$gallery) {
+                return response()->error('Gallery does not exist');
+            }
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -69,6 +94,16 @@ class GalleryController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try {
+            $gallery = Gallery::find($id);
+            if (!$gallery) {
+                return response()->error("gallery does not exist");
+            }
+            $updatedGallery = $gallery->update($request->only(['image_link']));
+            return response()->success($updatedGallery);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -80,5 +115,15 @@ class GalleryController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            $deletebyid = Gallery::find($id);
+            if (!$deletebyid) {
+                return response()->error("gallery does not exist");
+            }
+            $deletebyid->delete();
+            return response()->success($deletebyid);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 }

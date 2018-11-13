@@ -1,2 +1,0 @@
-# NailBookingService
-NailBookingService by ikemennateam

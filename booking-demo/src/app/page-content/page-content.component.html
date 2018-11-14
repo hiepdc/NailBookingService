@@ -1,0 +1,221 @@
+<!-- ===== content starts  ===== -->
+<div id="content" class="col-md-10 split">
+  <!-- ===== Booking section starts  ===== -->
+  <div id="booking">
+    <div class="content-wrapper">
+      <div class="content-box container">
+        <div class="inside-wrapper container" id="inside-wrapper-bookings">
+          <div class="section-heading">
+            <h2>Đặt Lịch</h2>
+          </div>
+
+          <!--Booking-1-->
+          <div id="booking" [hidden]="submmited">
+            <form (ngSubmit)="onSubmitBook()" #bookingForm="ngForm">
+              <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                  <h4 class="panel-title">
+                    <a role="button" class="item-question collapsed" data-toggle="collapse" href="#collapse1"
+                      aria-expanded="true" aria-controls="collapse1">
+                      <span class="panel-number">1</span>Nhập Số Điện Thoại
+                    </a>
+                  </h4>
+                  <div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
+                    <div class="panel-body" id="enter-phone">
+                      <div class="form-group">
+                        <input type="tel" placeholder="" onkeypress="return isNumber(event)" class="form-control"
+                          maxlength="10" pattern="(09|03[1|2|3|4|5|6|7|8|9])+([0-9]{8})\b" [(ngModel)]="phoneNumber"
+                          name="phoneNumber" required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel panel-default">
+                  <h4 class="panel-title">
+                    <a role="button" class="item-question collapsed" data-toggle="collapse" href="#collapse2"
+                      aria-expanded="false" aria-controls="collapse2"> <span class="panel-number">2</span> Chọn
+                      Services
+                    </a>
+                  </h4>
+                  <div id="collapse2" class="panel-collapse collapse in" role="tabpanel">
+                    <div class="panel-body" id="choose-service">
+                      <label class="radio-inline"><input type="radio" name="optradio" value="1" (change)="radioChangeHandler($event)"
+                          checked>Cơ Bản</label>
+                      <label class="radio-inline"><input type="radio" name="optradio" value="2" (change)="radioChangeHandler($event)">Nâng
+                        Cao</label>
+                      <p>Selected: {{selectedService}}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel panel-default">
+                  <h4 class="panel-title">
+                    <a class="item-question collapsed" role="button" data-toggle="collapse" href="#collapse3"
+                      aria-expanded="true" aria-controls="collapse3"> <span class="panel-number">3</span>
+                      Chọn Stylist
+                    </a>
+                  </h4>
+                  <div id="collapse3" class="panel-collapse collapse" role="tabpanel">
+                    <div class="panel-body" id="choose-stylist">
+                      <!-- services carousel -->
+                      <div id="owl-services" class="col-md-12 owl-carousel owl-theme">
+                        <div class="col-md-12">
+                          <div class="serviceBox" onclick="click_stylist($(this))" (click)="getShiftByDefault(selectedService,selectedDate)">
+                            <div class="service-icon">
+                              <img class="img-responsive img-circle border" src="../../assets/img/services/service1.jpg"
+                                alt="">
+                            </div>
+                            <div class="service-content">
+                              <h5>Châm trâm chọn cho bạn</h5>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12" *ngFor="let eachStylist of stylists">
+                          <div class="serviceBox" onclick="click_stylist($(this))" (click)="getShiftByStylist(selectedService,eachStylist.id,selectedDate)">
+                            <!-- service icon -->
+                            <div class="service-icon">
+                              <img class="img-responsive img-circle" [src]="eachStylist.image_link" alt="">
+                            </div>
+                            <!-- service content -->
+                            <div class="service-content">
+                              <h5>{{eachStylist.stylist_name}}</h5>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <h4 class="panel-title">
+                    <a class="item-question collapsed" role="button" data-toggle="collapse" href="#collapse4"
+                      aria-expanded="true" aria-controls="collapse4"> <span class="panel-number">4</span>
+                      Chọn ngày, giờ
+                    </a>
+                  </h4>
+                  <div id="collapse4" class="panel-collapse collapse in" role="tabpanel">
+                    <div class="panel-body" id="choose-hours">
+
+                      <div class="days">
+                        <div *ngFor="let date of threeDate" class="calendar-7-day" [ngClass]="{active: formatDate(date.date)==selectedDate}"
+                          (click)="selectDate(date)">
+                          <span class="text-date-1">{{date.label}}</span>
+                          <span class="text-date-2">{{date.day}}, {{date.date|date:'dd'}}/{{date.date|date:'MM'}}</span>
+                        </div>
+                      </div>
+
+                      <div class="timeline">
+                        <div class="swiper-container">
+                          <div class="swiper-wrapper">
+                            <div class="swiper-slide" *ngFor="let hour of status1; let i=index;">
+                              <div class="calendar-7-hour" onclick="click_hour($(this))" (click)="click_hour(hour)"
+                                [ngClass]="{disabled: hour!=statusSample1[i]}">{{changeStatusToString(statusSample1[i])}}</div>
+                            </div>
+                          </div>
+                          <div class="swiper-scrollbar"></div>
+                          <div class="swiper-button-prev"></div>
+                          <div class="swiper-button-next"></div>
+                        </div>
+                      </div>
+                      <input type="number" [(ngModel)]="selectedHour" name="flagSelectedHour" required hidden>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" id="button-next" class="btn" [disabled]="bookingForm.form.invalid">Tiếp theo</button>
+
+            </form>
+          </div>
+
+          <div *ngIf="submmited">
+            <!--booking-2-->
+            <div id="confirmBookingForm" [hidden]="verifyCode">
+              <form (ngSubmit)="onConfirmBooking()" #confirmBookingForm="ngForm">
+                <div class="section-heading">
+                  <h2>Đặt Lịch Thành Công</h2>
+                </div>
+                <h4>Cảm ơn anh chị {{pinApi.data.customer_name}} ({{phoneNumber}}) đã cho Châm trâm Nail được phục vụ</h4>
+                <h4><i class="fas fa-map-marker-alt margin-icon"></i> 35 Ngô Sĩ Liên - Hà Nội</h4>
+                <h4><i class="far fa-clock margin-icon"></i> {{changeStatusToString(selectedHour)}} Ngày
+                  {{formatDate(selectedDate)}}
+                  ((Mong anh đến sớm hơn 10 phút để chúng em phục vụ tốt nhất))
+                </h4>
+                <h4><i class="fas fa-female margin-icon"></i> {{changeStylistIdToName()}}</h4>
+
+                <h4>MỖI SĐT ĐẶT CHỈ DÀNH CHO 1 NGƯỜI</h4>
+                <p>(*) Nếu làm nail cho nhiều người, anh/chị vui lòng dùng SĐT khác để đặt thêm 1 lần nữa hoặc gọi tới
+                  hotline để được sắp xếp giúp em!</p>
+                <button type="button">Đổi Lịch Đặt thì back lại trang lúc nãy</button>
+                <button type="button" [routerLink]="['/home']" (click)="backToHome()">Hủy Lịch</button>
+              </form>
+            </div>
+
+            <!--Verify Code Phone-->
+            <div id="verifyCodePhone" [hidden]="!verifyCode">
+              <h3>Verify Code Number</h3>
+              <form (ngSubmit)="onSubmitCheck()" #checkVerifyCodeForm="ngForm">
+                <input type="tel" placeholder="" onkeypress="return isNumber(event)" onkeyup="numberWithCommas($(this))"
+                  onchange="numberWithCommas($(this))" class="form-control" maxlength="4" required pattern="(09|01[2|6|8|9])+([0-9]{8})\b"
+                  [(ngModel)]="phoneNumber" name="phoneNumber">
+                <button type="submit">Check</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- /inside-wrapper -->
+      </div>
+      <!-- /content-box -->
+    </div>
+  </div>
+  <!-- /services ends -->
+</div>
+<!-- /content -->
+<!-- Modal -->
+<div id="modalVerifyPhone" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Verify Code Number</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="tel" placeholder="0974372618" onkeypress="return isNumber(event)" onkeyup="numberWithCommas($(this))"
+            onchange="numberWithCommas($(this))" class="form-control" maxlength="10" required pattern="(09|01[2|6|8|9])+([0-9]{8})\b"
+            [(ngModel)]="verifyCode" name="verifyCode">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalBookingForm" id="closeVerifyPhoneModal">Next</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="modalBookingForm" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Booking Information</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <p>Some text in the modal.</p>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Đặt Lịch Ngay</button>
+        <!-- //gửi book detail đi rồi chuyển sang trang booking success-->
+      </div>
+    </div>
+
+  </div>
+</div>

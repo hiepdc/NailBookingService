@@ -66,7 +66,7 @@ class BookingController extends Controller
                 ' cho gói dịch vụ ' . $service_name;
             ' được phục vụ bởi ' . $stylist_name .
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
-            //$sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+           $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
@@ -372,6 +372,9 @@ class BookingController extends Controller
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function listBooking()
     {
         try {

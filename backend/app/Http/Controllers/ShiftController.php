@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Shift;
+use App\Stylist;
 use App\Service;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\BookingController;
+
 class ShiftController extends Controller
 {
     //
@@ -101,4 +105,156 @@ class ShiftController extends Controller
         return $statusArr;
     }
 
+
+    //Shift schedule
+    //Crud
+    //add
+    //edit
+    //display (index) - thoi gian lam viec va thuc te (theo ngay)
+
+    public function create()
+    {
+        //
+    }
+
+    public function store(Request $request)
+    {
+        //
+        try {
+            $numberOfStylist = sizeof(Stylist::all());
+            for($i = 0; $i < $numberOfStylist; $i++) {
+                $shift = Shift::create([
+                    'stylist_id' => $request->stylist_id."$i", 
+                    'date' => $request->date."$i", 
+                    'start_time' => $request->start_time."$i", 
+                    'end_time' => $request->end_time."$i", 
+                    'status' => $request->status."$i"
+                ]);
+            } 
+            return response()->success($shift);
+
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function edit($id)
+    {
+        //
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
+        try {
+            $shift = Shift::find($id);
+            if (!$shift) {
+                return response()->error("shift does not exist");
+            }
+            $updatedShift = $shift->update($request->only(['start_time', 'end_time']));
+            return response()->success($updatedShift);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function destroy($id)
+    {
+        //
+        try {
+            $deletebyid = Shift::find($id);
+            if (!$deletebyid) {
+                return response()->error("news does not exist");
+            }
+            $deletebyid->delete();
+            return response()->success($deletebyid);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    //Thoi gian lam viec va thuc hien order theo ngay
+    //Thoi gian da thuc hien order (theo ngay + stylist)
+        //Lay tat ca cac order da duoc thuc hien (theo ngay + stylist) 
+        //BookingController->getBookingTime($startTime, $sizeOfTime)
+    public function getBookedStatusByStylist($date, $stylist_id) {
+        $orders = DB::table('booking')
+            ->where([
+                ['date','=',$date],
+                ['stylist_id','=',$stylist_id],
+            ])
+            ->get();
+        String $finishStatus = "";
+        foreach ($orders as $key => $value) {
+            # code...
+            $bookingController = new BookingController();
+            $service = new Service();
+            $finishStatus = $finishStatus.$bookingController->getBookingTime($value->start_time, $service->getTimeService($value->service_id)*4).",";
+            $finishStatus = trim($finishStatus, ",");
+            $finishStatus = str_replace(",,", ",", $finishStatus);
+            return $finishStatus;
+        }
+    }
+//=====================================================================
+    public function getBookedStatusForAllStylist (Request $request) {
+        $date = $request->date;
+        $stylists = Stylist::all();
+        $array = Array();
+
+        foreach ($stylists as $key => $value) {
+            $array[$value->id]=$this->getBookedStatusByStylist($date,$value->id); 
+        }
+        return $array;
+    }
+
+//=====================================================================
+    public function getStatusForStylist (Request $request) {
+        $date = $request->date;
+        $shifts = Shift::where("date",$date)->get();
+        $array = Array();
+
+        foreach ($shifts as $key => $value) {
+            $array[$value->stylist_id]=$this->getStatusFromTime($value->start_time, $value->end_time); 
+        }
+        return $array;
+    }
+
+    public function getNumberFromTime($time) {
+        $arr = explode(':', $time);
+        $hour = $arr[0];
+        $minute = $arr[1];
+        return ($hour-9)*4 + $minute/15;
+    }
+
+    public function getStatusFromTime($startTime, $endTime) {
+        $startNumber = $this->getNumberFromTime($startTime);
+        $endNumber = $this->getNumberFromTime($endTime);
+        
+        $status = $startNumber;
+
+        for($i=$startNumber+1;$i < $endNumber; $i++) {
+            $status = $status.","."$i";
+        }
+        $status = trim($status, ",");
+        return $status;
+    }
+
+    public function updateStatusCurrentTime($status) {
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
+        $time = date("H:i");
+        $array = explode(':', $time);
+        $hour = $array[0];
+        $minute = $array[1];
+        $startNumberToUpdate = floor(($hour-9)*4 + $minute/15)+1;
+        //$startNumberToUpdate = floor(getNumberFromTime(date("H:i")))+1;
+        $arr = explode(',', $status);
+        $updateStatus = "";
+        foreach ($arr as $key => $value) {
+            if($value >= $startNumberToUpdate) {
+                $updateStatus = $updateStatus."$value".",";
+            }
+        }
+        $updateStatus = trim($updateStatus, ",");
+        return $updateStatus;
+    }
 }

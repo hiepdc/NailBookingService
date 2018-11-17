@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
@@ -14,6 +16,12 @@ class NewsController extends Controller
     public function index()
     {
         //
+        try {
+            $news = News::all();
+            return response()->success($news);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -35,6 +43,15 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            $news = News::create([
+                'content' => $request->content,
+                'image_link' => $request->image_link
+            ]);
+            return response()->success($news);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -46,6 +63,14 @@ class NewsController extends Controller
     public function show($id)
     {
         //
+        try {
+            $news = News::find($id);
+            if(!$news) {
+                return response()->error('News does not exist');
+            }
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -69,6 +94,16 @@ class NewsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try {
+            $news = News::find($id);
+            if (!$news) {
+                return response()->error("news does not exist");
+            }
+            $updatedNews = $news->update($request->only(['content','image_link']));
+            return response()->success($updatedNews);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -80,5 +115,15 @@ class NewsController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            $deletebyid = News::find($id);
+            if (!$deletebyid) {
+                return response()->error("news does not exist");
+            }
+            $deletebyid->delete();
+            return response()->success($deletebyid);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 }

@@ -25,7 +25,7 @@ class ResponseMacroServiceProvider extends ServiceProvider
         Response::macro('error', function ($message, $status = 400) {
             return Response::json([
                 'success' => false,
-                'message' => [$message],
+                'message' => $message,
 //                'errors' => [
 //                    'message' => $status . ' error',
 //                ],
@@ -35,7 +35,7 @@ class ResponseMacroServiceProvider extends ServiceProvider
         Response::macro('exception', function ($message, $status = 400) {
             return Response::json([
                 'success' => false,
-                'message' => [$message],
+                'message' => $message,
 //                'errors' => [
 //                    'message' => $status . ' error',
 //                ],
@@ -46,7 +46,7 @@ class ResponseMacroServiceProvider extends ServiceProvider
             return Response::json([
                 'success' => false,
                 'data' => null,
-                'message' => [$message],
+                'message' => $message,
 //                'errors' => [
 //                    'message' => $status . ' error',
 //                ],

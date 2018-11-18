@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 class Service extends Model
 {
     protected $fillable = [
-        'service_name', 'description', 'time_service', 'price'
+        'service_name', 'description', 'time_service', 'price', 'coin_service'
     ];
     public $timestamps = false;
     public function bookings(){

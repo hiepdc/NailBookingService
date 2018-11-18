@@ -115,9 +115,11 @@ class Booking extends Model
                 , 'bookings.status')
             ->where([
                 ['shifts.date', '=', $date],
-                ['stylists.stylist_name', '=', $stylist_name],
-                ['bookings.status', '=', $status],
-            ])->orderBy('bookings.start_time')
+                ['bookings.status', '=', $status]
+            ])
+//            ->where('bookings.status', '=', $status)
+            ->Where('stylists.stylist_name', 'like', '%' . $stylist_name . '%')
+            ->orderBy('bookings.start_time')
             ->orderBy('bookings.status')
             ->paginate(10);
         return $bookings;
@@ -145,4 +147,20 @@ class Booking extends Model
             ->paginate(10);
         return $bookings;
     }
+
+    public function checkIn($id)
+    {
+        $booking = Booking::find($id);
+        $booking->update(['status' => 'pending']);
+        return $booking;
+    }
+
+    public function checkOut($id)
+    {
+        $booking = Booking::find($id);
+        $booking->update(['status' => 'finished']);
+        return $booking;
+    }
+
+
 }

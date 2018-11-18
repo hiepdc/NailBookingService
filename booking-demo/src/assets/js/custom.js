@@ -1,4 +1,14 @@
 //----------------------------------- Document ready -----------------------------------//
+function clickNav(This) {
+	// var hours = document.querySelectorAll(".calendar-7-hour");
+	// hours.removeClass("active");
+	// $(This).find(".calendar-7-hour").addClass("active");
+
+	var li = $('#sidenav01').find("li");
+	li.removeClass("active");
+	$(This).addClass("active");
+}
+
 $(document).ready(
 	function () {
 		"use strict";
@@ -83,7 +93,33 @@ $(document).ready(
 				}
 			});
 
-		setTimeout(function () {
+		
+			$("#owl-services").owlCarousel(
+				{
+					nav: true,
+					margin: 20,
+					navText: ["<i class='fa fa-chevron-left'></i>",
+						"<i class='fa fa-chevron-right'></i>"],
+					dots: true,
+					loop: false,
+					autoplay: false,
+					responsiveClass: true,
+					responsive: {
+						0: {
+							items: 1,
+						},
+						600: {
+							items: 1,
+						},
+						991: {
+							items: 2,
+						},
+						1200: {
+							items: 3,
+						}
+					}
+				});
+	
 			var swiper = new Swiper('.swiper-container', {
 				slidesPerView: 6,
 				slidesPerColumn: 4,
@@ -97,7 +133,32 @@ $(document).ready(
 					prevEl: '.swiper-button-prev',
 				},
 			});
-		}, 3000);
+
+			$("#owl-one").owlCarousel(
+				{
+					nav: true,
+					margin: 20,
+					navText: ["<i class='fa fa-chevron-left'></i>",
+						"<i class='fa fa-chevron-right'></i>"],
+					dots: true,
+					loop: false,
+					autoplay: false,
+					responsiveClass: true,
+					responsive: {
+						0: {
+							items: 1,
+						},
+						600: {
+							items: 1,
+						},
+						991: {
+							items: 2,
+						},
+						1200: {
+							items: 4,
+						}
+					}
+				});
 
 	}); // end document ready
 
@@ -154,64 +215,6 @@ $(window).load(function () {
 		});
 		return false;
 	});
-
-	setTimeout(function () {
-		$("#owl-one").owlCarousel(
-			{
-				nav: true,
-				margin: 20,
-				navText: ["<i class='fa fa-chevron-left'></i>",
-					"<i class='fa fa-chevron-right'></i>"],
-				dots: true,
-				loop: false,
-				autoplay: false,
-				responsiveClass: true,
-				responsive: {
-					0: {
-						items: 1,
-					},
-					600: {
-						items: 1,
-					},
-					991: {
-						items: 2,
-					},
-					1200: {
-						items: 4,
-					}
-				}
-			});
-
-	}, 1000);
-
-	setTimeout(function () {
-		$("#owl-services").owlCarousel(
-			{
-				nav: true,
-				margin: 20,
-				navText: ["<i class='fa fa-chevron-left'></i>",
-					"<i class='fa fa-chevron-right'></i>"],
-				dots: true,
-				loop: false,
-				autoplay: false,
-				responsiveClass: true,
-				responsive: {
-					0: {
-						items: 1,
-					},
-					600: {
-						items: 1,
-					},
-					991: {
-						items: 2,
-					},
-					1200: {
-						items: 3,
-					}
-				}
-			});
-
-	}, 1000);
 
 
 	// Page Preloader

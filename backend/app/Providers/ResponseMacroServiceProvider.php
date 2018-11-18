@@ -26,9 +26,9 @@ class ResponseMacroServiceProvider extends ServiceProvider
             return Response::json([
                 'success' => false,
                 'message' => [$message],
-                'errors' => [
-                    'message' => $status . ' error',
-                ],
+//                'errors' => [
+//                    'message' => $status . ' error',
+//                ],
                 'status_code' => $status,
             ], $status);
         });
@@ -36,9 +36,9 @@ class ResponseMacroServiceProvider extends ServiceProvider
             return Response::json([
                 'success' => false,
                 'message' => [$message],
-                'errors' => [
-                    'message' => $status . ' error',
-                ],
+//                'errors' => [
+//                    'message' => $status . ' error',
+//                ],
                 'status_code' => $status,
             ], $status);
         });
@@ -47,9 +47,9 @@ class ResponseMacroServiceProvider extends ServiceProvider
                 'success' => false,
                 'data' => null,
                 'message' => [$message],
-                'errors' => [
-                    'message' => $status . ' error',
-                ],
+//                'errors' => [
+//                    'message' => $status . ' error',
+//                ],
                 'status_code' => $status,
             ], $status);
         });
@@ -57,9 +57,9 @@ class ResponseMacroServiceProvider extends ServiceProvider
             return Response::json([
                 'success' => false,
                 'message' => '422 Unprocessable Entity',
-                'errors' => [
-                    'message' => $errors . ' error',
-                ],
+//                'errors' => [
+//                    'message' => $errors . ' error',
+//                ],
                 'status_code' => 422,
             ], 422);
         });

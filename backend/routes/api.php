@@ -45,6 +45,14 @@ Route::delete('bookings/delete-booking/{phonenumber}','BookingController@deleteB
 Route::get('bookings/show/{id}','BookingController@show');
 //list bookings
 Route::get('bookings','BookingController@listBooking');
+//fillter booking
+Route::post('bookings/search','BookingController@searchBooking');
+//checkin booking
+Route::post('bookings/checkin','BookingController@checkIn');
+//checkout booking
+Route::post('bookings/checkout','BookingController@checkOut');
+//use coin booking
+Route::post('bookings/usecoin','BookingController@usecoin');
 
 //show shift
 Route::get('shifts','ShiftController@index');

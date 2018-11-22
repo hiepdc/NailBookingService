@@ -10,11 +10,15 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { LoaderService } from './loader.service';
 
+import { ErrorHandler } from './error_handler';
+
+
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
   private requests: HttpRequest<any>[] = [];
 
-  constructor(private loaderService: LoaderService) { }
+  constructor(private loaderService: LoaderService
+  ) { }
 
   removeRequest(req: HttpRequest<any>) {
     const i = this.requests.indexOf(req);
@@ -31,14 +35,26 @@ export class LoaderInterceptor implements HttpInterceptor {
     return Observable.create(observer => {
       const subscription = next.handle(req)
         .subscribe(
-        event => {
-          if (event instanceof HttpResponse) {
+          event => {
+            if (event instanceof HttpResponse) {
+              this.removeRequest(req);
+              observer.next(event);
+              console.log(event);
+            }
+          },
+          err => {
             this.removeRequest(req);
-            observer.next(event);
-          }
-        },
-        err => { this.removeRequest(req); observer.error(err); },
-        () => { this.removeRequest(req); observer.complete(); });
+            observer.error(err);
+            console.log(err.status);
+            // if (err instanceof HttpErrorResponse) {
+            //   this.errorHandler.handleError(err);
+            //   this.removeRequest(req); 
+            //   observer.error(err); 
+            // }
+          },
+          () => { this.removeRequest(req); observer.complete(); }
+        );
+        
       // teardown logic in case of cancelled requests
       return () => {
         this.removeRequest(req);

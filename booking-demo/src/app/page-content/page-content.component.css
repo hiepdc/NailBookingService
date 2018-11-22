@@ -1,6 +1,6 @@
  /*=========================== Services ============================ */
  .serviceBox {
-    margin-bottom: 20px;
+    margin-bottom: 6px;
     text-align: center;
     cursor: pointer;
    }
@@ -15,19 +15,21 @@
     transition: all 0.3s ease-in-out;
    }
    .serviceBox .service-content {
-    margin-top: 30px;
+    margin-top: 0px;
    }
    .service-hover-box img {
     transition: all 0.8s;
    }
    
 /*=========================== Booking ============================ */
+#inside-wrapper-bookings{
+  padding: 40px 200px 70px 145px;
+}
+
 .choose-service, .choose-stylist, .choose-time{
     margin: auto;
     padding: 0px 50px 0 50px;
-    
   }
-   
    .category-faq {
       background-color: #343434;
       font-weight: bold;
@@ -49,7 +51,7 @@
    .item-question{
       border: 1px solid #ececec;
       display: block;
-      line-height: 24px;
+      line-height: 11px;
       padding: 9px 50px 13px 70px;
       font-weight: bold;
       font-size: 18px;
@@ -78,25 +80,34 @@
         transform: translateY(-50%);
    }
   
-  
   .panel-body {
       padding: 20px 20px 20px 96px;
       /* font-size: 20px; */
       /* line-height: 0px; */
    }
+
+   #collapse1 .form-group{
+     margin-bottom: 0;
+   }
+
+   #collapse2 label{
+     font: 20px normal;
+   }
   
    #choose-stylist{
     font-size: 10px;
-    padding: 12px 36px 0px 104px;
+    padding: 12px 24px 0px 100px;
    }
-  
+   #choose-service{
+    padding: 10px 20px 3px 96px;  
+   }
    #choose-stylist img{
-    width: 53%;
+    width: 50%;
    }
   
    #choose-stylist h5{
     margin-bottom: 4px;
-    font: 21px normal;
+    font: 20px normal;
     color: #000;
    }
    
@@ -109,7 +120,7 @@
   }
   
   #enter-phone{
-    padding: 20px 20px 0px 93px;
+    padding: 6px 20px 2px 93px;
   }
   
   #enter-phone .form-control{
@@ -122,7 +133,7 @@
   .days{
       background-color: /* #72b8ff */ white;
       color: black;
-      font: 27px normal;
+      font: 22px normal;
       text-align:center;
       padding-bottom: 0px;
   }
@@ -145,8 +156,8 @@
       box-sizing:border-box;
       width: 93%;
       height: 100%;
-      font: 33px normal;
-      padding: 20px 20px 20px 20px;
+      font: 32px normal;
+      padding: 14px 10px 14px 10px;
       color:#4a4a4a;
       text-align:center;
       cursor:pointer;
@@ -180,7 +191,11 @@
   }
   
   .border{
-    border: 6px solid #ce6671; 
+    border: 5px solid #ce6671; 
+  }
+
+  .btn{
+    float: right;
   }
   
   .col-3{
@@ -205,4 +220,15 @@
  .ng-invalid:not(form)  {
    border: 3px solid /*#af2624*/ #87314e; 
  }
+
+ /* For Firefox */
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+/* Webkit browsers like Safari and Chrome */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
   

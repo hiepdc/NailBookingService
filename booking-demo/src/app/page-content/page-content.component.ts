@@ -32,7 +32,6 @@ export class PageContentComponent implements OnInit {
     slidesPerView: 6,
     slidesPerColumn: 4,
     spaceBetween: -10,
-    mousewheel: true,
     scrollbar: true,
     navigation: true,
   };
@@ -48,15 +47,27 @@ export class PageContentComponent implements OnInit {
   };
 
   //handle radio button
-  selectedService: number = 1;
-  radioChangeHandler(event: any) {
-    this.selectedService = +event.target.value;
+  selectedService: string = "1";
+  // radioChangeHandler(event: any) {
+  //   this.selectedService = +event.target.value;
+  // }
+
+  clickService(event: any){
+    this.selectedService = event.target.value;
+    if (this.stylistId == -1) {
+      console.log("selectedService: "+this.selectedService);
+      this.getShiftByDefault(this.selectedService, this.selectedDate);
+    } else {
+      console.log(this.selectedService);
+      this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate);
+    }
   }
 
-  //handle stylist
+  //#region handle stylist
   stylist: Stylist;
   stylists: Stylist[];
   stylistId: number = -1;
+  //#endregion
 
   //handle shift
   shiftApi: ShiftApi;
@@ -130,7 +141,7 @@ export class PageContentComponent implements OnInit {
   }
 
   //get shift which combine all stylist nad change to status
-  getShiftByDefault(serviceId: number, date: string): void {
+  getShiftByDefault(serviceId: string, date: string): void {
     this.stylistService.getShiftByDefault(serviceId, date).subscribe(
       (shiftApi) => {
         this.timeline = shiftApi.data;
@@ -157,7 +168,7 @@ export class PageContentComponent implements OnInit {
     );
   }
 
-  getShiftByStylist(serviceId: number, stylistId: number, date: string): void {
+  getShiftByStylist(serviceId: string, stylistId: number, date: string): void {
     this.stylistService.getShiftByStylist(serviceId, stylistId, date).subscribe(
       (shiftApi) => {
         this.timeline = shiftApi.data;
@@ -193,8 +204,16 @@ export class PageContentComponent implements OnInit {
   onSubmitBooking(form: NgForm): void {
     console.log(form.value);
     this.stylistService.checkPhoneOfCustomer(form.value).subscribe(
-      pinApi => { this.pinApi = pinApi; console.log(this.pinApi.success); }
+      (pinApi: PinApi) => { this.pinApi = pinApi; console.log(this.pinApi.success); },
+      error => console.log(error)
+      
     );
+  }
+  // onSubmitBooking(form: NgForm): void {
+  //   console.log(form.value);
+  //   this.stylistService.checkPhoneOfCustomer(form.value).subscribe(
+  //     pinApi => { this.pinApi = pinApi; console.log(this.pinApi.success); }
+  //   );
     
     // if (this.pinApi.success === true) {
     //   if (this.stylistId === -1) {
@@ -234,7 +253,7 @@ export class PageContentComponent implements OnInit {
     //   //thif chuyen qua for nhap ten
     //   this.verifyCode = false;
     // }
-  }
+  // }
 
   //handle hour which choose
   selectedHour: string = "";

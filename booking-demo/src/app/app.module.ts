@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -6,7 +7,7 @@ import { CoreModule } from './core';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { SwiperModule, SwiperConfigInterface,
   SWIPER_CONFIG } from 'ngx-swiper-wrapper';
-  import { OwlModule } from 'ngx-owl-carousel';
+  import { MaterialModule } from './material.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -48,6 +49,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     FormsModule,
     CoreModule,
     SwiperModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [
     StylistService,

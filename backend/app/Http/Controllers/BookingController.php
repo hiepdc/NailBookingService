@@ -314,6 +314,9 @@ class BookingController extends Controller
             //update coin
             $id = $request->id;
             $booking = Booking::find($id);
+            if(!$booking){
+                return response()->notFound("booking does not exist");
+            }
             $customerId = $booking->customer_id;
             $service_id = $booking->service_id;
             $service = Service::find($service_id);
@@ -333,6 +336,10 @@ class BookingController extends Controller
     {
         try {
             $id = $request->id;
+            $booking = Booking::find($id);
+            if(!$booking){
+                return response()->notFound("booking does not exist");
+            }
             $booking = new Booking();
             $checkOutBooking = $booking->checkOut($id);
             return response()->success($checkOutBooking, 'Bạn đã check-out thành công');
@@ -346,8 +353,11 @@ class BookingController extends Controller
         try {
             $id = $request->id;
             $booking = Booking::find($id);
-            $customerId = $booking->customer_id;
+            $customerId = $booking['customer_id'];
             $customerFinded = Customer::find($customerId);
+            if(!$customerFinded){
+                return response()->notFound("customer does not exist");
+            }
             $minCoin = 100;
             $coin = $customerFinded->coin;
             if($coin<$minCoin){

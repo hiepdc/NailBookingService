@@ -65,7 +65,7 @@ class ServiceController extends Controller
         try {
             $service = Service::find($id);
             if(!$service){
-                return response()->error("service does not exist");
+                return response()->notFound("service does not exist");
             }
             return response()->success($service);
         } catch (Exception $e) {
@@ -96,7 +96,7 @@ class ServiceController extends Controller
         try {
             $service = Service::find($id);
             if (!$service) {
-                return response()->error("service does not exist");
+                return response()->notFound("service does not exist");
             }
             $updatedService = $service->update($request->only(['service_name', 'description', 'time_service', 'price', 'coin_service']));
             return response()->success($updatedService);
@@ -116,7 +116,7 @@ class ServiceController extends Controller
         try {
             $deletebyid = Service::find($id);
             if (!$deletebyid) {
-                return response()->error("service does not exist");
+                return response()->notFound("service does not exist");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);

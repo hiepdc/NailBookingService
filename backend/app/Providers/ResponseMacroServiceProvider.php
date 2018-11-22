@@ -18,49 +18,56 @@ class ResponseMacroServiceProvider extends ServiceProvider
             return Response::json([
                 'success' => true,
                 'message' => $message,
-                'data' => $data,
-                'status_code' => 200,
+                'data' => $data
             ]);
         });
+
         Response::macro('error', function ($message, $status = 400) {
             return Response::json([
                 'success' => false,
-                'message' => $message,
-//                'errors' => [
-//                    'message' => $status . ' error',
-//                ],
-                'status_code' => $status,
+                'errors' => [
+                    'message' => $message,
+                    'status_code' => $status
+                ]
             ], $status);
         });
-        Response::macro('exception', function ($message, $status = 400) {
+        Response::macro('message', function ($message, $status) {
+            return Response::json([
+                'success' => true,
+                'errors' => [
+                    'message' => $message,
+                    'status_code' => $status
+                ]
+            ], $status);
+        });
+
+        Response::macro('exception', function ($message, $status) {
             return Response::json([
                 'success' => false,
-                'message' => $message,
-//                'errors' => [
-//                    'message' => $status . ' error',
-//                ],
-                'status_code' => $status,
+                'errors' => [
+                    'message' => $message,
+                    'status_code' => $status
+                ]
             ], $status);
         });
-        Response::macro('notFound', function ($message, $status = 404) {
+
+        Response::macro('notFound', function ($message = 'Record not found') {
             return Response::json([
                 'success' => false,
-                'data' => null,
-                'message' => $message,
-//                'errors' => [
-//                    'message' => $status . ' error',
-//                ],
-                'status_code' => $status,
-            ], $status);
+                'errors' => [
+                    'message' => $message,
+                    'status_code' => 404
+                ]
+            ], 404);
         });
+
         Response::macro('validationError', function ($errors) {
             return Response::json([
                 'success' => false,
-                'message' => '422 Unprocessable Entity',
-//                'errors' => [
-//                    'message' => $errors . ' error',
-//                ],
-                'status_code' => 422,
+                'errors' => [
+                    'message' => $errors . ' error',
+                ],
+//                'status_code' => 422,
             ], 422);
         });
     }

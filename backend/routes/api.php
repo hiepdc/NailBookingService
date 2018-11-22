@@ -32,12 +32,12 @@ Route::post('bookings/create-pin','BookingController@createPIN');
 Route::post('bookings/verify-pin','BookingController@verifyPIN');
 
 //api for booking
-Route::get('bookings/{phonenumber}','BookingController@showBookingForm');
+//Route::get('bookings/{phonenumber}','BookingController@showBookingForm');
 //add new booking
 Route::post('bookings/add-new-booking','BookingController@addNewBooking');
 //edit booking
 Route::post('bookings/edit-booking','BookingController@editBooking');
-//delete booking
+//delete booking  admin
 Route::delete('bookings/{phonenumber}','BookingController@deleteBooking');
 //delete booking
 Route::delete('bookings/delete-booking/{phonenumber}','BookingController@deleteBooking');
@@ -52,15 +52,15 @@ Route::post('bookings/checkin','BookingController@checkIn');
 //checkout booking
 Route::post('bookings/checkout','BookingController@checkOut');
 //use coin booking
-Route::post('bookings/usecoin','BookingController@usecoin');
+Route::post('bookings/use-coin','BookingController@usecoin');
 
 //show shift
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
 //display shift of stylist
-Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBookingTimeWithStylist');
+Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBooking');
 //display shift default
-Route::get('shifts/default/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
+//Route::get('shifts/stylist/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 
 //@@@Customers
 //list customers

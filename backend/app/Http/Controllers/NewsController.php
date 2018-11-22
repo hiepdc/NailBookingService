@@ -45,7 +45,7 @@ class NewsController extends Controller
         //
         try {
             $news = News::create([
-                'content' => $request->content,
+                'content' => $request->contents,
                 'image_link' => $request->image_link
             ]);
             return response()->success($news);
@@ -66,7 +66,7 @@ class NewsController extends Controller
         try {
             $news = News::find($id);
             if(!$news) {
-                return response()->error('News does not exist');
+                return response()->notFound('News does not exist');
             }
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -97,7 +97,7 @@ class NewsController extends Controller
         try {
             $news = News::find($id);
             if (!$news) {
-                return response()->error("news does not exist");
+                return response()->notFound("news does not exist");
             }
             $updatedNews = $news->update($request->only(['content','image_link']));
             return response()->success($updatedNews);
@@ -118,7 +118,7 @@ class NewsController extends Controller
         try {
             $deletebyid = News::find($id);
             if (!$deletebyid) {
-                return response()->error("news does not exist");
+                return response()->notFound("news does not exist");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);

@@ -66,7 +66,7 @@ class GalleryController extends Controller
         try {
             $gallery = Gallery::find($id);
             if(!$gallery) {
-                return response()->error('Gallery does not exist');
+                return response()->notFound('Gallery does not exist');
             }
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -97,7 +97,7 @@ class GalleryController extends Controller
         try {
             $gallery = Gallery::find($id);
             if (!$gallery) {
-                return response()->error("gallery does not exist");
+                return response()->notFound("gallery does not exist");
             }
             $updatedGallery = $gallery->update($request->only(['image_link']));
             return response()->success($updatedGallery);
@@ -118,7 +118,7 @@ class GalleryController extends Controller
         try {
             $deletebyid = Gallery::find($id);
             if (!$deletebyid) {
-                return response()->error("gallery does not exist");
+                return response()->notFound("gallery does not exist");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);

@@ -25,13 +25,51 @@ class ShiftController extends Controller
         try {
             $shift = Shift::find($id);
             if (!$shift) {
-                return response()->error("Shift does not exist");
+                return response()->notFound("Shift does not exist");
             }
             return response()->success($shift);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
     }
+
+    public function getAvailableBooking($serviceID, $stylistID, $date)
+    {
+        try {
+            if($stylistID != -1){
+                $service = new Service();
+                //sizeoftime bội số của 15'
+                $sizeOfTime = $service->getTimeService($serviceID) * 4;
+                $shift = new Shift();
+                $status = $shift->getStatusByStylistID($stylistID, $date);
+                $sts = $status->status;
+                $shiftDefaultByStylistID = $this->getAvailableBookingTime($sts, $sizeOfTime);
+                return response()->success($shiftDefaultByStylistID);
+            }else{
+                $service = new Service();
+                $sizeOfTime = $service->getTimeService($serviceID);
+                $shift = new Shift();
+                $allStatus = $shift->getStatusByDate($date);
+                $defaultStatus = array();
+                $returnStatus = array();
+                foreach ($allStatus as $key => $value) {
+                    $arr01 = array();
+                    //$arr01 = $this->getAvailableBookingTime((string)$value, $sizeOfTime);
+                    $myObject = get_object_vars($value);
+                    $arr01 = $this->getAvailableBookingTime(implode(",", $myObject), $sizeOfTime * 4);
+                    foreach ($arr01 as $key2 => $value2) {
+                        array_push($defaultStatus, $value2);
+                    }
+                }
+                $defaultStatus = array_unique($defaultStatus);
+                sort($defaultStatus);
+                return response()->success(array_unique($defaultStatus));
+            }
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
     public function getAvailableBookingTimeWithStylist($serviceID, $stylistID, $date)
     {
         try {
@@ -131,7 +169,7 @@ class ShiftController extends Controller
                     'status' => $request->status."$i"
                 ]);
             } 
-            return response()->success($shift);
+            return response()->success($shift, 'Bạn đã tạo thành công lịch làm việc');
 
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -149,10 +187,10 @@ class ShiftController extends Controller
         try {
             $shift = Shift::find($id);
             if (!$shift) {
-                return response()->error("shift does not exist");
+                return response()->notFound("shift does not exist");
             }
             $updatedShift = $shift->update($request->only(['start_time', 'end_time']));
-            return response()->success($updatedShift);
+            return response()->success($updatedShift, 'Update thành công lịch làm việc');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -164,7 +202,7 @@ class ShiftController extends Controller
         try {
             $deletebyid = Shift::find($id);
             if (!$deletebyid) {
-                return response()->error("news does not exist");
+                return response()->notFound("news does not exist");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);
@@ -184,7 +222,7 @@ class ShiftController extends Controller
                 ['stylist_id','=',$stylist_id],
             ])
             ->get();
-        String $finishStatus = "";
+         $finishStatus = "";
         foreach ($orders as $key => $value) {
             # code...
             $bookingController = new BookingController();

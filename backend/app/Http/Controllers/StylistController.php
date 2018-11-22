@@ -67,7 +67,7 @@ class StylistController extends Controller
         try {
             $showStylistByID = Stylist::find($id);
             if(!$showStylistByID){
-                return response()->error("stylist does not exist");
+                return response()->notFound("stylist does not exist");
             }
             return response()->success($showStylistByID);
         } catch (Exception $e) {
@@ -99,7 +99,7 @@ class StylistController extends Controller
         try {
             $stylist = Stylist::find($id);
             if (!$stylist) {
-                return response()->error("stylist does not exist");
+                return response()->notFound("stylist does not exist");
             }
             $updatedStylist = $stylist->update($request->only(['stylist_name', 'phone_number', 'information']));
             return response()->success($updatedStylist);
@@ -120,7 +120,7 @@ class StylistController extends Controller
         try {
            $deletebyid = Stylist::find($id);
             if (!$deletebyid) {
-                return response()->error("stylist does not exist");
+                return response()->notFound("stylist does not exist");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);

@@ -96,13 +96,13 @@ class CustomerController extends Controller
             //        $customers = Customer::where('customer_name','like','%'.$key.'%')
 //            ->orwhere('phone_number', 'like', '%'.$key.'%')
 //            ->paginate(10);
-            if (empty($key)) {
-                $customer = Stylist::paginate(10);
-            } else {
-                $customer = Searchy::customers('phone_number', 'phone_number')->query($key)
-                    ->get();
-            }
-            return response()->success($customer);
+//            if (empty($key)) {
+//                $customer = Stylist::paginate(10);
+//            } else {
+//                $customer = Searchy::customers('phone_number', 'phone_number')->query($key)
+//                    ->get();
+//            }
+            return response()->success($key);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

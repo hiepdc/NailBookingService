@@ -30,7 +30,7 @@ class BookingController extends Controller
             //check booking is exist
             $booking = new Booking();
             if ($booking->getStatusBookedByPhonenumber($request->phone_number) > 0) {
-                return response()->error('Bạn có chắc chắn muốn đổi lịch');
+                return response()->success(null, 'Bạn có chắc chắn muốn đổi lịch');
             }
             //add customer
             $customer = new Customer();
@@ -90,7 +90,7 @@ class BookingController extends Controller
         try {
             $booking = new Booking();
             if ($booking->getStatusBookedByPhonenumber($request->phone_number) == 0) {
-                return response()->error('Bạn chưa đặt lịch, tạo một lịch mới');
+                return response()->success(null, 'Bạn chưa đặt lịch, tạo một lịch mới');
             }
             $customer = new Customer();
             $shift = new Shift();
@@ -128,7 +128,7 @@ class BookingController extends Controller
             $shift = new Shift();
             $detailBooking = $booking->getDetailBookingByPhonenumber($phonenumber);
             if (!$detailBooking) {
-                return response()->error('Bạn chưa có lịch đặt nào.');
+                return response()->success(null, 'Bạn chưa có lịch đặt nào.');
             }
             $oldStatus = $detailBooking->status;
             $startTime = $detailBooking->start_time;
@@ -138,7 +138,7 @@ class BookingController extends Controller
             $success = $booking->deleteBookingByPhonenumber($phonenumber);
             $newstatus = $this->updateShiftStatusAfterDeleteBooking($oldStatus, $startTime, $sizeOfTime);
             $shift->updateStatusByShiftID($shiftID, $newstatus);
-            return response()->success($newstatus, 'Bạn vừa xóa thành công lịch đặt');
+            return response()->success($success, 'Bạn vừa xóa thành công lịch đặt');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -203,11 +203,19 @@ class BookingController extends Controller
             $customer = new Customer();
             //khách hàng đã có trong hệ thống
             if ($customer->getCustomerByPhonenumber($phone) != 0) {
-               // $availableCustomer = $customer->getCustomer($phone);
-                return response()->error('Khách hàng đã có trong hệ thống');
+                $availableCustomer = $customer->getCustomer($phone);
+                $result = [
+                    'check' => false,
+                    'customer' => $availableCustomer
+                ];
+                return response()->success($result, 'Khách hàng đã có trong hệ thống');
             }
-            $result = $twoFA->pinCreate($phone, $content, $appId);
-            return response()->success('Đã gửi mã pin đến cho khách hàng');
+            $twoFA->pinCreate($phone, $content, $appId);
+            $result = [
+                'check' => false,
+            ];
+           // return response()->success($result,'Đã gửi mã pin đến cho khách hàng');
+            return response()->success($result, 'Đã gửi mã pin đến cho khách hàng');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -224,10 +232,10 @@ class BookingController extends Controller
             $result = $twoFA->pinVerify($phone, $pinCode, $appId);
             $status = $result['status'];
             if ($status == 'error') {
-                return response()->error('Mã xác nhận đã hết hạn');
+                return response()->success(null, 'Mã xác nhận đã hết hạn');
             }
             $verified = $result['data'];
-            return response()->success($verified);
+            return response()->success($verified, 'Bạn vừa nhập mã pin thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -239,7 +247,7 @@ class BookingController extends Controller
         try {
             $booking = Booking::find($id);
             if (!$booking) {
-                return response()->error("booking does not exist");
+                return response()->notFound("booking does not exist");
             }
             return response()->success($booking);
         } catch (Exception $e) {
@@ -315,7 +323,7 @@ class BookingController extends Controller
 
            // update status
             $checkInBooking = $booking->checkIn($id);
-            return response()->success($checkInBooking);
+            return response()->success($checkInBooking, 'Bạn đã check in thành công');
         } catch (Exception $e) {
             response()->exception($e->getMessage(), $e->getCode());
         }
@@ -327,7 +335,7 @@ class BookingController extends Controller
             $id = $request->id;
             $booking = new Booking();
             $checkOutBooking = $booking->checkOut($id);
-            return response()->success($checkOutBooking);
+            return response()->success($checkOutBooking, 'Bạn đã check-out thành công');
         } catch (Exception $e) {
             response()->exception($e->getMessage(), $e->getCode());
         }
@@ -343,11 +351,11 @@ class BookingController extends Controller
             $minCoin = 100;
             $coin = $customerFinded->coin;
             if($coin<$minCoin){
-                return response()->error("Bạn không có đủ coin để sử dụng, hẹn lần sau.");
+                return response()->success(null, "Bạn không có đủ coin để sử dụng, hẹn lần sau.");
             }
             $customer = new Customer();
             $exitCoin = $customer->useCoinCustomer($customerId, $minCoin);
-            return response()->success($exitCoin);
+            return response()->success($exitCoin, 'Bạn vừa sử dụng 100 coin.');
         } catch (Exception $e) {
             response()->exception($e->getMessage(), $e->getCode());
         }

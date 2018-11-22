@@ -1,5 +1,15 @@
 //----------------------------------- Document ready -----------------------------------//
-$(window).load(
+function clickNav(This) {
+	// var hours = document.querySelectorAll(".calendar-7-hour");
+	// hours.removeClass("active");
+	// $(This).find(".calendar-7-hour").addClass("active");
+
+	var li = $('#sidenav01').find("li");
+	li.removeClass("active");
+	$(This).addClass("active");
+}
+
+$(document).ready(
 	function () {
 		"use strict";
 
@@ -83,11 +93,72 @@ $(window).load(
 				}
 			});
 
+		
+			$("#owl-services").owlCarousel(
+				{
+					nav: true,
+					margin: 20,
+					navText: ["<i class='fa fa-chevron-left'></i>",
+						"<i class='fa fa-chevron-right'></i>"],
+					dots: true,
+					loop: false,
+					autoplay: false,
+					responsiveClass: true,
+					responsive: {
+						0: {
+							items: 1,
+						},
+						600: {
+							items: 1,
+						},
+						991: {
+							items: 2,
+						},
+						1200: {
+							items: 3,
+						}
+					}
+				});
+	
+			var swiper = new Swiper('.swiper-container', {
+				slidesPerView: 6,
+				slidesPerColumn: 4,
+				spaceBetween: -10,
+				scrollbar: {
+					el: '.swiper-scrollbar',
+					hide: true,
+				},
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				},
+			});
 
-		// $("#calendar-7").Calendar7({
-		// 	allowTimeStart: '9:00',
-		// 	allowTimeEnd: '21:00'
-		// });
+			$("#owl-one").owlCarousel(
+				{
+					nav: true,
+					margin: 20,
+					navText: ["<i class='fa fa-chevron-left'></i>",
+						"<i class='fa fa-chevron-right'></i>"],
+					dots: true,
+					loop: false,
+					autoplay: false,
+					responsiveClass: true,
+					responsive: {
+						0: {
+							items: 1,
+						},
+						600: {
+							items: 1,
+						},
+						991: {
+							items: 2,
+						},
+						1200: {
+							items: 4,
+						}
+					}
+				});
 
 	}); // end document ready
 
@@ -144,63 +215,10 @@ $(window).load(function () {
 		});
 		return false;
 	});
-	setTimeout(function () {
-		$("#owl-one").owlCarousel(
-			{
-				nav: true,
-				margin: 20,
-				navText: ["<i class='fa fa-chevron-left'></i>",
-					"<i class='fa fa-chevron-right'></i>"],
-				dots: true,
-				loop: false,
-				autoplay: false,
-				responsiveClass: true,
-				responsive: {
-					0: {
-						items: 1,
-					},
-					600: {
-						items: 1,
-					},
-					991: {
-						items: 2,
-					},
-					1200: {
-						items: 4,
-					}
-				}
-			});
-// 
-	}, 3000);
 
-	setTimeout(function () {
-		$("#owl-services").owlCarousel(
-			{
-				nav: true,
-				margin: 20,
-				navText: ["<i class='fa fa-chevron-left'></i>",
-					"<i class='fa fa-chevron-right'></i>"],
-				dots: true,
-				loop: false,
-				autoplay: false,
-				responsiveClass: true,
-				responsive: {
-					0: {
-						items: 1,
-					},
-					600: {
-						items: 1,
-					},
-					991: {
-						items: 2,
-					},
-					1200: {
-						items: 3,
-					}
-				}
-			});
 
-	}, 3000);
+	// Page Preloader
+
 	$("#preloader").fadeOut("slow");
 
 }); // end window load function

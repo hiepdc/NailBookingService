@@ -4,4 +4,5 @@ export class Stylist {
     phone_number: number;
     information : string;
     image_link : string;
+
 }

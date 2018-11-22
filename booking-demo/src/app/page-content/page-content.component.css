@@ -1,0 +1,208 @@
+ /*=========================== Services ============================ */
+ .serviceBox {
+    margin-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
+   }
+   .service-icon img {
+   /*  border: 5px solid; */
+    max-width: 80%;
+    margin: 0 auto;
+    transition: all 0.3s ease-in-out;
+   }
+   .service-icon i {
+    font-size: 90px;
+    transition: all 0.3s ease-in-out;
+   }
+   .serviceBox .service-content {
+    margin-top: 30px;
+   }
+   .service-hover-box img {
+    transition: all 0.8s;
+   }
+   
+/*=========================== Booking ============================ */
+.choose-service, .choose-stylist, .choose-time{
+    margin: auto;
+    padding: 0px 50px 0 50px;
+    
+  }
+   
+   .category-faq {
+      background-color: #343434;
+      font-weight: bold;
+      color: #fff;
+      font-size: 16px;
+      padding: 0 20px;
+      margin: 40px 0 30px;
+      height: 50px;
+      line-height: 50px;
+   }
+   
+   .panel{
+      border: 0;
+      box-shadow: none;
+   }
+   .panel-title{
+    color: #000;
+   }
+   .item-question{
+      border: 1px solid #ececec;
+      display: block;
+      line-height: 24px;
+      padding: 9px 50px 13px 70px;
+      font-weight: bold;
+      font-size: 18px;
+      position: relative;
+      color: #111;
+  }
+  
+  .panel-title > a:hover, 
+  .panel-title > a:active, 
+  .panel-title > a:focus  {
+      text-decoration:none;
+    color: #000;
+  }
+  
+  .panel-number {
+        width: 35px;
+        height: 35px;
+        line-height: 32px;
+        text-align: center;
+        border-radius: 100%;
+        background-color: #ececec;
+        display: inline-block;
+        position: absolute;
+        left: 17px;
+        top: 50%;
+        transform: translateY(-50%);
+   }
+  
+  
+  .panel-body {
+      padding: 20px 20px 20px 96px;
+      /* font-size: 20px; */
+      /* line-height: 0px; */
+   }
+  
+   #choose-stylist{
+    font-size: 10px;
+    padding: 12px 36px 0px 104px;
+   }
+  
+   #choose-stylist img{
+    width: 53%;
+   }
+  
+   #choose-stylist h5{
+    margin-bottom: 4px;
+    font: 21px normal;
+    color: #000;
+   }
+   
+  #choose-stylist .owl-dots{
+  margin-top: 0px;
+  }
+  
+  #choose-hours{
+      padding: 12px 20px 20px 96px;
+  }
+  
+  #enter-phone{
+    padding: 20px 20px 0px 93px;
+  }
+  
+  #enter-phone .form-control{
+    font: 24px normal;
+    width: 50%;
+    /* height: 34px; */
+    color: #000;
+  }
+  
+  .days{
+      background-color: /* #72b8ff */ white;
+      color: black;
+      font: 27px normal;
+      text-align:center;
+      padding-bottom: 0px;
+  }
+  
+  .days .calendar-7-day{
+      display:inline-block;
+      cursor:pointer;
+      width: 33.13%;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      border: 1px solid #ccc!important;
+  }
+  .days .calendar-7-day:hover,.days .calendar-7-day.active{
+      background-color: /* #2874c6 */ #000;
+      color: white;
+  }
+
+  .calendar-7-hour{
+      display:inline-block;
+      box-sizing:border-box;
+      width: 93%;
+      height: 100%;
+      font: 33px normal;
+      padding: 20px 20px 20px 20px;
+      color:#4a4a4a;
+      text-align:center;
+      cursor:pointer;
+      margin: 4px 5px 5px 2px;
+      border: 2px solid #ececec;
+ 
+  }
+  .calendar-7-hour:hover{
+      background-color:/* #58ACFA #F6D8CE*/ #58ACFA;
+      color:white;
+      border-radius:3px
+  }
+  
+  .calendar-7-hour.active{
+    background-color: /* #FE2E64 */ #000;
+    color:white;
+    border-radius:3px;
+  }
+  
+  .calendar-7-hour.disabled{
+      color:rgb(7, 7, 7);
+      background-color:#eee;
+      /* cursor:not-allowed; */
+      pointer-events: none
+  }
+  
+  #choose-datetime{
+    margin: auto;
+    width: 100%;
+    
+  }
+  
+  .border{
+    border: 6px solid #ce6671; 
+  }
+  
+  .col-3{
+    height: 70px;
+  }
+  
+  .text-date-1{
+    display:block;
+  }
+  
+  .text-date-2{
+    display:block;
+        margin-top: 8px;
+  }
+  
+  .timeline{margin-top: -4px;}
+ 
+ .ng-valid[required], .ng-valid.required  {
+   border: 3px solid #42A948; /* green */
+ }
+ 
+ .ng-invalid:not(form)  {
+   border: 3px solid /*#af2624*/ #87314e; 
+ }
+  

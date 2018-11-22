@@ -1,17 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { Stylist } from '../models/stylist';
+import { HttpClient } from '@angular/common/http';
 import { StylistService } from '../stylist.service';
+import { LoaderService } from '../core';
+import { NgForm }   from '@angular/forms';
+
 import { ShiftApi } from '../models/shiftApi';
 import { DateTime } from '../models/dateTime';
+import { PinApi } from '../models/pinApi';
+import { Customer } from '../models/customer';
+import { BookingApi } from '../models/bookingApi';
+import {
+  SwiperComponent, SwiperDirective, SwiperConfigInterface,
+  SwiperScrollbarInterface, SwiperPaginationInterface
+} from 'ngx-swiper-wrapper';
+
+
 @Component({
   selector: 'app-page-content',
   templateUrl: './page-content.component.html',
-  styleUrls: ['./page-content.component.css']
+  styleUrls: ['./page-content.component.css','../../assets/css/swiper.min.css'
+  ]
 })
 export class PageContentComponent implements OnInit {
 
-  constructor(private stylistService: StylistService) {
+  constructor(private stylistService: StylistService, public loaderService: LoaderService) {
   }
+
+  //handle swiper
+  public config1: SwiperConfigInterface = {
+    slidesPerView: 6,
+    slidesPerColumn: 4,
+    spaceBetween: -10,
+    mousewheel: true,
+    scrollbar: true,
+    navigation: true,
+  };
+
+  public config2: SwiperConfigInterface = {
+    slidesPerView: 4,
+    spaceBetween: 0,
+    navigation: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  };
 
   //handle radio button
   selectedService: number = 1;
@@ -22,13 +56,19 @@ export class PageContentComponent implements OnInit {
   //handle stylist
   stylist: Stylist;
   stylists: Stylist[];
-  stylistId: number;
+  stylistId: number = -1;
 
   //handle shift
   shiftApi: ShiftApi;
   timeline: string[];
   status1: string[];
   status2: string[][];//giống statusSample2
+  statusSample1: string[] = [
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15',
+    '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31',
+    '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47',
+    '48', '49', '50', '51'
+  ];
   statusSample2: string[][] = [
     ['0', '1', '2', '3'], ['4', '5', '6', '7'], ['8', '9', '10', '11'], ['12', '13', '14', '15'],
     ['16', '17', '18', '19'], ['20', '21', '22', '23'], ['24', '25', '26', '27'], ['28', '29', '30', '31'],
@@ -37,14 +77,14 @@ export class PageContentComponent implements OnInit {
   ];
 
   //handle date
-
   day_now = new Date();
   today = new Date();
   tomorrow = new Date(this.day_now.setDate(this.day_now.getDate() + 1));;
   afterTomorrow = new Date(this.day_now.setDate(this.day_now.getDate() + 1));
   weeksOfzhTW = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
   threeDay = ["Hôm nay", "Ngày mai", "Ngày kia"];
-  date_id:number = 0;
+  selectedDate: string = this.formatDate(this.today);
+  date_
   threeDate = [
     {
       "label": "Hôm nay",
@@ -66,24 +106,30 @@ export class PageContentComponent implements OnInit {
     }
   ];
 
-  formatDate(date: Date): string {
-    var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [year, month, day].join('-');
+  ngOnInit() {
+    this.getStylistFromService();
+    this.getShiftByDefault(this.selectedService, this.formatDate(this.today));
   }
 
+  selectDate(dateTime: DateTime): void {
+    //this.dateTime = dateTime;
+    this.selectedDate = this.formatDate(dateTime.date);
+    if (this.stylistId == -1) {
+      this.getShiftByDefault(this.selectedService, this.selectedDate);
+    } else {
+      this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate);
+    }
+    console.log(this.selectedDate);
+  }
+
+  /*------  Get data from db --------*/
   getStylistFromService(): void {
     this.stylistService.getStylists().subscribe(
       stylistApi => this.stylists = stylistApi.data
     );
   }
 
-  //get shift by stylist id and change to status
+  //get shift which combine all stylist nad change to status
   getShiftByDefault(serviceId: number, date: string): void {
     this.stylistService.getShiftByDefault(serviceId, date).subscribe(
       (shiftApi) => {
@@ -103,21 +149,8 @@ export class PageContentComponent implements OnInit {
               this.status1[i] = "-1";
             }
           }
-
-          this.status2 = [];
-          var k: number = 0;
-          for (var i: number = 0; i < 13; i++) {
-            this.status2[i] = [];
-            for (var j: number = 0; j < 4; j++) {
-              this.status2[i][j] = this.status1[k];
-              k++;
-            }
-          }
-          
-        console.log(`status1: ${this.status1}`);
-        console.log(`status2: ${this.status2}`);
-        console.log(`statusSample2: ${this.statusSample2}`);
-        }else{
+          console.log(`status1: ${this.status1}`);
+        } else {
           console.log(`Không có dữ liệu trả về`);
         }
       }
@@ -129,9 +162,9 @@ export class PageContentComponent implements OnInit {
       (shiftApi) => {
         this.timeline = shiftApi.data;
         this.stylistId = stylistId;
-        console.log(`timeline: ${this.timeline}`);
+        console.log(`timeline default : ${this.timeline}`);
         console.log(`stylistId : ${this.stylistId}`);
-        if(Array.isArray(this.timeline) && this.timeline.length){
+        if (Array.isArray(this.timeline) && this.timeline.length) {
           this.status1 = [];
           var j: number = 0;
           for (var i: number = 0; i < 52; i++) {
@@ -143,39 +176,36 @@ export class PageContentComponent implements OnInit {
               this.status1[i] = "-1";
             }
           }
-  
-          this.status2 = [];
-          var k: number = 0;
-          for (var i: number = 0; i < 13; i++) {
-            this.status2[i] = [];
-            for (var j: number = 0; j < 4; j++) {
-              this.status2[i][j] = this.status1[k];
-              k++;
-            }
-          }
           console.log(`status1: ${this.status1}`);
-          console.log(`status2: ${this.status2}`);
-        }else{
+        } else {
           console.log(`Không có dữ liệu trả về`);
         }
-        
       }
     );
   }
 
-  dateId
-  selectDate(dateTime: DateTime):void{
-    //this.dateTime = dateTime;
-    this.date_id = dateTime.id;
-    if(this.stylistId == -1){
-      this.getShiftByDefault(this.selectedService,this.formatDate(dateTime.date));
-    }else{
-      this.getShiftByStylist(this.selectedService, this.stylistId, this.formatDate(dateTime.date));
-    }
-    console.log(this.formatDate(dateTime.date));
+  //handle form
+  submitted = false;
+  verifyCode = false;
+  phoneNumber: number;
+  pinApi: PinApi;
+  bookingApi: BookingApi;
+  onSubmitBooking(form: NgForm): void {
+    console.log(JSON.stringify(form.value));
+    this.stylistService.checkPhoneOfCustomer(form.value).subscribe(
+      (pinApi: PinApi) => { this.pinApi = pinApi; console.log(this.pinApi.success); },
+    );
   }
 
-  changeTime(status: string): string {
+  //handle hour which choose
+  selectedHour: string = "";
+  click_hour(hour: string): void {
+    this.selectedHour = hour;
+    console.log(`selected hour: ${this.selectedHour}`);
+  }
+
+  //transform status to string
+  changeStatusToString(status: string): string {
     //case bắt đâu từ 1 có thể thêm 1 ô trống nữa
     switch (status) {
       case '0': return "9:00"; case '1': return "9:15"; case '2': return "9:30"; case '3': return "9:45";
@@ -190,23 +220,29 @@ export class PageContentComponent implements OnInit {
       case '36': return "18:00"; case '37': return "18:15"; case '38': return "18:30"; case '39': return "18:45";
       case '40': return "19:00"; case '41': return "19:15"; case '42': return "19:30"; case '43': return "19:45";
       case '44': return "20:00"; case '45': return "20:15"; case '46': return "20:30"; case '47': return "20:45";
-      case '48': return "21:00"; case '49': return ""; case '50': return ""; case '51': return "";
+      case '48': return "21:00"; case '49': return "21:15"; case '50': return "21:30"; case '51': return "21:45";
     }
   }
 
+  //get stylist id and transform to name
+  changeStylistIdToName(): string {
+    if (this.stylistId == -1) {
+      return "Châm Trâm Nail đã xếp stylist tốt nhất cho chị";
+    } else {
+      return "Chị đã chọn ......";
+    }
+  }
 
-  // transformDate(date: Date): string {
-  //   return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-  // }
-  // statusSample1: string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '14'
-  //   , '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32'
-  //   , '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52'];
-  // splitString(string: string): string[] {
-  //   return string.split(",");
-  // }
-  ngOnInit() {
-    this.getStylistFromService();
-    this.getShiftByDefault(this.selectedService, this.formatDate(this.today));
+  //transform date by format yyyy-MM-dd
+  formatDate(date: Date): string {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
   }
 
 }

@@ -23,7 +23,7 @@
    
 /*=========================== Booking ============================ */
 #inside-wrapper-bookings{
-  padding: 40px 200px 70px 145px;
+  padding: 50px 200px 70px 145px;
 }
 
 .choose-service, .choose-stylist, .choose-time{
@@ -214,11 +214,11 @@
   .timeline{margin-top: -4px;}
  
  .ng-valid[required], .ng-valid.required  {
-   border: 3px solid #42A948; /* green */
+   border: 2px solid #42A948; /* green */
  }
  
  .ng-invalid:not(form)  {
-   border: 3px solid /*#af2624*/ #87314e; 
+   border: 1px solid /*#af2624*/ #87314e; 
  }
 
  /* For Firefox */

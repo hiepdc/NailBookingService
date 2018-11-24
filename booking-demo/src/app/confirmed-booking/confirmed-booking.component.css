@@ -1,0 +1,12 @@
+.btn{
+    float: right;
+  }
+
+  #inside-wrapper-confirmBooking{
+    padding: 70px 70px 70px 70px;
+  }
+  
+  .choose-service, .choose-stylist, .choose-time{
+      margin: auto;
+      padding: 0px 50px 0 50px;
+    }

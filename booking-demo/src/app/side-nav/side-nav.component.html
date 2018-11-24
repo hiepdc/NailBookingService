@@ -19,14 +19,14 @@
               <!-- /navbar-header  -->
               <div class="navbar-collapse collapse sidebar-navbar-collapse">
                   <ul class="nav navbar-nav" id="sidenav01">
-                      <li><a routerLink="/home">TRANG CHỦ</a></li>
-                      <li><a routerLink="/services">DỊCH VỤ</a></li>
-                      <li><a routerLink="/booking">ĐẶT LỊCH</a></li>
-                      <li><a routerLink="/gallery">ALBUM ẢNH</a></li>
-                      <li><a routerLink="/prices">BẢNG GIÁ</a></li>
-                      <li><a routerLink="/blog">BLOG</a></li>
-                      <li><a routerLink="/aboutus">GIỚI THIỆU</a></li>
-                      <li><a routerLink="/contact">LIÊN HỆ</a></li>
+                      <li ><a routerLink="home">TRANG CHỦ</a></li>
+                      <li ><a routerLink="services" [routerLinkActive]="['active']">DỊCH VỤ</a></li>
+                      <li><a routerLink="booking" [routerLinkActive]="['active']">ĐẶT LỊCH</a></li>
+                      <li><a routerLink="gallery"[routerLinkActive]="['active']">ALBUM ẢNH</a></li>
+                      <li ><a routerLink="prices"[routerLinkActive]="['active']">BẢNG GIÁ</a></li>
+                      <li ><a routerLink="blog"[routerLinkActive]="['active']">BLOG</a></li>
+                      <li><a routerLink="aboutus"[routerLinkActive]="['active']">GIỚI THIỆU</a></li>
+                      <li ><a routerLink="contact"[routerLinkActive]="['active']">LIÊN HỆ</a></li>
                   </ul>
                   <!-- navbar-nav -->
               </div>

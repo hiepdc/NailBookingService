@@ -1,3 +1,35 @@
-<p>
-  confirmed-booking works!
-</p>
+<div *ngIf="loaderService.isLoading | async">
+    <app-pre-loader></app-pre-loader>
+  </div>
+<div id="content" class="col-md-10 split" *ngIf="!(loaderService.isLoading | async)">
+  <!-- ===== Booking section starts  ===== -->
+  <div class="content-wrapper">
+    <div class="content-box container"> 
+      <div class="" id="inside-wrapper-confirmBooking">
+
+        <div id="confirmBookingForm">
+          <form (ngSubmit)="onConfirmBooking()" #confirmBookingForm="ngForm">
+            <div class="section-heading">
+              <h2>Đặt Lịch Thành Công</h2>
+            </div>
+            <h4>Cảm ơn anh chị {{customerName}} ({{phoneNumber}}) đã cho Châm trâm Nail được phục
+              vụ.</h4>
+              <h4>Thông tin đặt lịch của anh/chị:</h4>
+            <h4><i class="fas fa-map-marker-alt margin-icon"></i> 35 Ngô Sĩ Liên - Hà Nội</h4>
+            <h4><i class="far fa-clock margin-icon"></i> {{changeStatusToString(selectedHour)}} Ngày
+              {{formatDate(selectedDate)}}
+              (Mong anh đến sớm hơn 10 phút để chúng em phục vụ tốt nhất)
+            </h4>
+            <h4><i class="fas fa-female margin-icon"></i>  {{stylistName}}</h4>
+            <h4>MỖI SĐT ĐẶT CHỈ DÀNH CHO 1 NGƯỜI</h4>
+            <p>(*) Nếu làm nail cho nhiều người, anh/chị vui lòng dùng SĐT khác để đặt thêm 1 lần nữa hoặc gọi tới
+              hotline để được sắp xếp giúp em!</p>
+            <button type="button" class="btn" (click)="goBack()">Đổi Lịch thì sẽ hủy lịch cũ</button>
+            <button type="button" [routerLink]="['/home']" (click)="backToHome()" class="btn">Hủy Lịch</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

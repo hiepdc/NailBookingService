@@ -1,0 +1,36 @@
+{
+  "success": true,
+  "message": "successfully",
+  "data": {
+    "current_page": 1,
+    "data": [
+      {
+        "id": 1,
+        "service_name": "Combo cơ bản",
+        "description": "Đá bay mệt mỏi mùa hè với 7 bước Everly Combo mới duy nhất tại Everly. Trọn gói chỉ 100K, hoàn toàn thư giãn và sau đó bạn sẽ đẹp hoàn hảo!",
+        "time_service": 1,
+        "price": 100000,
+        "coin_service": 10
+      },
+      {
+        "id": 2,
+        "service_name": "Combo nâng cao",
+        "description": "COMBO LÀM NAILS 7 BƯỚC & NỐI MI - 200K:",
+        "time_service": 2,
+        "price": 200000,
+        "coin_service": 20
+      }
+    ],
+    "first_page_url": "http:\/\/localhost:8080\/NailBookingService\/backend\/public\/api\/services?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/localhost:8080\/NailBookingService\/backend\/public\/api\/services?page=1",
+    "next_page_url": null,
+    "path": "http:\/\/localhost:8080\/NailBookingService\/backend\/public\/api\/services",
+    "per_page": 10,
+    "prev_page_url": null,
+    "to": 2,
+    "total": 2
+  },
+  "status_code": 200
+}

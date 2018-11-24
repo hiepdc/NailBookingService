@@ -1,0 +1,120 @@
+{
+  "success": true,
+  "message": "successfully",
+  "data": {
+    "current_page": 1,
+    "data": [
+      {
+        "customer_name": "Jackeline Hickle",
+        "phone_number": "0976436396",
+        "coin": 80,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "longdq",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Ms. Meredith Kerluke V",
+        "phone_number": "0976312603",
+        "coin": 40,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "hiepdc",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Sienna Schinner",
+        "phone_number": "0976479452",
+        "coin": 20,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "longdq",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Maddison Buckridge DDS",
+        "phone_number": "0976685431",
+        "coin": 10,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "hungxoi",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Mr. Royce Conn Sr.",
+        "phone_number": "0976640796",
+        "coin": 70,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "Charles Torphy",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Brianne Aufderhar II",
+        "phone_number": "0976288305",
+        "coin": 60,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "Miss Magdalena Volkman IV",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Ms. Meredith Kerluke V",
+        "phone_number": "0976312603",
+        "coin": 40,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "Nash Pfeffer",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Wendy Eichmann I",
+        "phone_number": "0976460685",
+        "coin": 90,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "hungxoi",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Maddison Bartoletti",
+        "phone_number": "0976689795",
+        "coin": 0,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "Donna Bogan",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      },
+      {
+        "customer_name": "Ms. Elna Mohr",
+        "phone_number": "0976746297",
+        "coin": 40,
+        "service_name": "Combo cơ bản",
+        "stylist_name": "Adell Larson",
+        "date": "2018-11-15",
+        "start_time": 28,
+        "status": "booked"
+      }
+    ],
+    "first_page_url": "http:\/\/localhost:8080\/NailBookingService\/backend\/public\/api\/bookings?page=1",
+    "from": 1,
+    "last_page": 3,
+    "last_page_url": "http:\/\/localhost:8080\/NailBookingService\/backend\/public\/api\/bookings?page=3",
+    "next_page_url": "http:\/\/localhost:8080\/NailBookingService\/backend\/public\/api\/bookings?page=2",
+    "path": "http:\/\/localhost:8080\/NailBookingService\/backend\/public\/api\/bookings",
+    "per_page": 10,
+    "prev_page_url": null,
+    "to": 10,
+    "total": 23
+  },
+  "status_code": 200
+}

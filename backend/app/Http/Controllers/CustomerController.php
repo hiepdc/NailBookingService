@@ -52,7 +52,15 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+        $customer = Customer::find($id);
+        if(!$customer){
+            return response()->notFound("customer does not exist");
+        }
+        return response()->success($customer);
+    } catch (Exception $e) {
+        return response()->exception($e->getMessage(), $e->getCode());
+    }
     }
 
     /**
@@ -75,7 +83,16 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $customer = Customer::find($id);
+            if (!$customer) {
+                return response()->notFound("customer does not exist");
+            }
+            $updatedCustomer = $customer->update($request->only(['customer_name', 'phone_number', 'coin']));
+            return response()->success($updatedCustomer);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -86,7 +103,16 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $deletebyCustomer = Customer::find($id);
+            if (!$deletebyCustomer) {
+                return response()->notFound("customer does not exist");
+            }
+            $deletebyCustomer->delete();
+            return response()->success($deletebyCustomer);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     public function search(Request $request)

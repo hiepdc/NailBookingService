@@ -27,14 +27,14 @@ class BookingController extends Controller
     public function addNewBooking(Request $request)
     {
         try {
-            //check booking is exist
+            //1.check booking is exist
             $booking = new Booking();
             if ($booking->getStatusBookedByPhonenumber($request->phone_number) > 0) {
                 return response()->success(null, 'Bạn có chắc chắn muốn đổi lịch');
             }
             //add customer
             $customer = new Customer();
-            //kiểm tra khách hàng đã có trong hệ thống chưa
+            //2.kiểm tra khách hàng đã có trong hệ thống chưa
             if ($customer->getCustomerByPhonenumber($request->phone_number) == 0) {
                 $customer->addNewCustomer($request->customer_name, $request->phone_number);
             }
@@ -42,8 +42,9 @@ class BookingController extends Controller
             $service_id = $request->service_id;
             $customer_id = $customer->getIDByPhonenumber($request->phone_number);
             $start_time = $request->start_time;
-            //check có chọn stylist hay không
-            if (!$request->has('stylist_id')) {
+            //3.check có chọn stylist hay không
+            if ($request->stylist_id == -1) {
+                //nếu ko chọn thì random
                 $shift = $this->randomShift($start_time, $service_id, $request->date);
                 $shift_id = $shift->id;
                 $stylist_id = $shift->stylist_id;
@@ -52,7 +53,7 @@ class BookingController extends Controller
                 $shift_id = $shift_id_arr->id;
                 $stylist_id = $request->stylist_id;
             }
-            //mesage to customer
+            //4.mesage to customer
             $service_name_arr = Service::find($request->service_id)
                 ->select('service_name')
                 ->first();
@@ -68,10 +69,10 @@ class BookingController extends Controller
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
-            //add new booking
+            //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
 
-            //update status of shift
+            //6.update status of shift
             $oldStatus = $shift->getStatusByStylistID($stylist_id, $request->date);
             $sts = $oldStatus->status;
             $service = new Service();
@@ -212,7 +213,7 @@ class BookingController extends Controller
             }
             $twoFA->pinCreate($phone, $content, $appId);
             $result = [
-                'check' => false,
+                'check' => true,
             ];
            // return response()->success($result,'Đã gửi mã pin đến cho khách hàng');
             return response()->success($result, 'Đã gửi mã pin đến cho khách hàng');

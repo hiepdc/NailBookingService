@@ -63,8 +63,9 @@ Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@ge
 //Route::get('shifts/stylist/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 
 //@@@Customers
+Route::apiResource('customers', 'CustomerController');
 //list customers
-Route::get('customers','CustomerController@index');
+//Route::get('customers','CustomerController@index');
 //search customer name
 Route::post('customers/search/','CustomerController@search');
 // @@@Admin@@@

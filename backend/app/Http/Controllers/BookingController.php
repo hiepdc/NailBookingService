@@ -62,12 +62,12 @@ class BookingController extends Controller
             $stylist_name = $stylist_name_arr->stylist_name;
             // gửi tin nhắn
             $message = 'Cảm ơn anh/chị ' . $request->customer_name .
-                ' đã đặt lịch vào lúc ' . $request->start_time .
+                ' đã đặt lịch vào lúc ' . $this->convertTime($request->start_time) .
                 ' ngày ' . $request->date .
-                ' cho gói dịch vụ ' . $service_name;
+                ' cho gói dịch vụ ' . $service_name .
             ' được phục vụ bởi ' . $stylist_name .
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
-           $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+           //$sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
@@ -79,7 +79,7 @@ class BookingController extends Controller
             $sizeOfTime = $service->getTimeService($request->service_id) * 4;
             $status = $this->updateShiftStatusAfterBooking($sts, $request->start_time, $sizeOfTime);
             $shift->updateStatusByStylistID($stylist_id, $request->date, $status);
-            return response()->success($newBooking, 'Bạn đã đặt lịch thành công');
+            return response()->success($message, 'Bạn đã đặt lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -405,6 +405,16 @@ class BookingController extends Controller
         } catch (Exception $e) {
             response()->exception($e->getMessage(), $e->getCode());
         }
+    }
+    function convertTime($index){
+        $carbon = new Carbon('9:00:00');
+        $allTime = array();
+        foreach(range(0, 47) as $value){
+            $eachTime = $carbon->addMinutes(15)->format('H:i:s');
+            $allTime[] =$eachTime;
+        }
+        $realTime = $allTime[$index];
+        return $realTime;
     }
 
 }

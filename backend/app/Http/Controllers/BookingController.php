@@ -67,7 +67,7 @@ class BookingController extends Controller
                 ' cho gói dịch vụ ' . $service_name .
             ' được phục vụ bởi ' . $stylist_name .
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
-           //$sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
@@ -79,7 +79,7 @@ class BookingController extends Controller
             $sizeOfTime = $service->getTimeService($request->service_id) * 4;
             $status = $this->updateShiftStatusAfterBooking($sts, $request->start_time, $sizeOfTime);
             $shift->updateStatusByStylistID($stylist_id, $request->date, $status);
-            return response()->success($message, 'Bạn đã đặt lịch thành công');
+            return response()->success($newBooking, 'Bạn đã đặt lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -95,7 +95,18 @@ class BookingController extends Controller
             }
             $customer = new Customer();
             $shift = new Shift();
-            $shift_id_arr = $shift->getShiftIDByStylistID($request->stylist_id, $request->date);
+            //3.check có chọn stylist hay không
+            if ($request->stylist_id == -1) {
+                //nếu ko chọn thì random
+                $shift = $this->randomShift($request->start_time, $request->service_id, $request->date);
+                //$shift_id = $shift->id;
+                $stylist_id = $shift->stylist_id;
+            } else {
+                $shift_id_arr = $shift->getShiftIDByStylistID($request->stylist_id, $request->date);
+                //$shift_id = $shift_id_arr->id;
+                $stylist_id = $request->stylist_id;
+            }
+            $shift_id_arr = $shift->getShiftIDByStylistID($stylist_id, $request->date);
             $updateShift_id = $shift_id_arr->id;
             $updateService_id = $request->service_id;
             $updateCustomer_id = $customer->getIDByPhonenumber($request->phone_number);

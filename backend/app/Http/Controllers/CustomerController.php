@@ -42,6 +42,11 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         try {
+            $checkcustomer = Customer::where('phone_number', $request->phone_number)
+                ->count();
+            if($checkcustomer >0){
+                return response()->success(null, 'Khách hàng đã tồn tại hệ thống.');
+            }
             $customer = Customer::create([
                 'customer_name' => $request->customer_name,
                 'phone_number' => $request->phone_number,

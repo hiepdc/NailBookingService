@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\Customer;
+use App\Events\Notify;
 use App\Service;
 use App\Shift;
 use App\Stylist;
 use App\SpeedSMSAPI;
 use App\TwoFactorAPI;
 use Carbon\Carbon;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Pusher\Pusher;
 
 class BookingController extends Controller
 {
@@ -67,7 +70,12 @@ class BookingController extends Controller
                 ' cho gói dịch vụ ' . $service_name .
             ' được phục vụ bởi ' . $stylist_name .
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
-            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            // gửi tin nhắn admin
+            $message = ' Thời gian ' . $this->convertTime($request->start_time) .
+                ' ngày ' . $request->date .
+                ' gói dịch vụ ' . $service_name .
+            ' được phục vụ bởi ' . $stylist_name ;
+           // $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
@@ -79,6 +87,9 @@ class BookingController extends Controller
             $sizeOfTime = $service->getTimeService($request->service_id) * 4;
             $status = $this->updateShiftStatusAfterBooking($sts, $request->start_time, $sizeOfTime);
             $shift->updateStatusByStylistID($stylist_id, $request->date, $status);
+
+            //7.send message to admin
+            $this->sendMessageToAdmin($request->customer_name, $message);
             return response()->success($newBooking, 'Bạn đã đặt lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -426,6 +437,23 @@ class BookingController extends Controller
         }
         $realTime = $allTime[$index];
         return $realTime;
+    }
+
+    function sendMessageToAdmin($title, $message){
+        $options = array(
+            'cluster' => 'ap1',
+            'useTLS' => true
+        );
+        $pusher = new Pusher(
+            'b3a0673fc31ffb66e50a',
+            '81df77c6c01ad381c45c',
+            '657001',
+            $options
+        );
+        $data['title'] = $title;
+        $data['content'] = $message;
+        $pusher->trigger('Notify', 'send-message', $data);
+        return $data;
     }
 
 }

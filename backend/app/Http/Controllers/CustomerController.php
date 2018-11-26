@@ -41,7 +41,16 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $customer = Customer::create([
+                'customer_name' => $request->customer_name,
+                'phone_number' => $request->phone_number,
+                'coin' => 0
+            ]);
+            return response()->success($customer, 'Tạo khách hàng thành công.');
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }//
     }
 
     /**

@@ -190,7 +190,11 @@ export class PageContentComponent implements OnInit {
           }
           console.log(`status1: ${this.status1}`);
         } else {
-          console.log(`Không có dữ liệu trả về`);
+          for (var i: number = 0; i < 52; i++){
+            this.status1[i] = "-1";
+          }
+          console.log(`status1: ${this.status1}`);
+          console.log(`Lịch đã full`);
         }
       }
     );

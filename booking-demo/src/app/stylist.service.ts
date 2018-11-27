@@ -6,11 +6,12 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { StylistsApi } from './models/stylistsApi';
 import { ShiftApi } from './models/shiftApi';
-import { PinApi } from './models/pinApi';
+import { CheckPhoneApi } from './models/checkPhoneApi';
+import { CustomerApi } from './models/customerApi';
 import { Customer } from './models/customer';
 import { BookingApi } from './models/bookingApi';
-import { Stylist } from './models/stylist';
 import { StylistApi } from './models/stylistApi';
+import { PinApi } from './models/pinApi';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -36,7 +37,7 @@ export class StylistService {
     );
   }
 
-  getStylistById(stylistId:number):Observable<StylistApi>{
+  getStylistById(stylistId: number): Observable<StylistApi> {
     const url = `${this.stylistURL}/${stylistId}`;
     return this.http.get<StylistApi>(url).pipe(
       tap(receivedStylist => {
@@ -77,21 +78,52 @@ export class StylistService {
   //check phone number of customer
   checkPhoneOfCustomer(body: any): Observable<any> {
     const url = `${this.bookingURL}/create-pin`;
+    return this.http.post<CheckPhoneApi>(url, body, httpOptions).pipe(
+      tap((checkPhoneApi) => console.log(checkPhoneApi)),
+      catchError(error => of(new CheckPhoneApi()))
+    );
+  }
+
+  checkPinCode(phoneNumber: string, pin_code: number): Observable<any> {
+    const url = `${this.bookingURL}/verify-pin`;
+    var body = {
+      phone_number: phoneNumber,
+      pin_code: pin_code
+    };
     return this.http.post<PinApi>(url, body, httpOptions).pipe(
       tap((pinApi) => console.log(pinApi)),
       catchError(error => of(new PinApi()))
     );
   }
 
-  //add new booking with stylist default
-  addNewBookingDefault(customerName: string, phoneNumber: number, date: string, start_time: number, service_id: number) {
+  //#region add new booking with stylist default
+  // addNewBookingDefault(customerName: string, phoneNumber: number, date: string, start_time: number, service_id: number) {
+  //   const url = `${this.bookingURL}/add-new-booking`;
+  //   var body = {
+  //     customer_name: customerName,
+  //     phone_number: phoneNumber,
+  //     date: date,
+  //     start_time: start_time,
+  //     service_id: service_id
+  //   };
+  //   return this.http.post<BookingApi>(url, body, httpOptions).pipe(
+  //     tap((bookingApi: BookingApi) => console.log(bookingApi)),
+  //     catchError(error => of(new BookingApi()))
+  //   );
+  // }
+  //#endregion
+
+  addNewBooking(phoneNumber: string,
+    stylist_id: number, date: string,
+    start_time: number, service_id: number, customerName: string) {
     const url = `${this.bookingURL}/add-new-booking`;
     var body = {
-      customer_name: customerName,
       phone_number: phoneNumber,
+      stylist_id: stylist_id,
       date: date,
       start_time: start_time,
-      service_id: service_id
+      service_id: service_id,
+      customer_name: customerName,
     };
     return this.http.post<BookingApi>(url, body, httpOptions).pipe(
       tap((bookingApi: BookingApi) => console.log(bookingApi)),
@@ -99,11 +131,11 @@ export class StylistService {
     );
   }
 
-  //add new booking 
-  addNewBooking(customerName: string, phoneNumber: number, stylist_id: number, date: string, start_time: number, service_id: number) {
-    const url = `${this.bookingURL}/add-new-booking`;
+  editBooking(phoneNumber: string,
+    stylist_id: number, date: string,
+    start_time: number, service_id: number) {
+    const url = `${this.bookingURL}/edit-booking`;
     var body = {
-      customer_name: customerName,
       phone_number: phoneNumber,
       stylist_id: stylist_id,
       date: date,
@@ -116,11 +148,26 @@ export class StylistService {
     );
   }
 
-  getBooking() {
-
+  deleteBooking(phoneNumber: number): Observable<BookingApi> {
+    const url = `${this.bookingURL}/delete-booking/0${phoneNumber}`;
+    return this.http.delete<BookingApi>(url, httpOptions).pipe(
+      tap((bookingApi: BookingApi) => {
+        console.log(`message = ${bookingApi.message}`);
+        console.log(`Deleted movie with phone number = ${phoneNumber}`);
+      }),
+      catchError(error => of(new BookingApi()))
+    )
   }
 
-  getCustomerById(){
+  addNewCustomer(customerName:string, phoneNumber:string): Observable<CustomerApi> {
+    var body = {
+      customer_name: customerName,
+      phone_number: phoneNumber
+    };
+    return this.http.post<CustomerApi>(this.customerURL, body, httpOptions).pipe(
+      tap((customerApi: CustomerApi) => console.log("customerApi: " + JSON.stringify(customerApi))),
+      catchError(error => of(new CustomerApi()))
+    );
 
   }
 

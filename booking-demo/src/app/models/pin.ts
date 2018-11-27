@@ -1,6 +1,7 @@
-import {Customer} from './customer';
 
 export class Pin{
-    check: boolean;
-    customer: Customer;
+    pin:string;
+    phone:string;
+    verified:boolean;
+    remainingAttempts:number;
 }

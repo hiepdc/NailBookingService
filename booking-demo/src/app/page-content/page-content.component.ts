@@ -14,9 +14,13 @@ import { LoaderService } from '../core';
 import { Stylist } from '../models/stylist';
 import { ShiftApi } from '../models/shiftApi';
 import { DateTime } from '../models/dateTime';
-import { PinApi } from '../models/pinApi';
+import { CheckPhoneApi } from '../models/checkPhoneApi';
 import { Customer } from '../models/customer';
+import { CustomerApi } from '../models/customerApi';
 import { BookingApi } from '../models/bookingApi';
+import { PinApi } from '../models/pinApi';
+
+
 @Component({
   selector: 'app-page-content',
   templateUrl: './page-content.component.html',
@@ -26,9 +30,9 @@ import { BookingApi } from '../models/bookingApi';
 export class PageContentComponent implements OnInit {
 
   constructor(
-    private stylistService: StylistService, 
+    private stylistService: StylistService,
     public loaderService: LoaderService,
-    private router: Router, 
+    private router: Router,
     private confirmBookingService: ConfirmBookingService) {
   }
 
@@ -53,12 +57,13 @@ export class PageContentComponent implements OnInit {
 
   //radio button
   selectedService: string = "1";
+  service: string = "Cơ Bản";
 
   //stylist
   stylist: Stylist;
   stylists: Stylist[];
   stylistId: number = -1;
-  stylistName: string = "-1";
+  stylistName: string = "Châm Trâm Nail đã xếp stylist tốt nhất cho anh/chị";
 
   // shift
   shiftApi: ShiftApi;
@@ -101,20 +106,40 @@ export class PageContentComponent implements OnInit {
   ];
 
   //form
-  submitted = false;
+  //submitted = false;
   verifyPin: string;
   phoneNumber: string;
-  pinApi: PinApi = new PinApi();
-  bookingApi: BookingApi;
+  checkPhoneApi: CheckPhoneApi = new CheckPhoneApi();
 
-  //hour which choose
+  //hour which choose "1","2","3"
   selectedHour: string = "";
 
   //modal
   displayVerifyPin: string = 'none';
 
   //customer
+  customer: Customer = new Customer(0, "", "", 0);
   customerName: string;
+  customerId: number;
+
+  //pin
+  inputPinNumber: string;
+  checkPinApi: PinApi;
+  verified: boolean = false;
+  flagRemainingAttempts = false;
+  remainingAttempts: number;
+  //booking
+  bookingApi: BookingApi;
+
+  //change booking
+  displayChangeBooking: string = 'none';
+
+  //error message
+  displayErrorMessage: string = 'none';
+
+  //booking form 2
+  displayBookingForm2: string = 'none';
+
 
   //#endregion
 
@@ -123,6 +148,8 @@ export class PageContentComponent implements OnInit {
     this.confirmBookingService.currentPhoneNumber.subscribe(phoneNumber => this.phoneNumber = phoneNumber);
     this.getStylistFromService();
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
+    //this.openBookingForm2();
+    //this.openVerifyPin();
   }
 
   /*------  Put data to service ---------*/
@@ -140,7 +167,7 @@ export class PageContentComponent implements OnInit {
     );
   }
 
-  getShiftByStylist(serviceId: string, stylistId: number, date: string, stylistName:string): void {
+  getShiftByStylist(serviceId: string, stylistId: number, date: string, stylistName: string): void {
     this.stylistService.getShiftByStylist(serviceId, stylistId, date).subscribe(
       (shiftApi) => {
         this.timeline = shiftApi.data;
@@ -169,34 +196,134 @@ export class PageContentComponent implements OnInit {
     );
   }
 
+  getPinCode() {
+    var body = { phone_number: this.phoneNumber };
+    this.stylistService.checkPhoneOfCustomer(body).subscribe(
+      (checkPhoneApi: CheckPhoneApi) => {
+        console.log("checkPhoneApi message" + this.checkPhoneApi.message);
+        this.verified = false;
+        this.flagRemainingAttempts = false;
+      }
+    );
+
+  }
+
   onSubmitBooking(form: NgForm): void {
     console.log(form.value);
     this.stylistService.checkPhoneOfCustomer(form.value).subscribe(
-      (pinApi: PinApi) => {
-        this.pinApi = pinApi; console.log(this.pinApi.message);
-        //khách hàng đã có trong hệ thống
-        if (this.pinApi.data.check == false) {
-          //send data to service
-          this.customerName = this.pinApi.data.customer.customer_name;
-          this.addDataToConfirmBookingService();
-          this.router.navigate(['booking', this.pinApi.data.customer.id, this.phoneNumber]);
-          //thực hiện add booking với khách hàng đã có trong hệ thống
+      (checkPhoneApi: CheckPhoneApi) => {
+        this.checkPhoneApi = checkPhoneApi; console.log("checkPhoneApi message" + this.checkPhoneApi.message);
+        if (this.checkPhoneApi.data.check == false) {
+          //khách hàng đã có trong hệ thống
+          this.customerName = this.checkPhoneApi.data.customer.customer_name;
+          this.customerId = this.checkPhoneApi.data.customer.id;
+          //1.thực hiện add booking với khách hàng đã có trong hệ thống
+          this.stylistService.addNewBooking(this.phoneNumber,
+            this.stylistId, this.selectedDate, +this.selectedHour,
+            +this.selectedService, this.customerName).subscribe(
+              (bookingApi: BookingApi) => {
+                this.bookingApi = bookingApi;
+                if (this.bookingApi.data === null) {
+                  //hiển thị dialog thông báo Anh/chị có chắc chắn muốn đổi lịch không
+                  this.openChangeBooking();
+                } else {
+                  //1.close modal change booking
+                  this.closeChangeBooking();
+                  //2.send data to service
+                  this.addDataToConfirmBookingService();
+                  this.router.navigate(['booking', this.phoneNumber]);
+                }
+              },
+              error => { console.log(error); return }
+            );
         } else {
-          //hiển thị modal verifyCode
-          this.openModalVerifyPin();
+          //khách hàng chưa có trong hệ thống
+          //1.hiển thị modal verifyCode
+          console.log(this.displayVerifyPin);
+          this.openVerifyPin();
         }
-
       },
       error => { console.log(error); return }
     );
   }
 
-  changeBooking(): void {
-    this.submitted = false;
+  onSubmitCheckPin() {
+    // console.log(form.value);
+    this.stylistService.checkPinCode(this.phoneNumber, +this.inputPinNumber).subscribe(
+      (pinApi: PinApi) => {
+        this.checkPinApi = pinApi; console.log("check pin api: " + JSON.stringify(this.checkPinApi));
+        if (this.checkPinApi.data.verified == true) {
+          //1. thông báo check thành công
+          //2. hiển thị form booking có thêm tên
+          this.closeVerifyPin();
+          this.openBookingForm2();
+        } else {
+          if (this.checkPinApi.data.remainingAttempts == 0) {
+            //1. thông báo bạn đã điền sai pin code quá nhiều làn. vui lòng đợi sau 10phut
+            this.flagRemainingAttempts = false;
+            this.verified = true;
+            console.log("current verified: " + this.verified);
+            //thông báo thử bằng snackbar xem
+          } else {
+            //1. thông báo số lần có thể điền sai còn lại
+            this.verified = false;
+            this.flagRemainingAttempts = true;
+            this.remainingAttempts = this.checkPinApi.data.remainingAttempts;
+            console.log("current remainingAttempts: " + this.remainingAttempts);
+          }
+        }
+      },
+      error => { console.log(error); return }
+    )
   }
 
-  backToHome(): void {
-    //reset lại tất cả biến có trong booking
+  onSubmitChangeBooking() {
+    //edit booking rồi chuyển sang confirm booking
+    this.stylistService.editBooking(this.phoneNumber,
+      this.stylistId, this.selectedDate, +this.selectedHour,
+      +this.selectedService).subscribe(
+        (bookingApi: BookingApi) => {
+          this.bookingApi = bookingApi;
+          if (this.bookingApi.success == true) {
+            //2.send data to service
+            this.addDataToConfirmBookingService();
+            this.router.navigate(['booking', this.phoneNumber]);
+          } else {
+            this.openErrorMessage();
+          }
+        },
+        error => { console.log(error); return }
+      );
+  }
+
+  onSubmitBookingForm2() {
+    //1. tạo customer mới
+    // this.stylistService.addNewCustomer(this.customerName, this.phoneNumber).subscribe(
+    //   (customerApi: CustomerApi) => {
+    //     console.log(customerApi.data);
+    //   },
+    //   error => { console.log(error); return }
+    // );
+
+    this.stylistService.addNewBooking(this.phoneNumber,
+      this.stylistId, this.selectedDate, +this.selectedHour,
+      +this.selectedService, this.customerName).subscribe(
+        (bookingApi: BookingApi) => {
+          this.bookingApi = bookingApi;
+          if (this.bookingApi.data === null) {
+            //hiển thị dialog thông báo Anh/chị có chắc chắn muốn đổi lịch không
+            this.openChangeBooking();
+          } else {
+            //1.close BookingForm2
+            this.closeBookingForm2();
+            //2.send data to service
+            this.addDataToConfirmBookingService();
+            this.router.navigate(['booking', this.phoneNumber]);
+          }
+        },
+        error => { console.log(error); return }
+      );
+
   }
 
   selectDate(dateTime: DateTime): void {
@@ -204,6 +331,7 @@ export class PageContentComponent implements OnInit {
     this.selectedDate = this.formatDate(dateTime.date);
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
     console.log("selectedDate" + this.selectedDate);
+    this.selectedHour = "";
   }
 
   click_hour(hour: string): void {
@@ -213,18 +341,42 @@ export class PageContentComponent implements OnInit {
 
   clickService(event: any) {
     this.selectedService = event.target.value;
+    this.service = this.changeSelectedServiceToServiceName(this.selectedService);
     console.log("selectedService: " + this.selectedService);
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
   }
-
-  openModalVerifyPin() {
+  
+  openVerifyPin() {
     this.displayVerifyPin = 'block';
   }
 
-  closeModalVerifyPin() {
+  closeVerifyPin() {
     this.displayVerifyPin = 'none';
   }
 
+  openChangeBooking() {
+    this.displayChangeBooking = 'block';
+  }
+
+  closeChangeBooking() {
+    this.displayChangeBooking = 'none';
+  }
+
+  openErrorMessage() {
+    this.displayErrorMessage = 'block';
+  }
+
+  closeErrorMessage() {
+    this.displayErrorMessage = 'none';
+  }
+
+  openBookingForm2() {
+    this.displayBookingForm2 = 'block';
+  }
+
+  closeBookingForm2() {
+    this.displayBookingForm2 = 'none';
+  }
 
   // onSubmitBooking(form: NgForm): void {
   //   console.log(form.value);
@@ -272,11 +424,9 @@ export class PageContentComponent implements OnInit {
   // }
   // }
 
-
-
   //#region function support
-  //transform status to string
-  changeStatusToString(status: string): string {
+
+  changeStatusToStartTime(status: string): string {
     //case bắt đâu từ 1 có thể thêm 1 ô trống nữa
     switch (status) {
       case '0': return "9:00"; case '1': return "9:15"; case '2': return "9:30"; case '3': return "9:45";
@@ -295,15 +445,6 @@ export class PageContentComponent implements OnInit {
     }
   }
 
-  //get stylist id and transform to name
-  // changeStylistIdToName(): string {
-  //   if (this.stylistId == -1) {
-  //     return "Châm Trâm Nail đã xếp stylist tốt nhất cho chị";
-  //   } else {
-  //     return "Chị đã chọn ......";
-  //   }
-  // }
-
   //transform date by format yyyy-MM-dd
   formatDate(date: Date): string {
     var d = new Date(date),
@@ -314,6 +455,13 @@ export class PageContentComponent implements OnInit {
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
     return [year, month, day].join('-');
+  }
+
+  changeSelectedServiceToServiceName(selectedService: string): string {
+    switch (selectedService) {
+      case "1": return "Cơ Bản";
+      case "2": return "Nâng Cao";
+    }
   }
   //#endregion
 

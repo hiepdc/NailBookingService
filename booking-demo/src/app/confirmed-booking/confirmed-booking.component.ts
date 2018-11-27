@@ -4,9 +4,10 @@ import { Location } from '@angular/common';
 
 import { LoaderService } from '../core';
 import { StylistService } from '../stylist.service';
+import { ConfirmBookingService } from '../confirm-booking.service'
 
 import { Stylist } from '../models/stylist';
-import { ConfirmBookingService } from '../confirm-booking.service'
+import { BookingApi } from '../models/bookingApi';
 
 @Component({
   selector: 'app-confirmed-booking',
@@ -36,9 +37,6 @@ export class ConfirmedBookingComponent implements OnInit {
     this.confirmBookingService.currentHour.subscribe(hour => this.selectedHour = hour);
     this.confirmBookingService.currentCustomerName.subscribe(customerName => this.customerName = customerName);
     this.confirmBookingService.currentStylistName.subscribe(stylistName => this.stylistName = stylistName);
-    if(this.stylistName =="-1"){
-      this.stylistName = "Châm Trâm Nail đã xếp stylist tốt nhất cho anh/chị";
-    }
     this.getDataFromRoute();
   }
 
@@ -51,6 +49,13 @@ export class ConfirmedBookingComponent implements OnInit {
   }
 
   backToHome(){
+    //1. delete booking 
+    this.stylistService.deleteBooking(+this.phoneNumber).subscribe(
+      (bookingApi: BookingApi) =>{
+      },
+      error => { console.log(error); return }
+    )
+    //2. set variable 
     this.confirmBookingService.changePhoneNumber("");
     this.confirmBookingService.changeDate("");
     this.confirmBookingService.changeHour("");
@@ -66,6 +71,7 @@ export class ConfirmedBookingComponent implements OnInit {
     this.confirmBookingService.changePhoneNumber(this.phoneNumber);
   }
 
+  //#region function support
   changeStatusToString(status: string): string {
     //case bắt đâu từ 1 có thể thêm 1 ô trống nữa
     switch (status) {
@@ -95,4 +101,5 @@ export class ConfirmedBookingComponent implements OnInit {
     if (day.length < 2) day = '0' + day;
     return [day, month, year].join('-');
   }
+  //#endregion
 }

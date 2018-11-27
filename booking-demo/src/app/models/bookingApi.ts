@@ -1,7 +1,6 @@
 
 export class BookingApi{
-    success: string;
+    success: boolean;
     message: string;
-    status_code: string;
-    data: string;
+    data: any;
 }

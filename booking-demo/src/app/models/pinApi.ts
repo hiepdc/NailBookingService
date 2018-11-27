@@ -2,7 +2,8 @@
 import {Pin} from './pin';
 
 export class PinApi{
-    success: boolean;
+    success: string;
     message: string;
     data: Pin;
+
 }

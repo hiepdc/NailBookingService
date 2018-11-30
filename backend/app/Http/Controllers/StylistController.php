@@ -43,6 +43,11 @@ class StylistController extends Controller
     public function store(Request $request)
     {
         try {
+            $checkStylist = Stylist::where('phone_number', $request->phone_number)
+                                     ->count();
+            if($checkStylist >0){
+                return response()->success(null, 'Số điện thoại đã tồn tại trong hệ thống.');
+            }
             $stylist = Stylist::create([
                 'stylist_name' => $request->stylist_name,
                 'phone_number' => $request->phone_number,

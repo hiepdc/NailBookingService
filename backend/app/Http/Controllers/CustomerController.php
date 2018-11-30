@@ -45,7 +45,7 @@ class CustomerController extends Controller
             $checkcustomer = Customer::where('phone_number', $request->phone_number)
                 ->count();
             if($checkcustomer >0){
-                return response()->success(null, 'Khách hàng đã tồn tại hệ thống.');
+                return response()->success(null, 'Số điện thoại đã tồn tại trong hệ thống.');
             }
             $customer = Customer::create([
                 'customer_name' => $request->customer_name,
@@ -133,16 +133,16 @@ class CustomerController extends Controller
     {
         try {
             $key = $request->key;
-            //        $customers = Customer::where('customer_name','like','%'.$key.'%')
+//            $customer = Customer::where('customer_name','like','%'.$key.'%')
 //            ->orwhere('phone_number', 'like', '%'.$key.'%')
 //            ->paginate(10);
-//            if (empty($key)) {
-//                $customer = Stylist::paginate(10);
-//            } else {
-//                $customer = Searchy::customers('phone_number', 'phone_number')->query($key)
-//                    ->get();
-//            }
-            return response()->success($key);
+            if (empty($key)) {
+                $customer = Customer::paginate(10);
+            } else {
+                $customer = Searchy::customers('phone_number', 'phone_number')->query($key)
+                    ->get();
+            }
+            return response()->success($customer);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

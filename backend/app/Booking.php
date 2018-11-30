@@ -26,6 +26,9 @@ class Booking extends Model
         return $this->belongsTo(Shift::class);
     }
 
+    public function notification(){
+        return $this->hasOne(Notification::class);
+    }
     public $timestamps = false;
 
     public function getStatusBookedByPhonenumber($phonenumber)

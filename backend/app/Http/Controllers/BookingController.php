@@ -71,11 +71,11 @@ class BookingController extends Controller
             ' được phục vụ bởi ' . $stylist_name .
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
             // gửi tin nhắn admin
-            $message = ' Thời gian ' . $this->convertTime($request->start_time) .
+            $messageAdmin = ' Thời gian ' . $this->convertTime($request->start_time) .
                 ' ngày ' . $request->date .
                 ' gói dịch vụ ' . $service_name .
             ' được phục vụ bởi ' . $stylist_name ;
-           // $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
@@ -135,6 +135,24 @@ class BookingController extends Controller
             $shift->updateStatusByShiftID($updateShift_id, $updateStatus);
             // update booking  note:cập nhật lịch cũ và mới
             $newBooking = $booking->updateBooking($updateShift_id, $updateService_id, $updateCustomer_id, $updateStart_time);
+            $service_name_arr = Service::find($updateService_id)
+                                       ->select('service_name')
+                                       ->first();
+            $service_name = $service_name_arr->service_name;
+            $stylist_name_arr = Stylist::find($stylist_id);
+            $stylist_name = $stylist_name_arr->stylist_name;
+            $message = 'Cảm ơn anh/chị ' . $request->customer_name .
+                       ' đã đổi lại lịch đặt vào lúc ' . $this->convertTime($request->start_time) .
+                       ' ngày ' . $request->date .
+                       ' cho gói dịch vụ ' . $service_name .
+                       ' được phục vụ bởi ' . $stylist_name .
+                       '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
+            // gửi tin nhắn admin
+            $messageAdmin = ' Thời gian ' . $this->convertTime($request->start_time) .
+                            ' ngày ' . $request->date .
+                            ' gói dịch vụ ' . $service_name .
+                            ' được phục vụ bởi ' . $stylist_name ;
+            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
             if ($newBooking == 0) {
                 return response()->success($newBooking, "không có sự thay dổi nào");
             }
@@ -429,7 +447,7 @@ class BookingController extends Controller
         }
     }
     function convertTime($index){
-        $carbon = new Carbon('9:00:00');
+        $carbon = new Carbon('8:45:00');
         $allTime = array();
         foreach(range(0, 47) as $value){
             $eachTime = $carbon->addMinutes(15)->format('H:i:s');

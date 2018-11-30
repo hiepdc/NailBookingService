@@ -77,4 +77,7 @@ Route::group(['middleware' => ['jwt.auth']], function() {
 });
 
 Route::get('bookings/send-message-to-admin/{title}/{message}', 'BookingController@sendMessageToAdmin');
+Route::get('notifications', 'NotificationController@index');
+Route::get('notifications/number-unread', 'NotificationController@numberUnread');
+Route::get('notifications/mark-all-read', 'NotificationController@markAllRead');
 

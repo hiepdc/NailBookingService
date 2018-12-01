@@ -1,224 +1,304 @@
 <div *ngIf="loaderService.isLoading | async">
+  <app-pre-loader></app-pre-loader>
 </div>
 <!-- ===== content starts  ===== -->
 <div id="content" class="col-md-10 split" *ngIf="!(loaderService.isLoading | async)">
   <!-- ===== Booking section starts  ===== -->
-  <div id="booking">
-    <div class="content-wrapper">
-      <div class="content-box container">
-        <div class="inside-wrapper container" id="inside-wrapper-bookings">
-          <div class="section-heading">
+  <div class="content-wrapper">
+    <div class="content-box container">
+      <div class="" id="inside-wrapper-bookings">
+        <!-- <div class="section-heading">
             <h2>Đặt Lịch</h2>
-          </div>
+          </div> -->
 
-          <!--Booking-1-->
-          <div id="booking" [hidden]="submmited">
-            <form (ngSubmit)="onSubmitBooking(bookingForm)" #bookingForm="ngForm">
-              <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                  <h4 class="panel-title">
-                    <a role="button" class="item-question collapsed" data-toggle="collapse" href="#collapse1"
-                      aria-expanded="true" aria-controls="collapse1">
-                      <span class="panel-number">1</span>Nhập Số Điện Thoại
-                    </a>
-                  </h4>
-                  <div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
-                    <div class="panel-body" id="enter-phone">
-                      <div class="form-group">
-                        <input type="tel" placeholder="" class="form-control"
-                          maxlength="10" pattern="(09|03[1|2|3|4|5|6|7|8|9])+([0-9]{8})\b" [(ngModel)]="phoneNumber"
-                          name="phone_number" required>
-                          <p>{{phoneNumber}}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="panel panel-default">
-                  <h4 class="panel-title">
-                    <a role="button" class="item-question collapsed" data-toggle="collapse" href="#collapse2"
-                      aria-expanded="false" aria-controls="collapse2"> <span class="panel-number">2</span> Chọn
-                      Services
-                    </a>
-                  </h4>
-                  <div id="collapse2" class="panel-collapse collapse in" role="tabpanel">
-                    <div class="panel-body" id="choose-service">
-                      <label class="radio-inline"><input type="radio" name="optradio" value="1" (change)="radioChangeHandler($event)"
-                          checked>Cơ Bản</label>
-                      <label class="radio-inline"><input type="radio" name="optradio" value="2" (change)="radioChangeHandler($event)">Nâng
-                        Cao</label>
-                      <p>Selected: {{selectedService}}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="panel panel-default">
-                  <h4 class="panel-title">
-                    <a class="item-question collapsed" role="button" data-toggle="collapse" href="#collapse3"
-                      aria-expanded="true" aria-controls="collapse3"> <span class="panel-number">3</span>
-                      Chọn Stylist
-                    </a>
-                  </h4>
-                  <div id="collapse3" class="panel-collapse collapse in" role="tabpanel">
-                    <div class="panel-body" id="choose-stylist">
-
-                      <swiper [config]="config2" [(index)]="index">
-
-                        <div class="serviceBox" (click)="getShiftByDefault(selectedService,selectedDate)">
-                          <div class="service-icon">
-                            <img class="img-responsive img-circle" [ngClass]="{'border': stylistId == -1}" src="../../assets/img/services/service1.jpg"
-                              alt="">
-                          </div>
-                          <div class="service-content">
-                            <h5>Châm trâm chọn cho bạn</h5>
-                          </div>
-                        </div>
-
-                        <div class="serviceBox" (click)="getShiftByStylist(selectedService,eachStylist.id,selectedDate)"
-                          *ngFor="let eachStylist of stylists">
-                          <div class="service-icon">
-                            <img class="img-responsive img-circle" [ngClass]="{'border': stylistId==eachStylist.id}" [src]="eachStylist.image_link" alt="">
-                          </div>
-                          <div class="service-content">
-                            <h5>{{eachStylist.stylist_name}}</h5>
-                          </div>
-                        </div>
-
-                      </swiper>
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="panel panel-default">
-                  <h4 class="panel-title">
-                    <a class="item-question collapsed" role="button" data-toggle="collapse" href="#collapse4"
-                      aria-expanded="true" aria-controls="collapse4"> <span class="panel-number">4</span>
-                      Chọn ngày, giờ
-                    </a>
-                  </h4>
-                  <div id="collapse4" class="panel-collapse collapse in" role="tabpanel">
-                    <div class="panel-body" id="choose-hours">
-
-                      <div class="days">
-                        <div *ngFor="let date of threeDate" class="calendar-7-day" [ngClass]="{active: formatDate(date.date)==selectedDate}"
-                          (click)="selectDate(date)">
-                          <span class="text-date-1">{{date.label}}</span>
-                          <span class="text-date-2">{{date.day}}, {{date.date|date:'dd'}}/{{date.date|date:'MM'}}</span>
-                        </div>
-                      </div>
-
-                      <div class="timeline">
-
-                        <div class="swiper-container" [swiper]="config1">
-                          <div class="swiper-wrapper">
-                            <div class="swiper-slide" *ngFor="let hour of status1; let i=index;">
-                              <div class="calendar-7-hour" (click)="click_hour(hour)" [ngClass]="{disabled: hour!=statusSample1[i], active:selectedHour==hour}">{{changeStatusToString(statusSample1[i])}}</div>
-                            </div>
-                          </div>
-
-                          <div class="swiper-scrollbar"></div>
-                          <div class="swiper-pagination"></div>
-                          <div class="swiper-button-prev"></div>
-                          <div class="swiper-button-next"></div>
-                        </div>
-                      </div>
-                      <input type="number" [(ngModel)]="selectedHour" name="flagSelectedHour" required hidden>
+        <!--Booking-1-->
+        <div id="booking" [hidden]="submitted">
+          <form (ngSubmit)="onSubmitBooking(bookingForm)" #bookingForm="ngForm">
+            <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <h4 class="panel-title">
+                  <a role="button" class="item-question collapsed" data-toggle="collapse" href="#collapse1"
+                    aria-expanded="true" aria-controls="collapse1">
+                    <span class="panel-number">1</span>Nhập Số Điện Thoại
+                  </a>
+                </h4>
+                <div id="collapse1" class="panel-collapse collapse in" role="tabpanel">
+                  <div class="panel-body" id="enter-phone">
+                    <!-- <div class="form-group">
+                      <input type="tel" placeholder="" class="form-control" maxlength="10" pattern="(03|09|07|08|05)+([0-9]{8})\b"
+                        [(ngModel)]="phoneNumber" name="phone_number" required>
+                       <p>{{phoneNumber}}</p> 
+                    </div> -->
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                      <input type="tel" placeholder="" class="form-control" maxlength="10" pattern="(03|09|07|08|05)+([0-9]{8})\b"
+                        [(ngModel)]="phoneNumber" name="phone_number" required>
+                        <p>{{number}}</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <button type="submit" class="btn" [disabled]="bookingForm.form.invalid">Tiếp theo</button>
+
+              <div class="panel panel-default">
+                <h4 class="panel-title">
+                  <a role="button" class="item-question collapsed" data-toggle="collapse" href="#collapse2"
+                    aria-expanded="false" aria-controls="collapse2"> <span class="panel-number">2</span> Chọn
+                    Services
+                  </a>
+                </h4>
+                <div id="collapse2" class="panel-collapse collapse in" role="tabpanel">
+                  <div class="panel-body" id="choose-service">
+                    <label class="radio-inline"><input type="radio" name="service" value="1" (click)="clickService($event)"
+                        [ngModel]="selectedService">Cơ Bản</label>
+                    <label class="radio-inline"><input type="radio" name="service" value="2" (click)="clickService($event)"
+                        [ngModel]="selectedService">Nâng Cao</label>
+                    <!-- <p>Selected: {{selectedService}}</p> -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <h4 class="panel-title">
+                  <a class="item-question collapsed" role="button" data-toggle="collapse" href="#collapse3"
+                    aria-expanded="true" aria-controls="collapse3"> <span class="panel-number">3</span>
+                    Chọn Stylist
+                  </a>
+                </h4>
+                <div id="collapse3" class="panel-collapse collapse in" role="tabpanel">
+                  <div class="panel-body" id="choose-stylist">
+
+                    <swiper [config]="config2" [(index)]="index">
+
+                      <div class="serviceBox" (click)="getShiftByStylist(selectedService,-1,selectedDate,'Châm Trâm Nail đã xếp stylist tốt nhất cho anh/chị')">
+                        <div class="service-icon">
+                          <img class="img-responsive img-circle" [ngClass]="{'border': stylistId == -1}" src="../../assets/img/services/service1.jpg"
+                            alt="">
+                        </div>
+                        <div class="service-content">
+                          <h5>Châm trâm chọn cho bạn</h5>
+                        </div>
+                      </div>
+
+                      <div class="serviceBox" (click)="getShiftByStylist(selectedService,eachStylist.id,selectedDate,eachStylist.stylist_name)"
+                        *ngFor="let eachStylist of stylists">
+                        <div class="service-icon">
+                          <img class="img-responsive img-circle" [ngClass]="{'border': stylistId==eachStylist.id}"
+                            [src]="eachStylist.image_link" alt="">
+                        </div>
+                        <div class="service-content">
+                          <h5>{{eachStylist.stylist_name}}</h5>
+                        </div>
+                      </div>
+                    </swiper>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel panel-default">
+                <h4 class="panel-title">
+                  <a class="item-question collapsed" role="button" data-toggle="collapse" href="#collapse4"
+                    aria-expanded="true" aria-controls="collapse4"> <span class="panel-number">4</span>
+                    Chọn ngày, giờ
+                  </a>
+                </h4>
+                <div id="collapse4" class="panel-collapse collapse in" role="tabpanel">
+                  <div class="panel-body" id="choose-hours">
+
+                    <div class="days">
+                      <div *ngFor="let date of threeDate" class="calendar-7-day" [ngClass]="{active: formatDate(date.date)==selectedDate}"
+                        (click)="selectDate(date)">
+                        <span class="text-date-1">{{date.label}}</span>
+                        <span class="text-date-2">{{date.day}}, {{date.date|date:'dd'}}/{{date.date|date:'MM'}}</span>
+                      </div>
+                    </div>
+                    <div class="timeline">
+                      <div class="swiper-container" [swiper]="config1">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide" *ngFor="let hour of status1; let i=index;">
+                            <div class="calendar-7-hour" (click)="click_hour(hour)" [ngClass]="{disabled: hour!=statusSample1[i], active:selectedHour==hour}">
+                              <div class="btn-hour">{{changeStatusToStartTime(statusSample1[i])}}</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="swiper-scrollbar"></div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                      </div>
+                    </div>
+                    <input type="number" [(ngModel)]="selectedHour" name="flagSelectedHour" required hidden>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn" [disabled]="bookingForm.form.invalid">Tiếp theo</button>
+          </form>
+        </div>
+
+        <!-- <div *ngIf="submitted">
+        
+          <div id="confirmBookingForm">
+            <form (ngSubmit)="onConfirmBooking()" #confirmBookingForm="ngForm">
+              <div class="section-heading">
+                <h2>Đặt Lịch Thành Công</h2>
+              </div>
+              <h4>Cảm ơn anh chị {{pinApi.data.customer.customer_name}} ({{phoneNumber}}) đã cho Châm trâm Nail được phục vụ</h4>
+              <h4><i class="fas fa-map-marker-alt margin-icon"></i> 35 Ngô Sĩ Liên - Hà Nội</h4>
+              <h4><i class="far fa-clock margin-icon"></i> {{changeStatusToString(selectedHour)}} Ngày
+                {{formatDate(selectedDate)}}
+                ((Mong anh đến sớm hơn 10 phút để chúng em phục vụ tốt nhất))
+              </h4>
+              <h4><i class="fas fa-female margin-icon"></i> {{changeStylistIdToName()}}</h4>
+
+              <h4>MỖI SĐT ĐẶT CHỈ DÀNH CHO 1 NGƯỜI</h4>
+              <p>(*) Nếu làm nail cho nhiều người, anh/chị vui lòng dùng SĐT khác để đặt thêm 1 lần nữa hoặc gọi tới
+                hotline để được sắp xếp giúp em!</p>
+              <button type="button" class="btn" (click)="changeBooking()">Đổi Lịch</button>
+              <button type="button" [routerLink]="['/home']" (click)="backToHome()" class="btn">Hủy Lịch</button>
+            </form>
+          </div>
+          
+          <div id="verifyCodePhone" [hidden]="!verifyCode">
+            <h3>Verify Code Number</h3>
+            <form (ngSubmit)="onSubmitCheck()" #checkVerifyCodeForm="ngForm">
+              <input type="tel" placeholder="" onkeypress="return isNumber(event)" onkeyup="numberWithCommas($(this))"
+                onchange="numberWithCommas($(this))" class="form-control" maxlength="4" required pattern="(09|01[2|6|8|9])+([0-9]{8})\b"
+                [(ngModel)]="phoneNumber" name="phoneNumber">
+              <button type="submit">Check</button>
             </form>
           </div>
 
-          <div *ngIf="submmited">
-            <!--booking-2-->
-            <div id="confirmBookingForm" [hidden]="verifyCode">
-              <form (ngSubmit)="onConfirmBooking()" #confirmBookingForm="ngForm">
-                <div class="section-heading">
-                  <h2>Đặt Lịch Thành Công</h2>
-                </div>
-                <h4>Cảm ơn anh chị {{pinApi.data.customer_name}} ({{phoneNumber}}) đã cho Châm trâm Nail được phục vụ</h4>
-                <h4><i class="fas fa-map-marker-alt margin-icon"></i> 35 Ngô Sĩ Liên - Hà Nội</h4>
-                <h4><i class="far fa-clock margin-icon"></i> {{changeStatusToString(selectedHour)}} Ngày
-                  {{formatDate(selectedDate)}}
-                  ((Mong anh đến sớm hơn 10 phút để chúng em phục vụ tốt nhất))
-                </h4>
-                <h4><i class="fas fa-female margin-icon"></i> {{changeStylistIdToName()}}</h4>
+        </div> -->
 
-                <h4>MỖI SĐT ĐẶT CHỈ DÀNH CHO 1 NGƯỜI</h4>
-                <p>(*) Nếu làm nail cho nhiều người, anh/chị vui lòng dùng SĐT khác để đặt thêm 1 lần nữa hoặc gọi tới
-                  hotline để được sắp xếp giúp em!</p>
-                <button type="button">Đổi Lịch Đặt thì back lại trang lúc nãy</button>
-                <button type="button" [routerLink]="['/home']" (click)="backToHome()">Hủy Lịch</button>
-              </form>
-            </div>
-
-            <!--Verify Code Phone-->
-            <div id="verifyCodePhone" [hidden]="!verifyCode">
-              <h3>Verify Code Number</h3>
-              <form (ngSubmit)="onSubmitCheck()" #checkVerifyCodeForm="ngForm">
-                <input type="tel" placeholder="" onkeypress="return isNumber(event)" onkeyup="numberWithCommas($(this))"
-                  onchange="numberWithCommas($(this))" class="form-control" maxlength="4" required pattern="(09|01[2|6|8|9])+([0-9]{8})\b"
-                  [(ngModel)]="phoneNumber" name="phoneNumber">
-                <button type="submit">Check</button>
-              </form>
-            </div>
-          </div>
-        </div>
-        <!-- /inside-wrapper -->
       </div>
-      <!-- /content-box -->
+      <!-- /inside-wrapper -->
     </div>
+    <!-- /content-box -->
   </div>
   <!-- /services ends -->
 </div>
 <!-- /content -->
 
-<!-- Modal -->
-<div id="modalVerifyPhone" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
+<!-- Modal Verify Pin-->
+<div class="backdrop" [ngStyle]="{'display':displayVerifyPin}"></div>
+<div id="modalVerifyPin" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayVerifyPin}">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <form (ngSubmit)="onSubmitCheckPin()" #checkVerifyPinForm="ngForm">
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" (click)="closeVerifyPin()"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Verify Pin Number</h4>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="inputPin form-control" maxlength="4" pattern="^\d{4}$" required [(ngModel)]="inputPinNumber"
+            name="inputPinNumber" />
+          <p [hidden]="!verified" class="notification">Anh/Chị điền sai pin code quá 3 lần. Vui lòng lấy mã Pin mới sau
+            10 phút</p>
+          <p [hidden]="!flagRemainingAttempts" class="notification">Anh/Chị còn {{remainingAttempts}} lần nhập sai</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" (click)="closeVerifyPin()">Đóng</button>
+          <button type="submit" class="btn" [disabled]="checkVerifyPinForm.form.invalid" [style.display]="verified ? 'none' : 'block'">Check
+            Pin</button>
+          <button type="button" class="btn" (click)="getPinCode()" [style.display]="verified ? 'block' : 'none'">Get
+            Pin</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal !-->
+
+<!-- Modal Change Booking-->
+<div class="backdrop" [ngStyle]="{'display':displayChangeBooking}"></div>
+<div id="modalChangeBooking" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayChangeBooking}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- <form (ngSubmit)="onSubmitChangeBooking(changeBookingForm)" #changeBookingForm="ngForm"> -->
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Verify Code Number</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeChangeBooking()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Verify Pin Number</h4> -->
       </div>
       <div class="modal-body">
-        <form>
-          <input type="tel" placeholder="0974372618" onkeypress="return isNumber(event)" onkeyup="numberWithCommas($(this))"
-            onchange="numberWithCommas($(this))" class="form-control" maxlength="10" required pattern="(09|01[2|6|8|9])+([0-9]{8})\b"
-            [(ngModel)]="verifyCode" name="verifyCode">
-        </form>
+        <h4 class="modal-title">Anh/chị có muốn đổi lịch</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalBookingForm" id="closeVerifyPhoneModal">Next</button>
+        <button type="button" class="btn" (click)="closeChangeBooking()">Đóng</button>
+        <button type="button" class="btn" (click)="onSubmitChangeBooking()">Có</button>
       </div>
-    </div>
+      <!-- </form> -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal !-->
 
-  </div>
-</div>
-
-<div id="modalBookingForm" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
+<!-- Modal Error Message-->
+<div class="backdrop" [ngStyle]="{'display':displayErrorMessage}"></div>
+<div id="modalErrorMessage" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayErrorMessage}">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <!-- <form (ngSubmit)="onSubmitChangeBooking(changeBookingForm)" #changeBookingForm="ngForm"> -->
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Booking Information</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeErrorMessage()"><span aria-hidden="true">&times;</span></button>
+        <!-- <h4 class="modal-title">Verify Pin Number</h4> -->
       </div>
       <div class="modal-body">
-        <form>
-          <p>Some text in the modal.</p>
-        </form>
+        <h4 class="modal-title">Đã xảy ra lỗi. Anh/Chị vui lòng thực hiện lại</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Đặt Lịch Ngay</button>
-        <!-- //gửi book detail đi rồi chuyển sang trang booking success-->
+        <button type="button" class="btn" (click)="closeErrorMessage()">Đóng</button>
       </div>
-    </div>
+      <!-- </form> -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal !-->
 
-  </div>
-</div>
+<!-- Modal Booking Form-->
+<div class="backdrop" [ngStyle]="{'display':displayBookingForm2}"></div>
+<div id="modalBookingForm2" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayBookingForm2}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form #bookingForm2="ngForm" class="form-horizontal">
+        <div class="modal-header">
+          <button type="button" class="close" aria-label="Close" (click)="closeBookingForm2()"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" style="text-align: center">Check Pin thành công</h4>
+        </div>
+        <div class="modal-body">
+          <h5 class="modal-title" style="text-align: center">Thông Tin Đặt Lịch</h5>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="customer_name">Tên:</label>
+            <div class="col-sm-9">
+                <input type="tel" placeholder="" class="form-control" maxlength="10" [(ngModel)]="customerName" name="name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-3" for="phone_number">SĐT:</label>
+            <div class="col-sm-9">
+                <p class="form-control-static">{{phoneNumber}}</p>
+            </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label col-sm-3" for="service">Dịch vụ:</label>
+              <div class="col-sm-9">
+                <p class="form-control-static">{{service}}</p>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label col-sm-3" for="stylistName">Stylist:</label>
+              <div class="col-sm-9">
+                <p class="form-control-static">{{stylistName}}</p>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="control-label col-sm-3" for="start_time">Thời gian bắt đầu:</label>
+              <div class="col-sm-9">
+                <p class="form-control-static">{{changeStatusToStartTime(selectedHour)}}</p>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" (click)="closeBookingForm2()">Đóng</button>
+          <button type="button" class="btn" [disabled]="bookingForm2.form.invalid" (click)="onSubmitBookingForm2()">Đặt Lịch</button>
+        </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal !-->

@@ -1,9 +1,9 @@
 
-import {Customer} from './customer';
+import {Pin} from './pin';
 
 export class PinApi{
-    success: boolean;
+    success: string;
     message: string;
-    status_code: number;
-    //data: string [];
+    data: Pin;
+
 }

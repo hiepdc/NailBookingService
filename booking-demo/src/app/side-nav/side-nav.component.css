@@ -27,6 +27,9 @@
    .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
     background: transparent;
    }
+
+   
+
    .navbar-header {
     float: left;
     width: 100%;

@@ -14,14 +14,23 @@
         <div class="inside-wrapper home col-md-12">
           <h3>Welcome to Châm Trâm</h3>
           <div class="input_sdt">
-            <form>
-              <div class="std_img"></div>
-              <p class="lead"></p>
-              <!-- Buttons -->
-              <a class="btn " routerLink="/contact">Contact us</a> 
-              <a class="btn " routerLink="/aboutus">More
-                info</a>
-            </form>
+            <div class="input-phone">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                <input type="tel" placeholder="" class="form-control" maxlength="10" pattern="(03|09|07|08|05)+([0-9]{8})\b"
+                  [(ngModel)]="phoneNumber" name="phone_number" required>
+                <p>{{number}}</p>
+              </div>
+            </div>
+            <div class="btn-booking">
+              <p>
+                Đặt Lịch Giữ Chỗ
+              </p>
+            </div>
+
+            <!-- Buttons -->
+            <a class="btn " routerLink="/contact">Contact us</a>
+            <a class="btn " routerLink="/aboutus">More info</a>
           </div>
         </div>
         <!-- /inside-wrapper -->

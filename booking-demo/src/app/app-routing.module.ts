@@ -17,7 +17,7 @@ const routes:Routes = [
   { path: 'gallery', component: GalleryComponent },
   { path: 'prices', component: PricesComponent },
   { path: 'aboutus', component: AboutusComponent },
-  { path: 'booking/:id', component: ConfirmedBookingComponent }
+  { path: 'booking/:phone', component: ConfirmedBookingComponent }
 ];
 
 @NgModule({

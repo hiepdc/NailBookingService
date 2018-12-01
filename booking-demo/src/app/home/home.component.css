@@ -1,0 +1,29 @@
+.form-control{
+    font-size: 19px;
+  }
+
+  .control-label{
+    text-align: left;
+    padding-top: 11px;
+  }
+
+.input-group-addon{
+  font-size: 20px;
+}
+
+.form-control-static{
+  font-size: 19px;
+}
+
+.form-group{
+  margin-bottom: 5px;
+  padding: 0 40px 0 30px;
+} 
+
+.input_sdt{
+    width: 100%;
+    float: left;
+    background-color: #fff;
+    padding: 10px 12px;
+    position: relative;
+}

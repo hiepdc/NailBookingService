@@ -306,3 +306,75 @@ input[type=number]::-webkit-outer-spin-button {
   font: 30px normal;
   margin: 0;
 }
+
+/*=========================== Media queries ============================ */
+/* Small devices (landscape phones, 544px) */
+@media (max-width: 544px){
+  #inside-wrapper-bookings{
+    padding: 0!important;
+  }
+  .input-phone{
+    width: 60%;
+  }
+  #choose-stylist img{
+    width: 58%;
+   }
+   #choose-stylist h5{
+     font: 18px normal;
+   }
+  #enter-phone{
+    padding: 6px 20px 2px 72px;
+  }
+  #enter-phone .form-control{
+    font: 22px normal;
+  }
+  #choose-service{
+    padding: 10px 20px 3px 72px;
+  }
+  #choose-stylist{
+    padding: 12px 24px 0px 15px;
+  }
+  #choose-hours{
+    padding: 12px 20px 0px 22px;
+  }
+  .calendar-7-hour{
+    width: 90%;
+    font: 24px normal;
+  }
+  .days{
+    font:17px normal;
+  }
+  .btn-hour{
+    margin-left: -10px;
+  }
+  .item-question{
+    font-size: 16px;
+  }
+  #collapse2 label {
+    font: 20px normal;
+  }
+  .btn{
+    font-size: 14px;
+    margin-right: 10px;
+  }
+}
+/* Medium devices (tablets, 768px) The navbar toggle appears at this breakpoint */
+@media (max-width: 768px) {
+}
+/* Medium- Large devices (desktops, 992px) */
+@media (max-width: 992px) {
+}
+/* Large devices (large desktops, min 1200px ) */
+@media (min-width: 1200px) {
+
+}
+/* Large devices (large desktops, max 1200px) */
+@media (max-width: 1199px) {
+  #inside-wrapper-bookings{
+    padding: 0!important;
+  }   
+}
+/* Large devices ( min 1500px) */
+@media (min-width: 1500px) {
+  
+ }

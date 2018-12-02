@@ -764,7 +764,7 @@
    .input-group .form-control, .input-group-btn {
     display: inline-table;
     width: 100%;
-    margin-top: 10px;
+    /* margin-top: 10px; */
    }
    .testimonial-pic, .testimonial .testimonial-review {
     float: none;
@@ -780,15 +780,13 @@
     right: 12px;
    }
    .content-box {
-    margin-top: 200px!important;
+    margin-top: 25px!important;
+    margin-bottom: 110px!important;
    }
    .inside-wrapper {
     padding: 20px 20px!important;
    }
 
-   .content-wrapper{
-
-   }
 }
    /* Medium devices (tablets, 768px) The navbar toggle appears at this breakpoint */
    @media (max-width: 768px) {
@@ -956,7 +954,7 @@
       background-repeat: no-repeat;
     }
     .content-box {
-      margin-top: 400px;
+      margin-top: 80px;
       width: 100%;
       margin-bottom: 150px;
     }

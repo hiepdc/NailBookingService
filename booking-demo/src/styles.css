@@ -38,7 +38,6 @@
 	border-top: 10px solid #f2e9e1;
 }
 
-
 /* Wine red */
 .table>thead>tr>th, .service-icon i, a, .alert-info, figure.team-style3 i,
 	.nav.nav-tabs>li:focus>a, .nav.nav-tabs>li.active>a, .nav.nav-tabs>li.active>a:hover,
@@ -63,6 +62,7 @@
     color: #797979;
     font-family: 'Open Sans', sans-serif;
   }
+  
   p,ul,ol {
     font-size: 16px;
     line-height: 1.8;
@@ -203,7 +203,7 @@
    .content-box {
     padding: 0px;
     width: 100%;
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.64);
     margin-top: 0px;
     margin-bottom: 0px;
     float:left;
@@ -222,11 +222,9 @@
    }
 
    .inside-wrapper {
-    padding: 70px!important;
+    padding: 40px 70px 70px 70px!important;
    }
-   .inside-wrapper.home {
-    padding: 40px!important;
-   }
+ 
    /* Content -webkit-box animation */
    /* @keyframes slidein {
     0% {
@@ -238,6 +236,7 @@
       transform: translateY(0);
     }
    } */
+   
    /* background images in each section */
    #services .content-wrapper {
     background-size: cover!important;
@@ -504,7 +503,7 @@
    /* section-heading */
    .section-heading {
     text-align: center;
-    margin-bottom: 70px;
+    margin-bottom: 30px;
    }
    .section-heading :after {
     content: ' ';
@@ -786,7 +785,11 @@
    .inside-wrapper {
     padding: 20px 20px!important;
    }
+
+   .content-wrapper{
+
    }
+}
    /* Medium devices (tablets, 768px) The navbar toggle appears at this breakpoint */
    @media (max-width: 768px) {
      /* section */
@@ -801,7 +804,7 @@
       font-size: 40px;
     }
     /* owl carousel navigation on top */
-    .owl-nav {
+    /* .owl-nav {
       margin: 0 auto;
       top: 0px;
       left: 50%;
@@ -818,7 +821,7 @@
     }
     .owl-carousel .owl-stage {
       margin-top: 50px;
-    }
+    } */
     /* typography */
     h1 {
       font-size: 2.4em;
@@ -916,13 +919,11 @@
      align-items: center;
    }
    /* content -webkit-box home*/
-   .content-box.home {
+   /* .content-box.home {
     padding: 10px!important;
     width: 60%;
    }
-   .content-box.home h1{
-    margin-top: 0px;
-   }    
+   */
    .inside-wrapper.container{
      width:1000px;
    }
@@ -933,20 +934,20 @@
    .dropdown-menu {
     margin-top: 30px;
    }
-   }
+}
    /* Large devices (large desktops, max 1200px) */
    @media (max-width: 1199px) {
     .slideshow {
       min-height: 100%;
     }
-    .content-box.home {
+    /* .content-box.home {
       padding: 0px 20px 30px 20px!important;
       width: 90%;
       left: 5%;
       margin-top: 0px!important;
       top: 30%;
       position: absolute;
-    }
+    } */
     .navbar {
       margin-bottom: 0px;
     }
@@ -968,9 +969,7 @@
       top: 89px;
       min-height:100%;
     }
-    .content-box.home {
-      margin-bottom: 150px;
-    }
+
     /* navigation */
     .dropdown-menu:before {
       display: none;
@@ -1069,10 +1068,9 @@
    @media (min-width: 1500px) {
    
     /* content -webkit-box home*/
-    .content-box.home {
+    /* .content-box.home {
       width: 50%!important;
-    }
-   
+    } */
    }
 
    

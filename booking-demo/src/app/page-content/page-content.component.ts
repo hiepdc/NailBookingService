@@ -24,7 +24,8 @@ import { PinApi } from '../models/pinApi';
 @Component({
   selector: 'app-page-content',
   templateUrl: './page-content.component.html',
-  styleUrls: ['./page-content.component.css', '../../assets/css/swiper.min.css'
+  styleUrls: ['./page-content.component.css'
+  //, '../../assets/css/swiper.min.css'
   ]
 })
 export class PageContentComponent implements OnInit {
@@ -148,6 +149,7 @@ export class PageContentComponent implements OnInit {
     this.confirmBookingService.currentPhoneNumber.subscribe(phoneNumber => this.phoneNumber = phoneNumber);
     this.getStylistFromService();
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
+    
     //this.openBookingForm2();
     //this.openVerifyPin();
   }
@@ -200,11 +202,15 @@ export class PageContentComponent implements OnInit {
     );
   }
 
+  getCustomerName(){
+
+  }
+
   getPinCode() {
     var body = { phone_number: this.phoneNumber };
     this.stylistService.checkPhoneOfCustomer(body).subscribe(
       (checkPhoneApi: CheckPhoneApi) => {
-        console.log("checkPhoneApi message" + this.checkPhoneApi.message);
+        console.log("checkPhoneApi message: " + this.checkPhoneApi.message);
         this.verified = false;
         this.flagRemainingAttempts = false;
       }

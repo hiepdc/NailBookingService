@@ -168,7 +168,10 @@ export class StylistService {
       tap((customerApi: CustomerApi) => console.log("customerApi: " + JSON.stringify(customerApi))),
       catchError(error => of(new CustomerApi()))
     );
+  }
 
+  getCustomerName(){
+    
   }
 
   constructor(private http: HttpClient) { }

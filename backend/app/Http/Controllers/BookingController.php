@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\Customer;
-use App\Events\Notify;
+use App\Notification;
 use App\Service;
 use App\Shift;
 use App\Stylist;
 use App\SpeedSMSAPI;
 use App\TwoFactorAPI;
 use Carbon\Carbon;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Pusher\Pusher;
 
@@ -63,18 +62,13 @@ class BookingController extends Controller
             $service_name = $service_name_arr->service_name;
             $stylist_name_arr = Stylist::find($stylist_id);
             $stylist_name = $stylist_name_arr->stylist_name;
-            // gửi tin nhắn
             $message = 'Cảm ơn anh/chị ' . $request->customer_name .
                 ' đã đặt lịch vào lúc ' . $this->convertTime($request->start_time) .
                 ' ngày ' . $request->date .
                 ' cho gói dịch vụ ' . $service_name .
             ' được phục vụ bởi ' . $stylist_name .
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
-            // gửi tin nhắn admin
-            $messageAdmin = ' Thời gian ' . $this->convertTime($request->start_time) .
-                ' ngày ' . $request->date .
-                ' gói dịch vụ ' . $service_name .
-            ' được phục vụ bởi ' . $stylist_name ;
+            // gửi tin nhắn to customer
             $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //5.add new booking
@@ -88,9 +82,11 @@ class BookingController extends Controller
             $status = $this->updateShiftStatusAfterBooking($sts, $request->start_time, $sizeOfTime);
             $shift->updateStatusByStylistID($stylist_id, $request->date, $status);
 
-            //7.send message to admin
-            $this->sendMessageToAdmin($request->customer_name, $message);
-            return response()->success($newBooking, 'Bạn đã đặt lịch thành công');
+            //7.add notification
+            $notification = new Notification();
+            $notification->addNotificaion($newBooking->id, 'new');
+            $data = $this->sendMessageToAdmin();
+            return response()->success($data, 'Bạn đã đặt lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -147,15 +143,13 @@ class BookingController extends Controller
                        ' cho gói dịch vụ ' . $service_name .
                        ' được phục vụ bởi ' . $stylist_name .
                        '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
-            // gửi tin nhắn admin
-            $messageAdmin = ' Thời gian ' . $this->convertTime($request->start_time) .
-                            ' ngày ' . $request->date .
-                            ' gói dịch vụ ' . $service_name .
-                            ' được phục vụ bởi ' . $stylist_name ;
+
             $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
-            if ($newBooking == 0) {
-                return response()->success($newBooking, "không có sự thay dổi nào");
-            }
+
+            //add notification
+            $notification = new Notification();
+            $notification->addNotificaion($newBooking->id, 'edit');
+            $this->sendMessageToAdmin();
             return response()->success($newBooking, 'Bạn đã đặt lại lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -179,7 +173,12 @@ class BookingController extends Controller
             $success = $booking->deleteBookingByPhonenumber($phonenumber);
             $newstatus = $this->updateShiftStatusAfterDeleteBooking($oldStatus, $startTime, $sizeOfTime);
             $shift->updateStatusByShiftID($shiftID, $newstatus);
-            return response()->success($success, 'Bạn vừa xóa thành công lịch đặt');
+
+            //add notification
+            $notificaiton = new Notification();
+            $notificaiton->addNotificaion($detailBooking->id, 'delete');
+            $this->sendMessageToAdmin();
+            return response()->success($detailBooking, 'Bạn vừa xóa thành công lịch đặt');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -457,7 +456,7 @@ class BookingController extends Controller
         return $realTime;
     }
 
-    function sendMessageToAdmin($title, $message){
+    function sendMessageToAdmin(){
         $options = array(
             'cluster' => 'ap1',
             'useTLS' => true
@@ -468,8 +467,13 @@ class BookingController extends Controller
             '657001',
             $options
         );
-        $data['title'] = $title;
-        $data['content'] = $message;
+        $notification = new Notification();
+        //number unread
+        $count = $notification->countUnread();
+        $data['countUnread'] = $count;
+        //list notification
+        $listLastNotitification = $notification->getAllNotification();
+        $data['notifications'] = $listLastNotitification;
         $pusher->trigger('Notify', 'send-message', $data);
         return $data;
     }

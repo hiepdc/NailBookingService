@@ -15,7 +15,8 @@ class NotificationSeeder extends Seeder
             DB::table('notifications')->insert([
                 [
                     'booking_id' => rand(1,10),
-                    'status' => '0'
+                    'status' => 1,
+                    'type' => 'new'
                 ]
             ]);
         }

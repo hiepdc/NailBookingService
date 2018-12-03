@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class Booking extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'shift_id', 'service_id', 'customer_id', 'start_time', 'status'
     ];
@@ -31,6 +33,8 @@ class Booking extends Model
     }
     public $timestamps = false;
 
+    protected $dates = ['deleted_at'];
+
     public function getStatusBookedByPhonenumber($phonenumber)
     {
         $statusBooking = DB::table('customers')
@@ -39,7 +43,7 @@ class Booking extends Model
             ->where([
                 ['phone_number', '=', $phonenumber],
                 ['status', '=', 'booked']
-            ])
+            ])->whereNull('deleted_at')
             ->count();
         return $statusBooking;
     }
@@ -49,7 +53,7 @@ class Booking extends Model
         $detailBooking = DB::table('customers')
             ->join('bookings', 'customers.id', '=', 'bookings.customer_id')
             ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
-            ->select('customers.id'
+            ->select('bookings.id'
                 , 'customers.customer_name'
                 , 'bookings.start_time'
                 , 'bookings.service_id'
@@ -57,8 +61,9 @@ class Booking extends Model
                 , 'shifts.status')
             ->where([
                 ['phone_number', '=', $phonenumber],
-                ['bookings.status', '=', 'booked']
-            ])->first();
+                ['bookings.status', '=', 'booked'],
+            ])->whereNull('deleted_at')
+              ->first();
         return $detailBooking;
     }
 
@@ -69,8 +74,7 @@ class Booking extends Model
         $deteteBooking = Booking::where([
             ['customer_id', $customer_id],
             ['status', 'booked'],
-        ])
-            ->delete();
+        ])->delete();
         return $deteteBooking;
     }
 
@@ -93,7 +97,8 @@ class Booking extends Model
         $booking = Booking::where([
             ['customer_id', $customer_id],
             ['status', 'booked']
-        ])->update([
+        ])->first();
+        $booking->update([
             'shift_id' => $shift_id,
             'service_id' => $service_id,
             'start_time' => $start_time
@@ -122,6 +127,7 @@ class Booking extends Model
             ])
 //            ->where('bookings.status', '=', $status)
             ->Where('stylists.stylist_name', 'like', '%' . $stylist_name . '%')
+            ->whereNull('deleted_at')
             ->orderBy('bookings.start_time')
             ->orderBy('bookings.status')
             ->paginate(10);
@@ -145,8 +151,9 @@ class Booking extends Model
                 , 'bookings.status')
             ->where([
                 ['date', '=', $date],
-            ])->orderBy('bookings.start_time')
-            ->orderBy('bookings.status')
+            ])->orderBy('bookings.id', 'desc')
+            ->whereNull('deleted_at')
+//            ->orderBy('bookings.status')
             ->paginate(10);
         return $bookings;
     }

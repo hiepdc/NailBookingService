@@ -8,6 +8,7 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { PricesComponent } from './prices/prices.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ConfirmedBookingComponent } from './confirmed-booking/confirmed-booking.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const routes:Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes:Routes = [
   { path: 'gallery', component: GalleryComponent },
   { path: 'prices', component: PricesComponent },
   { path: 'aboutus', component: AboutusComponent },
-  { path: 'booking/:phone', component: ConfirmedBookingComponent }
+  { path: 'booking/:phone', component: ConfirmedBookingComponent },
+  { path: 'admin', component: NotificationComponent }
 ];
 
 @NgModule({

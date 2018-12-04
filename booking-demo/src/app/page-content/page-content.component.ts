@@ -202,10 +202,6 @@ export class PageContentComponent implements OnInit {
     );
   }
 
-  getCustomerName(){
-
-  }
-
   getPinCode() {
     var body = { phone_number: this.phoneNumber };
     this.stylistService.checkPhoneOfCustomer(body).subscribe(
@@ -241,7 +237,8 @@ export class PageContentComponent implements OnInit {
                   this.closeChangeBooking();
                   //2.send data to service
                   this.addDataToConfirmBookingService();
-                  this.router.navigate(['booking', this.phoneNumber]);
+                  var hour = this.changeStatusToStartTime(this.selectedHour);
+                  this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, this.selectedDate, this.stylistName]);
                 }
               },
               error => { console.log(error); return }
@@ -297,7 +294,8 @@ export class PageContentComponent implements OnInit {
           if (this.bookingApi.success == true) {
             //2.send data to service
             this.addDataToConfirmBookingService();
-            this.router.navigate(['booking', this.phoneNumber]);
+            var hour = this.changeStatusToStartTime(this.selectedHour);
+            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour,this.selectedDate, this.stylistName]);
           } else {
             this.openErrorMessage();
           }
@@ -328,7 +326,8 @@ export class PageContentComponent implements OnInit {
             this.closeBookingForm2();
             //2.send data to service
             this.addDataToConfirmBookingService();
-            this.router.navigate(['booking', this.phoneNumber]);
+            var hour = this.changeStatusToStartTime(this.selectedHour);
+            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, this.selectedDate, this.stylistName]);
           }
         },
         error => { console.log(error); return }

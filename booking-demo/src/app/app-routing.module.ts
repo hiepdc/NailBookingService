@@ -17,8 +17,9 @@ const routes:Routes = [
   { path: 'gallery', component: GalleryComponent },
   { path: 'prices', component: PricesComponent },
   { path: 'aboutus', component: AboutusComponent },
-  { path: 'booking/:phone', component: ConfirmedBookingComponent }
-];
+  { path: 'booking/:phone/:customerName/:hour/:date/:stylistName', component: ConfirmedBookingComponent },
+  //{ path: 'booking?:phone&:customerName&:hour&:date&:stylistName', component: ConfirmedBookingComponent }
+]; 
 
 @NgModule({
   imports: [

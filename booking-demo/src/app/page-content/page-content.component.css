@@ -312,9 +312,10 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 150px
 }
 
+
 /*=========================== Media queries ============================ */
 /* Small devices (landscape phones, 544px) */
-@media (max-width: 544px){
+@media (max-width: 480px ){
   #inside-wrapper-bookings{
     padding: 0!important;
   }
@@ -366,21 +367,60 @@ input[type=number]::-webkit-outer-spin-button {
     margin-top: 195px;
   }
   .bookingForm2{
-    margin-top: 90px;
+    margin-top: 95px;
   }
   .form-group{
     padding:  0;
     display: flex;
+    margin-bottom: 0px;
   }
   .control-label{
     width: 20%;
   }
+  .modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    /* height: 250px; */
+    /* overflow-y: auto; */
+}
+
+.modal-body h5{
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.modal-header h4{
+  font-size: 19px;
+}
+
+.modal{
+  overflow-y: scroll;
+}
+
+}
+
+@media (max-width: 320px ){
+  .calendar-7-hour {
+    width: 82%;
+    font: 17px normal;
+    border: 1px solid #ececec;
+}
 }
 /* Medium devices (tablets, 768px) The navbar toggle appears at this breakpoint */
 @media (max-width: 768px) {
+  .modal-dialog{
+    overflow-y: initial !important;
+    margin-top: 95px;
 }
+.modal{
+  overflow-y: scroll;
+}
+}
+
 /* Medium- Large devices (desktops, 992px) */
 @media (max-width: 992px) {
+  
 }
 /* Large devices (large desktops, min 1200px ) */
 @media (min-width: 1200px) {

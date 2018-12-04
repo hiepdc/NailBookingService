@@ -252,7 +252,8 @@ input[type=number]::-webkit-outer-spin-button {
     width: 50%;
     font-size: 25px;
     height: 40px;
-    margin-left: 135px;
+    margin-left: 25%;
+    margin-right: 25%;
     text-align: center;
   }
 
@@ -307,6 +308,10 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+.verifyPin, .changeBoooking{  
+  margin-top: 150px
+}
+
 /*=========================== Media queries ============================ */
 /* Small devices (landscape phones, 544px) */
 @media (max-width: 544px){
@@ -356,6 +361,19 @@ input[type=number]::-webkit-outer-spin-button {
   .btn{
     font-size: 14px;
     margin-right: 10px;
+  }
+  .verifyPin, .changeBoooking{
+    margin-top: 195px;
+  }
+  .bookingForm2{
+    margin-top: 90px;
+  }
+  .form-group{
+    padding:  0;
+    display: flex;
+  }
+  .control-label{
+    width: 20%;
   }
 }
 /* Medium devices (tablets, 768px) The navbar toggle appears at this breakpoint */

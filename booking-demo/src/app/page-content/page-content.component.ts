@@ -150,7 +150,7 @@ export class PageContentComponent implements OnInit {
     this.getStylistFromService();
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
     
-    //this.openBookingForm2();
+    this.openBookingForm2();
     //this.openVerifyPin();
   }
 

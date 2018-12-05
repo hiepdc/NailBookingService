@@ -240,7 +240,7 @@
    /* background images in each section */
    #services .content-wrapper {
     background-size: cover!important;
-    background: url("http://localhost:4200/assets/css/../img/backgrounds/bg1.jpg");
+    background: url("assets/img/backgrounds/bg10.jpg");
    }
    #aboutus .content-wrapper {
     background-size: cover!important;
@@ -252,7 +252,7 @@
    }
    #gallery .content-wrapper {
     background-size: cover!important;
-    background: url("http://localhost:4200/assets/css/../img/backgrounds/bg4.jpg");
+    background: url("assets/img/backgrounds/bg8.jpg");
    }
    #prices .content-wrapper {
     background-size: cover!important;

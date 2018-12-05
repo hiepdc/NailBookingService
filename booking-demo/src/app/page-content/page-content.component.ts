@@ -192,6 +192,7 @@ export class PageContentComponent implements OnInit {
           }
           console.log(`status1: ${this.status1}`);
         } else {
+          this.status1 = [];
           for (var i: number = 0; i < 52; i++) {
             this.status1[i] = "-1";
           }

@@ -8,6 +8,7 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { SwiperModule, SwiperConfigInterface,
   SWIPER_CONFIG } from 'ngx-swiper-wrapper';
   import { MaterialModule } from './material.module';
+  import { LightboxModule } from 'ngx-lightbox';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -24,6 +25,7 @@ import { VerifyPinNumberComponent } from './verify-pin-number/verify-pin-number.
 
 import { StylistService } from './stylist.service';
 import { ConfirmBookingService } from './confirm-booking.service';
+import { CollectionComponent } from './collection/collection.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -42,7 +44,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PricesComponent,
     AboutusComponent,
     ConfirmedBookingComponent,
-    VerifyPinNumberComponent
+    VerifyPinNumberComponent,
+    CollectionComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CoreModule,
     SwiperModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    LightboxModule
   ],
   providers: [
     StylistService,

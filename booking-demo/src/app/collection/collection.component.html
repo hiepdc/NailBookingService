@@ -1,0 +1,29 @@
+<!-- ===== content starts  ===== -->
+<div id="content" class="col-md-10 split">
+  <!-- ===== Gallery section starts  ===== -->
+  <div id="collection">
+    <div class="content-wrapper">
+      <div class="content-box container">
+        <div class="inside-wrapper container">
+          <!-- section-heading -->
+          <div class="section-heading">
+            <h2>{{collectionName}}</h2>
+          </div> 
+
+          <div class="column has-text-centered">
+            <div class="img-row" *ngFor="let image of albums; let i=index">
+              <img class="img-frame" [src]="image.thumb" (click)="open(i)" />
+            </div>
+          </div>
+
+
+        </div>
+        <!-- /inside-wrapper -->
+      </div>
+      <!-- /content-box -->
+    </div>
+    <!-- / content-wrapper -->
+  </div>
+  <!-- /gallery ends -->
+</div>
+<!-- /content -->

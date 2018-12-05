@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Gallery extends Model
 {
     protected $fillable = [
-        'image_link'
+        'name', 'image_link'
     ];
+
+    public $timestamps = false;
+
+    public function images(){
+        $this->hasMany('App\Image');
+    }
 }

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Gallery;
 use App\Image;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class GalleryController extends Controller
+class ImageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +14,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
         try {
-            $galleries = Gallery::all();
-            return response()->success($galleries);
+            $image = Image::all();
+            return response()->success($image);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -32,7 +29,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -43,13 +40,12 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
         try {
-            $gallery = Gallery::create([
-                'name' => $request->name,
+            $image = Image::create([
+                'gallery_id' => $request->gallery_id,
                 'image_link' => $request->image_link
             ]);
-            return response()->success($gallery);
+            return response()->success($image);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -63,16 +59,11 @@ class GalleryController extends Controller
      */
     public function show($id)
     {
-        //
-
         try {
-            $gallery = Gallery::find($id);
-            if (!$gallery) {
-                return response()->notFound("gallery does not exist");
+            $image = Image::find($id);
+            if(!$image) {
+                return response()->notFound('Image does not exist');
             }
-            $image = new Image();
-            $results = $image->getImages($id);
-            return response()->success($results);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -98,13 +89,12 @@ class GalleryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         try {
-            $gallery = Gallery::find($id);
-            if (!$gallery) {
-                return response()->notFound("gallery does not exist");
+            $image = Image::find($id);
+            if (!$image) {
+                return response()->notFound("Image does not exist");
             }
-            $updatedGallery = $gallery->update($request->only(['name', 'image_link']));
+            $updatedGallery = $image->update($request->only(['gallery_id', 'image_link']));
             return response()->success($updatedGallery);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -119,11 +109,10 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
         try {
-            $deletebyid = Gallery::find($id);
+            $deletebyid = Image::find($id);
             if (!$deletebyid) {
-                return response()->notFound("gallery does not exist");
+                return response()->notFound("Image does not exist");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);

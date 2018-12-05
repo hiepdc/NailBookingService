@@ -81,3 +81,5 @@ Route::get('notifications', 'NotificationController@index');
 Route::get('notifications/number-unread', 'NotificationController@numberUnread');
 Route::get('notifications/mark-all-read', 'NotificationController@markAllRead');
 
+Route::get('galleries', 'GalleryController@index');
+Route::get('galleries/{id}', "GalleryController@show");

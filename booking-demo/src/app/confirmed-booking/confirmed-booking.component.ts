@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { LoaderService } from '../core';
+//import { LoaderService } from '../core';
 import { StylistService } from '../stylist.service';
 import { ConfirmBookingService } from '../confirm-booking.service'
 
@@ -17,41 +17,49 @@ import { BookingApi } from '../models/bookingApi';
 export class ConfirmedBookingComponent implements OnInit {
 
   constructor(
-    private route:ActivatedRoute,
-    private location:Location,
-    private stylistService:StylistService,
-    private loaderService:LoaderService,
-    private confirmBookingService:ConfirmBookingService
+    private route: ActivatedRoute,
+    private location: Location,
+    private stylistService: StylistService,
+    //private loaderService:LoaderService,
+    private confirmBookingService: ConfirmBookingService
   ) { }
 
-  customerId:number;
-  customerName:string;
-  phoneNumber:string;
-  selectedHour:string;
-  selectedDate:string;
-  stylistName:string;
-  stylist:Stylist;
+  customerId: number;
+  customerName: string;
+  phoneNumber: string;
+  selectedHour: string;
+  selectedDate: string;
+  stylistName: string;
+  stylist: Stylist;
 
   ngOnInit() {
-    this.confirmBookingService.currentDate.subscribe(date => this.selectedDate = date);
-    this.confirmBookingService.currentHour.subscribe(hour => this.selectedHour = hour);
-    this.confirmBookingService.currentCustomerName.subscribe(customerName => this.customerName = customerName);
-    this.confirmBookingService.currentStylistName.subscribe(stylistName => this.stylistName = stylistName);
+    // this.confirmBookingService.currentDate.subscribe(date => this.selectedDate = date);
+    // this.confirmBookingService.currentHour.subscribe(hour => this.selectedHour = hour);
+    // this.confirmBookingService.currentCustomerName.subscribe(customerName => this.customerName = customerName);
+    // this.confirmBookingService.currentStylistName.subscribe(stylistName => this.stylistName = stylistName);
     this.getDataFromRoute();
+
   }
 
-  getDataFromRoute():void{
-    this.customerId = +this.route.snapshot.paramMap.get('id');
+  getDataFromRoute(): void {
     this.phoneNumber = this.route.snapshot.paramMap.get('phone');
+    this.customerName = this.route.snapshot.paramMap.get('customerName');
+    this.selectedHour = this.route.snapshot.paramMap.get('hour');
+    this.stylistName = this.route.snapshot.paramMap.get('stylistName');
+    this.selectedDate = this.route.snapshot.paramMap.get('date');
     console.log("this.route.snapshot.paramMap: "+JSON.stringify(this.route.snapshot.paramMap));
-    console.log("this.route.snapshot.paramMap:customerId "+this.customerId);
     console.log("this.route.snapshot.paramMap:phone "+this.phoneNumber);
+
+    // this.route.queryParams.subscribe(params => {
+    //   this.phoneNumber = params['startdate'];
+    //   console.log(this.phoneNumber); // Print the parameter to the console. 
+    // });
   }
 
-  backToHome(){
+  backToHome() {
     //1. delete booking 
     this.stylistService.deleteBooking(+this.phoneNumber).subscribe(
-      (bookingApi: BookingApi) =>{
+      (bookingApi: BookingApi) => {
       },
       error => { console.log(error); return }
     )
@@ -60,14 +68,15 @@ export class ConfirmedBookingComponent implements OnInit {
     this.confirmBookingService.changeDate("");
     this.confirmBookingService.changeHour("");
     this.confirmBookingService.changeStylistName("");
+    this.confirmBookingService.changeCustomerName("");
   }
 
-  goBack():void{
+  goBack(): void {
     this.addPhoneNumberToConfirmBookingService();
     this.location.back();
   }
 
-  addPhoneNumberToConfirmBookingService(){
+  addPhoneNumberToConfirmBookingService() {
     this.confirmBookingService.changePhoneNumber(this.phoneNumber);
   }
 

@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import { NotificationApi } from './models/notificationApi';
-import { StylistsApi } from './models/stylistsApi';
 
 declare const Pusher: any;
 

@@ -29,12 +29,15 @@
                         [(ngModel)]="phoneNumber" name="phone_number" required>
                        <p>{{phoneNumber}}</p> 
                     </div> -->
-                    <div class="input-group">
+                    <div class="input-group input-phone">
                       <span class="input-group-addon"><i class="fas fa-phone"></i></span>
                       <input type="tel" placeholder="" class="form-control" maxlength="10" pattern="(03|09|07|08|05)+([0-9]{8})\b"
                         [(ngModel)]="phoneNumber" name="phone_number" required>
-                        <p>{{number}}</p>
+                      <!-- <p>{{number}}</p> -->
                     </div>
+                    <div class="customer-name">
+                        <p>{{phoneNumber}}</p>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -182,7 +185,7 @@
 <!-- Modal Verify Pin-->
 <div class="backdrop" [ngStyle]="{'display':displayVerifyPin}"></div>
 <div id="modalVerifyPin" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayVerifyPin}">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog verifyPin" role="document">
     <div class="modal-content">
       <form (ngSubmit)="onSubmitCheckPin()" #checkVerifyPinForm="ngForm">
         <div class="modal-header">
@@ -211,7 +214,7 @@
 <!-- Modal Change Booking-->
 <div class="backdrop" [ngStyle]="{'display':displayChangeBooking}"></div>
 <div id="modalChangeBooking" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayChangeBooking}">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog changeBoooking" role="document">
     <div class="modal-content">
       <!-- <form (ngSubmit)="onSubmitChangeBooking(changeBookingForm)" #changeBookingForm="ngForm"> -->
       <div class="modal-header">
@@ -254,7 +257,7 @@
 <!-- Modal Booking Form-->
 <div class="backdrop" [ngStyle]="{'display':displayBookingForm2}"></div>
 <div id="modalBookingForm2" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayBookingForm2}">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog bookingForm2" role="document">
     <div class="modal-content">
       <form #bookingForm2="ngForm" class="form-horizontal">
         <div class="modal-header">
@@ -266,37 +269,39 @@
           <div class="form-group">
             <label class="control-label col-sm-3" for="customer_name">Tên:</label>
             <div class="col-sm-9">
-                <input type="tel" placeholder="" class="form-control" maxlength="10" [(ngModel)]="customerName" name="name" required>
+              <input type="tel" placeholder="" class="form-control" maxlength="10" [(ngModel)]="customerName" name="name"
+                required>
             </div>
           </div>
           <div class="form-group">
             <label class="control-label col-sm-3" for="phone_number">SĐT:</label>
             <div class="col-sm-9">
-                <p class="form-control-static">{{phoneNumber}}</p>
+              <p class="form-control-static">{{phoneNumber}}</p>
             </div>
           </div>
           <div class="form-group">
-              <label class="control-label col-sm-3" for="service">Dịch vụ:</label>
-              <div class="col-sm-9">
-                <p class="form-control-static">{{service}}</p>
-              </div>
+            <label class="control-label col-sm-3" for="service">Dịch vụ:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static">{{service}}</p>
+            </div>
           </div>
           <div class="form-group">
-              <label class="control-label col-sm-3" for="stylistName">Stylist:</label>
-              <div class="col-sm-9">
-                <p class="form-control-static">{{stylistName}}</p>
-              </div>
+            <label class="control-label col-sm-3" for="stylistName">Stylist:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static">{{stylistName}}</p>
+            </div>
           </div>
           <div class="form-group">
-              <label class="control-label col-sm-3" for="start_time">Thời gian bắt đầu:</label>
-              <div class="col-sm-9">
-                <p class="form-control-static">{{changeStatusToStartTime(selectedHour)}}</p>
-              </div>
+            <label class="control-label col-sm-3" for="start_time">Thời gian:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static">{{changeStatusToStartTime(selectedHour)}}</p>
+            </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn" (click)="closeBookingForm2()">Đóng</button>
-          <button type="button" class="btn" [disabled]="bookingForm2.form.invalid" (click)="onSubmitBookingForm2()">Đặt Lịch</button>
+          <button type="button" class="btn" [disabled]="bookingForm2.form.invalid" (click)="onSubmitBookingForm2()">Đặt
+            Lịch</button>
         </div>
       </form>
     </div><!-- /.modal-content -->

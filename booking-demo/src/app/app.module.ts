@@ -24,8 +24,8 @@ import { VerifyPinNumberComponent } from './verify-pin-number/verify-pin-number.
 
 import { StylistService } from './stylist.service';
 import { ConfirmBookingService } from './confirm-booking.service';
-import { NotificationComponent } from './notification/notification.component';
 import { PusherService } from './pusher.service';
+import { NotificationComponent } from './notification/notification.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',

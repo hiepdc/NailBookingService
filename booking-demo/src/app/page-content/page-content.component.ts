@@ -24,7 +24,8 @@ import { PinApi } from '../models/pinApi';
 @Component({
   selector: 'app-page-content',
   templateUrl: './page-content.component.html',
-  styleUrls: ['./page-content.component.css', '../../assets/css/swiper.min.css'
+  styleUrls: ['./page-content.component.css'
+    //, '../../assets/css/swiper.min.css'
   ]
 })
 export class PageContentComponent implements OnInit {
@@ -148,8 +149,9 @@ export class PageContentComponent implements OnInit {
     this.confirmBookingService.currentPhoneNumber.subscribe(phoneNumber => this.phoneNumber = phoneNumber);
     this.getStylistFromService();
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
+
     //this.openBookingForm2();
-    //this.openVerifyPin();
+    this.openVerifyPin();
   }
 
   /*------  Put data to service ---------*/
@@ -190,7 +192,8 @@ export class PageContentComponent implements OnInit {
           }
           console.log(`status1: ${this.status1}`);
         } else {
-          for (var i: number = 0; i < 52; i++){
+          for (var i: number = 0; i < 52; i++) {
+            this.status1 = [];
             this.status1[i] = "-1";
           }
           console.log(`status1: ${this.status1}`);
@@ -204,7 +207,7 @@ export class PageContentComponent implements OnInit {
     var body = { phone_number: this.phoneNumber };
     this.stylistService.checkPhoneOfCustomer(body).subscribe(
       (checkPhoneApi: CheckPhoneApi) => {
-        console.log("checkPhoneApi message" + this.checkPhoneApi.message);
+        console.log("checkPhoneApi message: " + this.checkPhoneApi.message);
         this.verified = false;
         this.flagRemainingAttempts = false;
       }
@@ -235,7 +238,8 @@ export class PageContentComponent implements OnInit {
                   this.closeChangeBooking();
                   //2.send data to service
                   this.addDataToConfirmBookingService();
-                  this.router.navigate(['booking', this.phoneNumber]);
+                  var hour = this.changeStatusToStartTime(this.selectedHour);
+                  this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, this.selectedDate, this.stylistName]);
                 }
               },
               error => { console.log(error); return }
@@ -256,24 +260,28 @@ export class PageContentComponent implements OnInit {
     this.stylistService.checkPinCode(this.phoneNumber, +this.inputPinNumber).subscribe(
       (pinApi: PinApi) => {
         this.checkPinApi = pinApi; console.log("check pin api: " + JSON.stringify(this.checkPinApi));
-        if (this.checkPinApi.data.verified == true) {
-          //1. thông báo check thành công
-          //2. hiển thị form booking có thêm tên
-          this.closeVerifyPin();
-          this.openBookingForm2();
+        if (this.checkPinApi.data === null) {
+          console.log("data: " + this.checkPinApi.data);
         } else {
-          if (this.checkPinApi.data.remainingAttempts == 0) {
-            //1. thông báo bạn đã điền sai pin code quá nhiều làn. vui lòng đợi sau 10phut
-            this.flagRemainingAttempts = false;
-            this.verified = true;
-            console.log("current verified: " + this.verified);
-            //thông báo thử bằng snackbar xem
+          if (this.checkPinApi.data.verified === true) {
+            //1. thông báo check thành công
+            //2. hiển thị form booking có thêm tên
+            this.closeVerifyPin();
+            this.openBookingForm2();
           } else {
-            //1. thông báo số lần có thể điền sai còn lại
-            this.verified = false;
-            this.flagRemainingAttempts = true;
-            this.remainingAttempts = this.checkPinApi.data.remainingAttempts;
-            console.log("current remainingAttempts: " + this.remainingAttempts);
+            if (this.checkPinApi.data.remainingAttempts == 0) {
+              //1. thông báo bạn đã điền sai pin code quá nhiều làn. vui lòng đợi sau 10phut
+              this.flagRemainingAttempts = false;
+              this.verified = true;
+              console.log("current verified: " + this.verified);
+              //thông báo thử bằng snackbar xem
+            } else {
+              //1. thông báo số lần có thể điền sai còn lại
+              this.verified = false;
+              this.flagRemainingAttempts = true;
+              this.remainingAttempts = this.checkPinApi.data.remainingAttempts;
+              console.log("current remainingAttempts: " + this.remainingAttempts);
+            }
           }
         }
       },
@@ -291,7 +299,8 @@ export class PageContentComponent implements OnInit {
           if (this.bookingApi.success == true) {
             //2.send data to service
             this.addDataToConfirmBookingService();
-            this.router.navigate(['booking', this.phoneNumber]);
+            var hour = this.changeStatusToStartTime(this.selectedHour);
+            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, this.selectedDate, this.stylistName]);
           } else {
             this.openErrorMessage();
           }
@@ -322,7 +331,8 @@ export class PageContentComponent implements OnInit {
             this.closeBookingForm2();
             //2.send data to service
             this.addDataToConfirmBookingService();
-            this.router.navigate(['booking', this.phoneNumber]);
+            var hour = this.changeStatusToStartTime(this.selectedHour);
+            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, this.selectedDate, this.stylistName]);
           }
         },
         error => { console.log(error); return }
@@ -349,7 +359,7 @@ export class PageContentComponent implements OnInit {
     console.log("selectedService: " + this.selectedService);
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
   }
-  
+
   openVerifyPin() {
     this.displayVerifyPin = 'block';
   }

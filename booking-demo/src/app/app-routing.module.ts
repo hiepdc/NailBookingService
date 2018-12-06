@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 import { PageContentComponent } from './page-content/page-content.component';
 import { HomeComponent } from './home/home.component';
@@ -8,8 +8,9 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { PricesComponent } from './prices/prices.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ConfirmedBookingComponent } from './confirmed-booking/confirmed-booking.component';
-import { NotificationComponent } from './notification/notification.component'
-const routes:Routes = [
+import { AdminModule} from './admin/admin.module';
+
+const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
@@ -19,12 +20,14 @@ const routes:Routes = [
   { path: 'aboutus', component: AboutusComponent },
   { path: 'booking/:phone/:customerName/:hour/:date/:stylistName', component: ConfirmedBookingComponent },
   //{ path: 'booking?:phone&:customerName&:hour&:date&:stylistName', component: ConfirmedBookingComponent }
-  { path: 'admin', component: NotificationComponent }
-]; 
+  {
+    path: 'admin', loadChildren: ()=> AdminModule
+  }
+];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
 
   exports: [RouterModule]

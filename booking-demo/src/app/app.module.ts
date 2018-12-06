@@ -24,9 +24,8 @@ import { VerifyPinNumberComponent } from './verify-pin-number/verify-pin-number.
 
 import { StylistService } from './stylist.service';
 import { ConfirmBookingService } from './confirm-booking.service';
-import { PusherService } from './pusher.service';
-import { NotificationComponent } from './notification/notification.component';
 
+import { AdminModule } from './admin/admin.module';
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   slidesPerView: 'auto'
@@ -44,8 +43,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PricesComponent,
     AboutusComponent,
     ConfirmedBookingComponent,
-    VerifyPinNumberComponent,
-    NotificationComponent
+    VerifyPinNumberComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +53,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CoreModule,
     SwiperModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    AdminModule
   ],
   providers: [
     StylistService,
@@ -63,8 +62,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
-    },
-    PusherService
+    }
   ],
   bootstrap: [AppComponent]
 })

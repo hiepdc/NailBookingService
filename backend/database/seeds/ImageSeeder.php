@@ -11,6 +11,7 @@ class ImageSeeder extends Seeder
      */
     public function run()
     {
+        //^_^
         foreach (range(1, 50) as $index) {
             DB::table('images')->insert([
                 'gallery_id' => rand(1,10),

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { GalleryService } from '../gallery.service';
+import { LoaderService } from '../core';
+import { Gallery } from '../models/gallery';
 @Component({
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
@@ -7,12 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GalleryComponent implements OnInit {
 
-  constructor() { }
+  private galleries:Gallery[];
+  
+  constructor(
+    public loaderService: LoaderService,
+    private galleryService:GalleryService
+  ) { }
 
   ngOnInit() {
+    this.getGalleriesFromService();
   }
 
-  openCollection(){
+  getGalleriesFromService(): void {
+    this.galleryService.getAllGalleries().subscribe(
+      galleryApi => this.galleries = galleryApi.data
+    );
+  }
+
+  //add gallery to service
+  addGalleyId(){
     
   }
 

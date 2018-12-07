@@ -170,10 +170,6 @@ export class StylistService {
     );
   }
 
-  getCustomerName(){
-    
-  }
-
   constructor(private http: HttpClient) { }
 
 }

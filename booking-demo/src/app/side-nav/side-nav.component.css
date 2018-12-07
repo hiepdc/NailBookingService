@@ -23,12 +23,9 @@
     transition: width .8s;
    }
    
-   
    .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
     background: transparent;
    }
-
-   
 
    .navbar-header {
     float: left;

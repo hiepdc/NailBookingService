@@ -19,7 +19,7 @@ const routes:Routes = [
   { path: 'aboutus', component: AboutusComponent },
   { path: 'booking/:phone/:customerName/:hour/:date/:stylistName', component: ConfirmedBookingComponent },
   //{ path: 'booking?:phone&:customerName&:hour&:date&:stylistName', component: ConfirmedBookingComponent }
-  { path: 'gallery/:collectionName', component: CollectionComponent }
+  { path: 'gallery/:collectionId/:collectionName', component: CollectionComponent }
 ]; 
 
 @NgModule({

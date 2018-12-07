@@ -22,10 +22,12 @@ import { PricesComponent } from './prices/prices.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ConfirmedBookingComponent } from './confirmed-booking/confirmed-booking.component';
 import { VerifyPinNumberComponent } from './verify-pin-number/verify-pin-number.component';
+import { CollectionComponent } from './collection/collection.component';
+import { BlogComponent } from './blog/blog.component';
 
 import { StylistService } from './stylist.service';
 import { ConfirmBookingService } from './confirm-booking.service';
-import { CollectionComponent } from './collection/collection.component';
+import { GalleryService } from './gallery.service';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -45,7 +47,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AboutusComponent,
     ConfirmedBookingComponent,
     VerifyPinNumberComponent,
-    CollectionComponent
+    CollectionComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   providers: [
     StylistService,
     ConfirmBookingService,
+    GalleryService,
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG

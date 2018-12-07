@@ -5,12 +5,18 @@ use Illuminate\Support\Facades\DB;
 class Service extends Model
 {
     protected $fillable = [
-        'service_name', 'description', 'time_service', 'price', 'coin_service'
+        'service_name', 'description', 'time_service', 'coin_service'
     ];
     public $timestamps = false;
+
     public function bookings(){
         return $this->hasMany(Booking::class);
     }
+
+    public function serviceItems(){
+        return $this->hasMany(ServiceItem::class);
+    }
+
     public function getTimeService($serviceID){
         $time_services = DB::table('services')
             ->select('time_service')
@@ -22,4 +28,5 @@ class Service extends Model
 //            ->select('time_service')->get();
         return $time;
     }
+
 }

@@ -43,6 +43,8 @@ class ImageController extends Controller
         try {
             $image = Image::create([
                 'gallery_id' => $request->gallery_id,
+                'caption' => $request->caption,
+                'thumb_link' => $request->thumb_link,
                 'image_link' => $request->image_link
             ]);
             return response()->success($image);
@@ -94,7 +96,7 @@ class ImageController extends Controller
             if (!$image) {
                 return response()->notFound("Image does not exist");
             }
-            $updatedGallery = $image->update($request->only(['gallery_id', 'image_link']));
+            $updatedGallery = $image->update($request->only(['gallery_id', 'caption', 'thumb_link', 'image_link']));
             return response()->success($updatedGallery);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

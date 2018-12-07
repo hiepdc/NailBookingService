@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Image extends Model
 {
     protected $fillable = [
-        'gallery_id', 'image_link'
+        'gallery_id', 'caption', 'thumb_link', 'image_link'
     ];
 
     public $timestamps = false;
@@ -25,7 +25,7 @@ class Image extends Model
             ->get();
         $result = [];
         foreach ($images as $image){
-            $result [] = $image->image_link;
+            $result [] = $image;
         }
         return $result;
     }

@@ -41,7 +41,16 @@ class ServiceItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $serviceItem = ServiceItem::create([
+                'name' => $request->name,
+                'service_id' => $request->service_id,
+                'price' => $request->price
+            ]);
+            return response()->success($serviceItem);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -52,7 +61,15 @@ class ServiceItemController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $serviceItem = ServiceItem::find($id);
+            if(!$serviceItem) {
+                return response()->notFound('service does not exist');
+            }
+            return response()->success($serviceItem);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -75,7 +92,16 @@ class ServiceItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $serviceItem = ServiceItem::find($id);
+            if (!$serviceItem) {
+                return response()->notFound("Service does not exist");
+            }
+            $updatedGallery = $serviceItem->update($request->only(['name', 'service_id', 'price']));
+            return response()->success($updatedGallery);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
     /**
@@ -86,6 +112,15 @@ class ServiceItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $deletebyid = ServiceItem::find($id);
+            if (!$deletebyid) {
+                return response()->notFound("Service does not exist");
+            }
+            $deletebyid->delete();
+            return response()->success($deletebyid);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 }

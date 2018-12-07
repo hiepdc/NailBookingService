@@ -17,16 +17,14 @@ class ServiceItem extends Model
     }
 
     public function  getAllServiceItems(){
-        $serviceItemsOne = DB::table('service_items')
-                             ->where('service_id', 1)
+        $serviceItemsOne = ServiceItem::where('service_id', 1)
                              ->get();
         $serviceItemFirsts = [] ;
         foreach($serviceItemsOne as $serviceItem){
             $serviceItemFirsts [] = $serviceItem;
         }
-        $serviceItemsTwo = DB::table('service_items')
-                             ->where('service_id', 2)
-                             ->get();
+        $serviceItemsTwo = ServiceItem::where('service_id', 2)
+                                      ->get();
         $serviceItemSeconds = [] ;
         foreach($serviceItemsTwo as $serviceItem){
             $serviceItemSeconds [] = $serviceItem;

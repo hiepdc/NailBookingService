@@ -19,6 +19,7 @@ class CreateGalleriesTable extends Migration
                 $table->increments('id');
                 $table->string('name');
                 $table->string('image_link');
+                $table->softDeletes();
             });
         }
     }

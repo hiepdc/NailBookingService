@@ -66,6 +66,7 @@ class ImageController extends Controller
             if(!$image) {
                 return response()->notFound('Image does not exist');
             }
+            return response()->success($image);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

@@ -84,4 +84,4 @@ Route::get('notifications/mark-all-read', 'NotificationController@markAllRead');
 Route::get('galleries', 'GalleryController@index');
 Route::get('galleries/{id}', "GalleryController@show");
 
-Route::get('service-items', 'ServiceItemController@index');
+Route::apiResource('service-items', 'ServiceItemController');

@@ -411,11 +411,6 @@ class BookingController extends Controller
         }
     }
 
-    public function cancelBooking()
-    {
-        //@@ AUTO chuy?n tr?ng thái t? booked sang cancel khi quá th?i di?m checking 5 phút
-    }
-
     public function searchBooking(Request $request)
     {
         try {
@@ -445,6 +440,7 @@ class BookingController extends Controller
             response()->exception($e->getMessage(), $e->getCode());
         }
     }
+
     function convertTime($index){
         $carbon = new Carbon('8:45:00');
         $allTime = array();

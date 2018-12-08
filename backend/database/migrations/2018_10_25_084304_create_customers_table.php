@@ -20,6 +20,7 @@ class CreateCustomersTable extends Migration
                 $table->string('customer_name');
                 $table->char('phone_number');
                 $table->integer('coin');
+                $table->softDeletes();
             });
         }
     }

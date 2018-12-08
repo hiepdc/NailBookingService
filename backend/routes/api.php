@@ -62,12 +62,12 @@ Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@ge
 //display shift default
 //Route::get('shifts/stylist/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 
-//@@@Customers
-Route::apiResource('customers', 'CustomerController');
-//list customers
-//Route::get('customers','CustomerController@index');
-//search customer name
-Route::post('customers/search/','CustomerController@search');
+//admin customers
+Route::get('customers', 'CustomerController@index');
+Route::post('customers/{id}', 'CustomerController@update');
+Route::delete('customers/{id}', 'CustomerController@destroy');
+Route::post('customers/search','CustomerController@search');
+
 // @@@Admin@@@
 Route::post('login', 'AuthController@login');
 Route::post('register', 'AuthController@register');

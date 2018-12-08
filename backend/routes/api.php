@@ -69,11 +69,11 @@ Route::delete('customers/{id}', 'CustomerController@destroy');
 Route::post('customers/search','CustomerController@search');
 
 // @@@Admin@@@
-Route::post('login', 'AuthController@login');
-Route::post('register', 'AuthController@register');
+Route::post('auth/login', 'AuthController@login');
+Route::post('auth/register', 'AuthController@register');
 
 Route::group(['middleware' => ['jwt.auth']], function() {
-    Route::get('logout', 'AuthController@logout');
+    Route::get('auth/logout', 'AuthController@logout');
 });
 
 Route::get('bookings/send-message-to-admin/{title}/{message}', 'BookingController@sendMessageToAdmin');

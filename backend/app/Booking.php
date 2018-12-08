@@ -3,10 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class Booking extends Model
 {
+    use SoftDeletes;
+    protected $date = ['deleted_at'];
+
     protected $fillable = [
         'shift_id', 'service_id', 'customer_id', 'start_time', 'status'
     ];
@@ -39,7 +43,7 @@ class Booking extends Model
             ->where([
                 ['phone_number', '=', $phonenumber],
                 ['status', '=', 'booked']
-            ])
+            ])->whereNull('bookings.deleted_at')
             ->count();
         return $statusBooking;
     }
@@ -58,7 +62,8 @@ class Booking extends Model
             ->where([
                 ['phone_number', '=', $phonenumber],
                 ['bookings.status', '=', 'booked'],
-            ])->first();
+            ])->whereNull('bookings.deleted_at')
+              ->first();
         return $detailBooking;
     }
 
@@ -119,7 +124,7 @@ class Booking extends Model
             ->where([
                 ['shifts.date', '=', $date],
                 ['bookings.status', '=', $status]
-            ])
+            ])->whereNull('bookings.deleted_at')
 //            ->where('bookings.status', '=', $status)
             ->Where('stylists.stylist_name', 'like', '%' . $stylist_name . '%')
             ->orderBy('bookings.start_time')
@@ -143,6 +148,7 @@ class Booking extends Model
                 , 'shifts.date'
                 , 'bookings.start_time'
                 , 'bookings.status')
+            ->whereNull('bookings.deleted_at')
             ->where([
                 ['date', '=', $date],
             ])->orderBy('bookings.id', 'desc')

@@ -15,7 +15,7 @@ class ServiceController extends Controller
     public function index()
     {
         try {
-            $listService = Service::paginate(10);
+            $listService = Service::all();
             return response()->success($listService);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

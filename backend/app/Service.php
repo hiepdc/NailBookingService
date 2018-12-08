@@ -22,13 +22,8 @@ class Service extends Model
     }
 
     public function getTimeService($serviceID){
-        $time_services = Service::where('id', $serviceID)
-                                ->select('time_service')
-                                ->first();
+        $time_services = Service::find($serviceID);
         $time = $time_services->time_service;
-//        $time_service =  Service::find($serviceID)
-//            ->where('id', $serviceID)
-//            ->select('time_service')->get();
         return $time;
     }
 

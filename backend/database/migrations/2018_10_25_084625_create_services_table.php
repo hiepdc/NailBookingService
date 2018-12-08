@@ -21,7 +21,7 @@ class CreateServicesTable extends Migration
                 $table->text('description');
                 $table->integer('time_service');
                 $table->integer('coin_service');
-                $table->softDeletes();
+//                $table->softDeletes();
             });
         }
     }

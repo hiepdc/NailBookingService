@@ -5,8 +5,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 class Service extends Model
 {
-    use SoftDeletes;
-    protected $dates = ['deleted_at'];
+//    use SoftDeletes;
+//    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'service_name', 'description', 'time_service', 'coin_service'

@@ -19,7 +19,7 @@ class CreateServicesTable extends Migration
                 $table->increments('id');
                 $table->string('service_name');
                 $table->text('description');
-                $table->integer('time_service');
+                $table->float('time_service');
                 $table->integer('coin_service');
 //                $table->softDeletes();
             });

@@ -17,21 +17,12 @@ class ServiceItem extends Model
     }
 
     public function  getAllServiceItems(){
-        $serviceItemsOne = ServiceItem::where('service_id', 1)
-                             ->get();
-        $serviceItemFirsts = [] ;
-        foreach($serviceItemsOne as $serviceItem){
-            $serviceItemFirsts [] = $serviceItem;
-        }
-        $serviceItemsTwo = ServiceItem::where('service_id', 2)
-                                      ->get();
-        $serviceItemSeconds = [] ;
-        foreach($serviceItemsTwo as $serviceItem){
-            $serviceItemSeconds [] = $serviceItem;
-        }
-        $results = [];
-        $results['1'] = $serviceItemFirsts;
-        $results['2'] = $serviceItemSeconds;
-        return $results;
+        $serviceItems = all();
+        return $serviceItems;
+    }
+    public function  getServiceItemByService($service_id){
+        $serviceItems = ServiceItem::where('service_id', $service_id)
+            ->get();
+        return $serviceItems;
     }
 }

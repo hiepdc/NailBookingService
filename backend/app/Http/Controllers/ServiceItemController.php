@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service;
 use App\ServiceItem;
 use Illuminate\Http\Request;
 
@@ -67,6 +68,23 @@ class ServiceItemController extends Controller
                 return response()->notFound('service does not exist');
             }
             return response()->success($serviceItem);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+    public function showServiceItems($id)
+    {
+        try {
+            $service = Service::find($id);
+            if(!$service){
+                return response()->notFound("service does not exist");
+            }
+            $serviceItem = new ServiceItem();
+            $result = $serviceItem->getServiceItemByService($id);
+            if(!$serviceItem) {
+                return response()->notFound('service does not exist');
+            }
+            return response()->success($result);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

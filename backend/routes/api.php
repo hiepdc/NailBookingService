@@ -85,3 +85,4 @@ Route::get('galleries', 'GalleryController@index');
 Route::get('galleries/{id}', "GalleryController@show");
 
 Route::apiResource('service-items', 'ServiceItemController');
+Route::get('services/{id}/service-items', 'ServiceItemController@showServiceItems');

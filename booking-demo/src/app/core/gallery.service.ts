@@ -6,10 +6,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { GalleryApi } from './models/galleryApi';
 import { CollectionApi } from './models/collectionApi';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
 @Injectable()
 export class GalleryService {
   private galleryUrl = "http://localhost:8000/api/galleries";
@@ -27,7 +23,7 @@ export class GalleryService {
     const url = `${this.galleryUrl}/${galleryId}`;
     return this.http.get<CollectionApi>(url).pipe(
       tap(receivedCollection => {
-        console.log(receivedCollection);
+        console.log("receivedCollection: "+receivedCollection);
       }),
       catchError(error => of(new CollectionApi()))
     );

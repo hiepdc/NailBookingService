@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-//import { LoaderService } from '../core';
-import { StylistService } from '../stylist.service';
+import { BookingService } from '../booking.service';
 import { ConfirmBookingService } from '../confirm-booking.service'
 
 import { Stylist } from '../models/stylist';
@@ -19,7 +18,7 @@ export class ConfirmedBookingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private stylistService: StylistService,
+    private bookingService: BookingService,
     //private loaderService:LoaderService,
     private confirmBookingService: ConfirmBookingService
   ) { }
@@ -58,7 +57,7 @@ export class ConfirmedBookingComponent implements OnInit {
 
   backToHome() {
     //1. delete booking 
-    this.stylistService.deleteBooking(+this.phoneNumber).subscribe(
+    this.bookingService.deleteBooking(+this.phoneNumber).subscribe(
       (bookingApi: BookingApi) => {
       },
       error => { console.log(error); return }

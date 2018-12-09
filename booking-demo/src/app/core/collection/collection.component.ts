@@ -3,6 +3,8 @@ import { Lightbox, LightboxConfig, LightboxEvent, LIGHTBOX_EVENT, IEvent, IAlbum
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { GalleryService } from '../gallery.service';
+import { Collection } from '../models/collection';
+
 @Component({
   selector: 'app-collection',
   templateUrl: './collection.component.html',
@@ -12,13 +14,14 @@ export class CollectionComponent implements OnInit {
 
   public albums: Array<IAlbum>;
   private _subscription: Subscription;
-  private collectionName:string;
-  private collectionId:number;
+  private collectionName: string;
+  private collectionId: number;
+  private collections: Collection[];
 
   private lightBoxConfig = {
     fadeDuration: 0,
     resizeDuration: 0.4,
-    wrapAround: true, showImageNumberLabel: true 
+    wrapAround: true, showImageNumberLabel: true
   }
 
   constructor(
@@ -26,8 +29,8 @@ export class CollectionComponent implements OnInit {
     private _lightboxEvent: LightboxEvent,
     //private _lighboxConfig: LightboxConfig,
     private route: ActivatedRoute,
-    private galleryService:GalleryService
-  ) {}
+    private galleryService: GalleryService
+  ) { }
 
   open(index: number): void {
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
@@ -41,35 +44,40 @@ export class CollectionComponent implements OnInit {
     }
   }
 
-  getDataFromUrl(){
+  getDataFromUrl() {
     this.collectionId = +this.route.snapshot.paramMap.get('collectionId');
     this.collectionName = this.route.snapshot.paramMap.get('collectionName');
-    console.log("this.route.snapshot.paramMap:collectionName:  "+this.collectionName);
-    console.log("this.route.snapshot.paramMap:collectionId:  "+this.collectionId);
+    console.log("this.route.snapshot.paramMap:collectionName:  " + this.collectionName);
+    console.log("this.route.snapshot.paramMap:collectionId:  " + this.collectionId);
   }
 
-  getCollection(){
-    
-    this.albums = [];
-    for (let i = 1; i <= 8; i++) {
-      const src = '../../assets/img/gallery/nail' + i + '.jpg';
-      const caption = 'Image ' + i + ' caption here';
-      const thumb = '../../assets/img/gallery/nail' + i + '_tn.jpg';
-      const album = {
-         src: src,
-         caption: caption,
-         thumb: thumb
-      };
-      this.albums.push(album);
-    }
-    // set default config cách 1
-    // this._lighboxConfig.fadeDuration = 0;
-    // this._lighboxConfig.resizeDuration = 0.4;
+  getGalleryByByIdFromService() {
+    this.galleryService.getGalleryById(this.collectionId).subscribe(
+      collectionApi => {
+        this.collections = collectionApi.data;
+        this.albums = [];
+        if (this.collections.length) {
+          for (let i = 0; i < this.collections.length; i++) {
+            const src = this.collections[i].image_link;
+            const caption = this.collections[i].caption;
+            const thumb = this.collections[i].thumb_link;
+            const album = {
+              src: src,
+              caption: caption,
+              thumb: thumb
+            };
+            this.albums.push(album);
+          }
+        } else {
+          console.log("collection don't have any item");
+        }
+      }
+    );
   }
 
   ngOnInit() {
     this.getDataFromUrl();
-    this.getCollection();
+    this.getGalleryByByIdFromService();
   }
 
 }

@@ -27,12 +27,19 @@
     margin: 20px 0px;
     font-size: 20px;
    }
+
+   .menu-item-content{
+        display: flex;
+        border-bottom: 1px dotted rgb(213, 213, 213);
+   }
    /* menu Name */
    .menu-item-name {
     text-align: left;
     font-weight: 700;
     font-size: 18px;
-    border-bottom: 1px dotted rgb(213, 213, 213);
+    /* border-bottom: 1px dotted rgb(213, 213, 213); */
+    width: 100%;
+    color: darkslategrey;
    }
    /* menu Description */
    .menu-item-description {
@@ -45,8 +52,9 @@
    .menu-item-price {
     float: right;
     color: #333;
-    margin-top: -32px;
+    /* margin-top: -32px; */
     font-size: 22px;
+    /* width: 30%; */
    }
    .margin1 {
     margin-top: 30px;

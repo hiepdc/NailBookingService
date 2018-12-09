@@ -17,8 +17,15 @@ class ServiceItem extends Model
     }
 
     public function  getAllServiceItems(){
-        $serviceItems = all();
-        return $serviceItems;
+        $services = Service::select('id')
+            ->get();
+        $results = [];
+        foreach ($services as $service){
+            $serviceItems = ServiceItem::where('service_id', $service->id)
+                                       ->get();
+            $results[$service->id] = $serviceItems;
+        }
+        return $results;
     }
     public function  getServiceItemByService($service_id){
         $serviceItems = ServiceItem::where('service_id', $service_id)

@@ -1,0 +1,83 @@
+<div *ngIf="loaderService.isLoading | async">
+   <app-pre-loader></app-pre-loader>
+ </div>
+<!-- ===== content starts  ===== -->
+<div id="content" class="col-md-10 split" *ngIf="!(loaderService.isLoading | async)">
+   <!-- ===== Gallery section starts  ===== -->
+   <div id="gallery">
+      <div class="content-wrapper">
+         <div class="content-box container">
+            <div class="inside-wrapper container">
+               <!-- section-heading -->
+               <div class="section-heading">
+                  <h2>Album Ảnh</h2>
+               </div>
+
+               <div class="row">
+
+                  <div class="col-sm-12 col-md-6" *ngFor="let gallery of galleries">
+                     <div class="block-content">
+                        <div class="wrap-img">
+                           <img class="img-responsive" [src]="gallery.image_link" alt="">
+                        </div>
+                        <div class="wrap-btn">
+                           <a class="btn" target="_blank" routerLink="{{gallery.id}}/{{gallery.name}}">{{gallery.name}}</a>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                     <div class="block-content">
+                        <div class="wrap-img">
+                           <img class="img-responsive" src="../../../assets/img/gallery/nail2.jpg" alt="">
+                        </div>
+                        <div class="wrap-btn">
+                           <a class="btn">Name of Collection</a>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                     <div class="block-content">
+                        <div class="wrap-img">
+                           <img class="img-responsive" src="../../assets/img/gallery/nail3.jpg" alt="">
+                        </div>
+                        <div class="wrap-btn">
+                           <a class="btn">Name of Collection</a>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                     <div class="block-content">
+                        <div class="wrap-img">
+                           <img class="img-responsive" src="../../assets/img/gallery/nail4.jpg" alt="">
+                        </div>
+                        <div class="wrap-btn">
+                           <a class="btn">Name of Collection</a>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-6">
+                     <div class="block-content">
+                        <div class="wrap-img">
+                           <img class="img-responsive" src="../../assets/img/gallery/nail5.jpg" alt="">
+                        </div>
+                        <div class="wrap-btn">
+                           <a class="btn">Name of Collection</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+            <!-- /inside-wrapper -->
+         </div>
+         <!-- /content-box -->
+      </div>
+      <!-- / content-wrapper -->
+   </div>
+   <!-- /gallery ends -->
+</div>
+<!-- /content -->

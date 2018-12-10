@@ -1,0 +1,75 @@
+<div *ngIf="loaderService.isLoading | async">
+  <app-pre-loader></app-pre-loader>
+</div>
+<!-- ===== content starts  ===== -->
+<div id="content" class="col-md-10 split" *ngIf="!(loaderService.isLoading | async)">
+  <!-- ===== Prices section starts  ===== -->
+  <div id="prices">
+    <div class="content-wrapper">
+      <div class="content-box container">
+        <div class="inside-wrapper container">
+          <!-- section-heading -->
+          <div class="section-heading">
+            <h2>Bảng Giá</h2>
+          </div>
+          <!-- /section-heading -->
+          <!-- Navigation -->
+          <ul class="nav nav-tabs col-md-12  margin1" id="myTab">
+
+            <li class="" *ngFor="let service of services; let i=index" [ngClass]="{'active': service.id===1}" (click)="selectService(service.id)">
+              <a href="#tab{{i+1}}" data-toggle="tab">
+                <img class="img-responsive img-circle img-price" src="../../../assets/img/gallery/nail1.jpg" alt="">
+                {{service.service_name}}
+              </a>
+            </li>
+
+          </ul>
+          <!-- Price tabs Start -->
+          <div class="tabbable">
+            <div class="tab-content">
+              <!--Tab Content 1 -->
+              <div class="tab-pane fade" *ngFor="let service of services; let i=index" [ngClass]="{'active in': service.id===1}"
+                id="tab{{service.id}}">
+                <!-- Prices: Hair & Face -->
+                <div class="prices-main">
+                  <!-- First Row -->
+                  <div class="row">
+                    <!-- menu body -->
+                    <div class="col-sm-12 col-md-6" *ngFor='let serviceItem of serviceItemApi.data[service.id]'>
+                      <!-- Item starts -->
+                      <div class="menu-item">
+                        <div class="menu-item-content">
+                          <div class="menu-item-name">
+                            {{serviceItem.name}}
+                          </div>
+                          <div class="menu-item-price">
+                            {{serviceItem.price}}
+                          </div>
+                        </div>
+                        <div class="menu-item-description">
+                        </div>
+                      </div>
+                      <!-- Item ends -->
+                    </div>
+                    <!-- / menu body -->
+
+                  </div>
+
+                </div>
+                <!-- /prices-main -->
+              </div>
+              <!-- /#tab1 -->
+            </div>
+            <!--tab-content-->
+          </div>
+          <!--tababble-->
+        </div>
+        <!-- /inside-wrapper -->
+      </div>
+      <!-- /content-box -->
+    </div>
+    <!-- / content-wrapper -->
+  </div>
+  <!-- /prices ends -->
+</div>
+<!-- /content -->

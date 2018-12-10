@@ -139,7 +139,7 @@ class CustomerController extends Controller
             if (empty($key)) {
                 $customer = Customer::paginate(10);
             } else {
-                $customer = Searchy::customers('phone_number', 'phone_number')->query($key)
+                $customer = Searchy::customers('customer_name', 'phone_number')->query($key)
                     ->get();
             }
             return response()->success($customer);

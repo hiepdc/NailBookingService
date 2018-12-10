@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Gallery;
+use App\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -45,6 +46,7 @@ class GalleryController extends Controller
         //
         try {
             $gallery = Gallery::create([
+                'name' => $request->name,
                 'image_link' => $request->image_link
             ]);
             return response()->success($gallery);
@@ -65,9 +67,12 @@ class GalleryController extends Controller
 
         try {
             $gallery = Gallery::find($id);
-            if(!$gallery) {
-                return response()->notFound('Gallery does not exist');
+            if (!$gallery) {
+                return response()->notFound("gallery does not exist");
             }
+            $image = new Image();
+            $results = $image->getImages($id);
+            return response()->success($results);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -99,7 +104,7 @@ class GalleryController extends Controller
             if (!$gallery) {
                 return response()->notFound("gallery does not exist");
             }
-            $updatedGallery = $gallery->update($request->only(['image_link']));
+            $updatedGallery = $gallery->update($request->only(['name', 'image_link']));
             return response()->success($updatedGallery);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

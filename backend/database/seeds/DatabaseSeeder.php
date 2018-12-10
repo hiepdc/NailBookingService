@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(GallerySeeder::class);
         $this->call(NewsSeeder::class);
         $this->call(NotificationSeeder::class);
+        $this->call(ImageSeeder::class);
+        $this->call(ServiceItemSeeder::class);
 
     }
 }

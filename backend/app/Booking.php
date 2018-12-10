@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 class Booking extends Model
 {
     use SoftDeletes;
+    protected $date = ['deleted_at'];
+
     protected $fillable = [
         'shift_id', 'service_id', 'customer_id', 'start_time', 'status'
     ];
@@ -33,8 +35,6 @@ class Booking extends Model
     }
     public $timestamps = false;
 
-    protected $dates = ['deleted_at'];
-
     public function getStatusBookedByPhonenumber($phonenumber)
     {
         $statusBooking = DB::table('customers')
@@ -43,7 +43,7 @@ class Booking extends Model
             ->where([
                 ['phone_number', '=', $phonenumber],
                 ['status', '=', 'booked']
-            ])->whereNull('deleted_at')
+            ])->whereNull('bookings.deleted_at')
             ->count();
         return $statusBooking;
     }
@@ -62,7 +62,7 @@ class Booking extends Model
             ->where([
                 ['phone_number', '=', $phonenumber],
                 ['bookings.status', '=', 'booked'],
-            ])->whereNull('deleted_at')
+            ])->whereNull('bookings.deleted_at')
               ->first();
         return $detailBooking;
     }
@@ -113,7 +113,8 @@ class Booking extends Model
             ->join('customers', 'customers.id', '=', 'bookings.customer_id')
             ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
             ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
-            ->select('customers.customer_name'
+            ->select('bookings.id',
+                'customers.customer_name'
                 , 'customers.phone_number'
                 , 'customers.coin'
                 , 'services.service_name'
@@ -124,10 +125,9 @@ class Booking extends Model
             ->where([
                 ['shifts.date', '=', $date],
                 ['bookings.status', '=', $status]
-            ])
+            ])->whereNull('bookings.deleted_at')
 //            ->where('bookings.status', '=', $status)
             ->Where('stylists.stylist_name', 'like', '%' . $stylist_name . '%')
-            ->whereNull('deleted_at')
             ->orderBy('bookings.start_time')
             ->orderBy('bookings.status')
             ->paginate(10);
@@ -141,20 +141,19 @@ class Booking extends Model
             ->join('customers', 'customers.id', '=', 'bookings.customer_id')
             ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
             ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
-            ->select('customers.customer_name'
+            ->select('bookings.id'
+                ,'customers.customer_name'
                 , 'customers.phone_number'
-                , 'customers.coin'
                 , 'services.service_name'
                 , 'stylists.stylist_name'
                 , 'shifts.date'
                 , 'bookings.start_time'
-                , 'bookings.status')
-            ->where([
-                ['date', '=', $date],
-            ])->orderBy('bookings.id', 'desc')
-            ->whereNull('deleted_at')
+                , 'bookings.status'
+                , 'customers.coin')
+            ->whereNull('bookings.deleted_at')
+            ->orderBy('bookings.id', 'desc')
 //            ->orderBy('bookings.status')
-            ->paginate(10);
+            ->paginate(100);
         return $bookings;
     }
 

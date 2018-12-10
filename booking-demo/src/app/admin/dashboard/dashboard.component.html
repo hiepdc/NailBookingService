@@ -1,5 +1,43 @@
-<p>
-  Welcome to the Admin dashboard!
-</p>
-
-The Authentication Guard in the Core Module will only allow you access this route if you have logged in.
+<!-- ===== content starts  ===== -->
+<div id="content" class="col-md-10 split">
+  <!-- ===== Home section starts  ===== -->
+  <div id="home">
+    <div class="slideshow">
+      <div class="slideshow-image"></div>
+      <div class="slideshow-image"></div>
+      <div class="slideshow-image"></div>
+      <div class="slideshow-image"></div>
+    </div>
+    <!-- /slideshow -->
+    <div class="content-wrapper">
+      <div class="content-box home text-center container">
+        <div class="inside-wrapper home col-md-12">
+          <h3>Welcome to Châm Trâm</h3>
+          <div class="input_sdt">
+            <form >
+              <div class="input-phone">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                  <input type="tel" placeholder="" class="form-control phone" maxlength="10" pattern="(03|09|07|08|05)+([0-9]{8})\b"
+                     name="phone_number" required>
+                  <!-- <p>{{number}}</p> -->
+                </div>
+              </div>
+              <button type="button" class="btn btn-booking">Đặt Lịch Giữ Chỗ
+                <img src="../../assets/img/home/arrow right.png">
+              </button>
+            </form>
+            <!-- Buttons -->
+            <!-- <a class="btn " routerLink="/contact">Contact us</a>
+            <a class="btn " routerLink="/aboutus">More info</a> -->
+          </div>
+        </div>
+        <!-- /inside-wrapper -->
+      </div>
+      <!-- /content-box -->
+    </div>
+    <!-- /content-wrapper -->
+  </div>
+  <!-- /home section ends -->
+</div>
+<!-- /content -->

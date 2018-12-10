@@ -9,6 +9,9 @@ import { PusherService } from './pusher.service';
 import { ServiceComponent } from './service/service.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { FooterComponent } from './footer/footer.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import {ServicesService} from '../admin/service/services.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -20,9 +23,12 @@ import { LogoutComponent } from './logout/logout.component';
     NotificationComponent,
     ServiceComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    FooterComponent,
+    SidebarComponent
     ],
   providers: [
+    ServicesService,
     PusherService
   ]
 })

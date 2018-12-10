@@ -25,7 +25,6 @@ import { PricesComponent } from './prices/prices.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ConfirmedBookingComponent } from './confirmed-booking/confirmed-booking.component';
 import { CollectionComponent } from './collection/collection.component';
-import { BlogComponent } from './blog/blog.component';
 
 import { BookingService } from './booking.service';
 import { ConfirmBookingService } from './confirm-booking.service';

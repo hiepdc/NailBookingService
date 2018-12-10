@@ -5,11 +5,14 @@ import { AdminModule} from './admin/admin.module';
 import { CoreModule } from './core/core.module';
 
 const routes:Routes = [
+  // {
+  //   path: '', loadChildren: ()=> CoreModule
+  // },
+  // {
+  //   path: 'admin', loadChildren: ()=> AdminModule
+  // }
   {
-    path: '', loadChildren: ()=> CoreModule
-  },
-  {
-    path: 'admin', loadChildren: ()=> AdminModule
+    path: 'admin', loadChildren: './admin/admin.module#AdminModule'
   }
 ]; 
 

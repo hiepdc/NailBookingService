@@ -1,33 +1,23 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
+import { RouterModule, Routes} from '@angular/router';
 
-import { PageContentComponent } from './page-content/page-content.component';
-import { HomeComponent } from './home/home.component';
-import { ServicesComponent } from './services/services.component';
-import { GalleryComponent } from './gallery/gallery.component';
-import { PricesComponent } from './prices/prices.component';
-import { AboutusComponent } from './aboutus/aboutus.component';
-import { ConfirmedBookingComponent } from './confirmed-booking/confirmed-booking.component';
 import { AdminModule} from './admin/admin.module';
+import { CoreModule } from './core/core.module';
 
-const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'services', component: ServicesComponent },
-  { path: 'booking', component: PageContentComponent },
-  { path: 'gallery', component: GalleryComponent },
-  { path: 'prices', component: PricesComponent },
-  { path: 'aboutus', component: AboutusComponent },
-  { path: 'booking/:phone/:customerName/:hour/:date/:stylistName', component: ConfirmedBookingComponent },
-  //{ path: 'booking?:phone&:customerName&:hour&:date&:stylistName', component: ConfirmedBookingComponent }
+const routes:Routes = [
+  {
+    path: '', loadChildren: ()=> CoreModule
+  },
   {
     path: 'admin', loadChildren: ()=> AdminModule
-  }
-];
+  },
+   // otherwise redirect to home
+   { path: '**', redirectTo: '' }
+]; 
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes)
   ],
 
   exports: [RouterModule]

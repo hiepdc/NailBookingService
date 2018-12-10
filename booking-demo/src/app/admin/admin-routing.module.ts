@@ -3,38 +3,41 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotificationComponent } from './notification/notification.component';
-import { LogoutComponent } from './logout/logout.component';
 import { ServiceComponent } from './service/service.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './_guards';
+import { BookingComponent } from './booking/booking.component';
 
 const aroutes: Routes = [
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: '',
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: '', component: DashboardComponent },
-      {
-        path: 'login',
-        component: DashboardComponent,
-      },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'notification',
         component: NotificationComponent,
       },
       {
-        path: 'logout',
-        component: LogoutComponent,
-      },
-      {
         path: 'service',
         component: ServiceComponent,
       },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'booking',
+        component: BookingComponent,
+      },
     ]
   },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

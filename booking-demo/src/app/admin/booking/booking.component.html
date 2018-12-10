@@ -23,6 +23,7 @@
           <tbody>
             <tr *ngFor="let booking of bookings | paginate: { id: 'listing_pagination',
             itemsPerPage: 10,
+
             totalItems: totalRec }">
               <td>{{booking.customer_name}}</td>
               <td>{{booking.phone_number}}</td>

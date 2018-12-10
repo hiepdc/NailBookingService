@@ -53,9 +53,9 @@ import { AdminModule } from './admin/admin.module';
   imports: [
     AppRoutingModule,
     HttpHandleModule,
-    AdminModule,
+    // AdminModule,
     FormsModule,
-    CoreModule,
+    // CoreModule,
     SwiperModule,
     BrowserAnimationsModule,
     MaterialModule,

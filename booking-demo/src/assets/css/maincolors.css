@@ -1,7 +1,7 @@
 
 /* Pink */
 .btn-primary:active,.btn-primary:not(:disabled):not(.disabled):active,.btn-primary.focus, .btn-primary:focus,.btn-default.focus, .btn-default:focus,.btn,.btn-default, .pager li>a:focus, .pager li>a:hover,a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, button.list-group-item:hover, .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover, .pagination>li>a:hover,.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover,.date-category,.navbar-default .navbar-nav>li>a::after , .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover, .spinner > div,.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover,.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover, .bg-color1,.btn:before,.contact-icon .top-icon,.nav-pills>li>a:focus, .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover, .nav-pills>li>a:hover{
-	background:#d02552;
+	background:#d68189;
 }
 
 .panel-heading a:hover, .panel-heading a, blockquote:before,
@@ -10,17 +10,17 @@
 	.navbar-default .navbar-nav>li>a:hover, .owl-prev i:hover, .owl-next i:hover,
 	ul.custom li:before, .margin-icon, .nav.nav-tabs li a, .social-media i,
 	.brand, .brand i {
-	color: #d02552;
+	color: #d68189;
 }
 
 .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover
 	{
-	color: #d02552;
+	color: #d68189;
 }
 
 .content-box.home, .section-heading:after, .service-icon img,
 	.contact-icon, .btn:hover, .btn-default:hover {
-	border-color: #d02552;
+	border-color: #d68189;
 }
 /* light yellow */
 .alert-info, .testimonial .content {

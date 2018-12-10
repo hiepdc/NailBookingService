@@ -1,36 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-// import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../_services/authentication.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
- model: any = {};
-    loading = false;
-    error = '';
 
-    constructor(
-        private router: Router,
-        private authenticationService: AuthenticationService) { }
+  constructor() { }
 
-    ngOnInit() {
-        // reset login status
-        this.authenticationService.logout();
-    }
+  ngOnInit() {
+  }
 
-    login() {
-        this.loading = true;
-        this.authenticationService.login(this.model.name, this.model.password)
-            .subscribe(result => {
-                if (result === true) {
-                    this.router.navigate(['/admin']);
-                } else {
-                    this.error = 'Username or password is incorrect';
-                    this.loading = false;
-                }
-            });
-    }
 }

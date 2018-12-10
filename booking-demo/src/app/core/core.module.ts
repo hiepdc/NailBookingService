@@ -27,7 +27,7 @@ import { ConfirmedBookingComponent } from './confirmed-booking/confirmed-booking
 import { CollectionComponent } from './collection/collection.component';
 import { BlogComponent } from './blog/blog.component';
 
-import { StylistService } from './stylist.service';
+import { BookingService } from './booking.service';
 import { ConfirmBookingService } from './confirm-booking.service';
 import { GalleryService } from './gallery.service';
 
@@ -64,7 +64,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PreLoaderComponent
   ],
   providers: [
-    StylistService,
+    BookingService,
     ConfirmBookingService,
     GalleryService,
     {

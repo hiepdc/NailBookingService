@@ -8,7 +8,7 @@ import {
   SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
 import { ConfirmBookingService } from '../confirm-booking.service'
-import { StylistService } from '../stylist.service';
+import { BookingService } from '../booking.service';
 import { LoaderService } from '../http-handle';
 
 import { Stylist } from '../models/stylist';
@@ -28,7 +28,7 @@ import { PinApi } from '../models/pinApi';
 export class BookingComponent implements OnInit {
 
   constructor(
-    private stylistService: StylistService,
+    private bookingService: BookingService,
     public loaderService: LoaderService,
     private router: Router,
     private confirmBookingService: ConfirmBookingService) {
@@ -148,7 +148,7 @@ export class BookingComponent implements OnInit {
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
 
     //this.openBookingForm2();
-    this.openVerifyPin();
+    //this.openVerifyPin();
   }
 
   /*------  Put data to service ---------*/
@@ -161,13 +161,13 @@ export class BookingComponent implements OnInit {
 
   /*------  Get data from db --------*/
   getStylistFromService(): void {
-    this.stylistService.getStylists().subscribe(
+    this.bookingService.getStylists().subscribe(
       stylistsApi => this.stylists = stylistsApi.data
     );
   }
 
   getShiftByStylist(serviceId: string, stylistId: number, date: string, stylistName: string): void {
-    this.stylistService.getShiftByStylist(serviceId, stylistId, date).subscribe(
+    this.bookingService.getShiftByStylist(serviceId, stylistId, date).subscribe(
       (shiftApi) => {
         this.timeline = shiftApi.data;
         this.stylistId = stylistId;
@@ -202,7 +202,7 @@ export class BookingComponent implements OnInit {
 
   getPinCode() {
     var body = { phone_number: this.phoneNumber };
-    this.stylistService.checkPhoneOfCustomer(body).subscribe(
+    this.bookingService.checkPhoneOfCustomer(body).subscribe(
       (checkPhoneApi: CheckPhoneApi) => {
         console.log("checkPhoneApi message: " + this.checkPhoneApi.message);
         this.verified = false;
@@ -214,7 +214,7 @@ export class BookingComponent implements OnInit {
 
   onSubmitBooking(form: NgForm): void {
     console.log(form.value);
-    this.stylistService.checkPhoneOfCustomer(form.value).subscribe(
+    this.bookingService.checkPhoneOfCustomer(form.value).subscribe(
       (checkPhoneApi: CheckPhoneApi) => {
         this.checkPhoneApi = checkPhoneApi; console.log("checkPhoneApi message" + this.checkPhoneApi.message);
         if (this.checkPhoneApi.data.check == false) {
@@ -222,7 +222,7 @@ export class BookingComponent implements OnInit {
           this.customerName = this.checkPhoneApi.data.customer.customer_name;
           this.customerId = this.checkPhoneApi.data.customer.id;
           //1.thực hiện add booking với khách hàng đã có trong hệ thống
-          this.stylistService.addNewBooking(this.phoneNumber,
+          this.bookingService.addNewBooking(this.phoneNumber,
             this.stylistId, this.selectedDate, +this.selectedHour,
             +this.selectedService, this.customerName).subscribe(
               (bookingApi: BookingApi) => {
@@ -254,7 +254,7 @@ export class BookingComponent implements OnInit {
 
   onSubmitCheckPin() {
     // console.log(form.value);
-    this.stylistService.checkPinCode(this.phoneNumber, +this.inputPinNumber).subscribe(
+    this.bookingService.checkPinCode(this.phoneNumber, +this.inputPinNumber).subscribe(
       (pinApi: PinApi) => {
         this.checkPinApi = pinApi; console.log("check pin api: " + JSON.stringify(this.checkPinApi));
         if (this.checkPinApi.data === null) {
@@ -288,7 +288,7 @@ export class BookingComponent implements OnInit {
 
   onSubmitChangeBooking() {
     //edit booking rồi chuyển sang confirm booking
-    this.stylistService.editBooking(this.phoneNumber,
+    this.bookingService.editBooking(this.phoneNumber,
       this.stylistId, this.selectedDate, +this.selectedHour,
       +this.selectedService).subscribe(
         (bookingApi: BookingApi) => {
@@ -308,14 +308,14 @@ export class BookingComponent implements OnInit {
 
   onSubmitBookingForm2() {
     //1. tạo customer mới
-    // this.stylistService.addNewCustomer(this.customerName, this.phoneNumber).subscribe(
+    // this.bookingService.addNewCustomer(this.customerName, this.phoneNumber).subscribe(
     //   (customerApi: CustomerApi) => {
     //     console.log(customerApi.data);
     //   },
     //   error => { console.log(error); return }
     // );
 
-    this.stylistService.addNewBooking(this.phoneNumber,
+    this.bookingService.addNewBooking(this.phoneNumber,
       this.stylistId, this.selectedDate, +this.selectedHour,
       +this.selectedService, this.customerName).subscribe(
         (bookingApi: BookingApi) => {
@@ -391,14 +391,14 @@ export class BookingComponent implements OnInit {
 
   // onSubmitBooking(form: NgForm): void {
   //   console.log(form.value);
-  //   this.stylistService.checkPhoneOfCustomer(form.value).subscribe(
+  //   this.bookingService.checkPhoneOfCustomer(form.value).subscribe(
   //     pinApi => { this.pinApi = pinApi; console.log(this.pinApi.success); }
   //   );
 
   // if (this.pinApi.success === true) {
   //   if (this.stylistId === -1) {
   //     //addd default
-  //     this.stylistService.addNewBookingDefault(
+  //     this.bookingService.addNewBookingDefault(
   //       this.pinApi.data.customer_name, +this.phoneNumber,
   //       this.selectedDate, +this.selectedHour, this.selectedService).subscribe(
   //         bookingApi => {
@@ -412,7 +412,7 @@ export class BookingComponent implements OnInit {
   //         });
   //   } else {
   //     //add 
-  //     this.stylistService.addNewBooking(
+  //     this.bookingService.addNewBooking(
   //       this.pinApi.data.customer_name, +this.phoneNumber,
   //       this.stylistId, this.selectedDate, +this.selectedHour, this.selectedService).subscribe(
   //         bookingApi => {

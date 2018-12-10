@@ -10,9 +10,7 @@ const routes:Routes = [
   },
   {
     path: 'admin', loadChildren: ()=> AdminModule
-  },
-   // otherwise redirect to home
-   { path: '**', redirectTo: '' }
+  }
 ]; 
 
 @NgModule({

@@ -26,9 +26,4 @@ export class GalleryComponent implements OnInit {
     );
   }
 
-  //add gallery to service
-  addGalleyId(){
-    
-  }
-
 }

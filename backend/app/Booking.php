@@ -113,7 +113,8 @@ class Booking extends Model
             ->join('customers', 'customers.id', '=', 'bookings.customer_id')
             ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
             ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
-            ->select('customers.customer_name'
+            ->select('bookings.id',
+                'customers.customer_name'
                 , 'customers.phone_number'
                 , 'customers.coin'
                 , 'services.service_name'
@@ -140,20 +141,19 @@ class Booking extends Model
             ->join('customers', 'customers.id', '=', 'bookings.customer_id')
             ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
             ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
-            ->select('customers.customer_name'
+            ->select('bookings.id'
+                ,'customers.customer_name'
                 , 'customers.phone_number'
-                , 'customers.coin'
                 , 'services.service_name'
                 , 'stylists.stylist_name'
                 , 'shifts.date'
                 , 'bookings.start_time'
-                , 'bookings.status')
+                , 'bookings.status'
+                , 'customers.coin')
             ->whereNull('bookings.deleted_at')
-            ->where([
-                ['date', '=', $date],
-            ])->orderBy('bookings.id', 'desc')
+            ->orderBy('bookings.id', 'desc')
 //            ->orderBy('bookings.status')
-            ->paginate(10);
+            ->paginate(100);
         return $bookings;
     }
 

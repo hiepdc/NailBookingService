@@ -348,14 +348,18 @@ class BookingController extends Controller
         }
     }
 
-    public function checkIn(Request $request)
+    public function checkIn($id)
     {
         try {
             //update coin
-            $id = $request->id;
+//            $id = $request->id;
             $booking = Booking::find($id);
             if(!$booking){
                 return response()->notFound("booking does not exist");
+            }
+            $status = $booking->status;
+            if($status != 'booked'){
+                return response()->success(null, 'Booking đã được check-in');
             }
             $customerId = $booking->customer_id;
             $service_id = $booking->service_id;
@@ -372,13 +376,17 @@ class BookingController extends Controller
         }
     }
 
-    public function checkOut(Request $request)
+    public function checkOut($id)
     {
         try {
-            $id = $request->id;
+//            $id = $request->id;
             $booking = Booking::find($id);
             if(!$booking){
                 return response()->notFound("booking does not exist");
+            }
+            $status = $booking->status;
+            if($status == 'booked' || $status == 'finished'){
+                return response()->success(null, 'Lịch đặt đã được check-out hoặc chưa được check-in');
             }
             $booking = new Booking();
             $checkOutBooking = $booking->checkOut($id);

@@ -46,9 +46,9 @@ Route::get('bookings','BookingController@listBooking');
 //fillter booking
 Route::post('bookings/search','BookingController@searchBooking');
 //checkin booking
-Route::post('bookings/checkin','BookingController@checkIn');
+Route::get('bookings/checkin/{id}','BookingController@checkIn');
 //checkout booking
-Route::post('bookings/checkout','BookingController@checkOut');
+Route::get('bookings/checkout/{id}','BookingController@checkOut');
 //use coin booking
 Route::post('bookings/use-coin','BookingController@usecoin');
 //check exist booking

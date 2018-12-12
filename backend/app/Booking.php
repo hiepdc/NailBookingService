@@ -194,4 +194,10 @@ class Booking extends Model
                       ->first();
         return $bookings;
     }
+
+    public function getstatusBooking($id){
+       $booking = Booking::find($id);
+       $status = $booking->status;
+       return $status;
+    }
 }

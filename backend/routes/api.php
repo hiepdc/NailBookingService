@@ -53,7 +53,8 @@ Route::post('bookings/checkin','BookingController@checkIn');
 Route::post('bookings/checkout','BookingController@checkOut');
 //use coin booking
 Route::post('bookings/use-coin','BookingController@usecoin');
-
+//check exist booking
+Route::post('bookings/check-exist-booking', 'BookingController@checkExistBooking');
 //show shift
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');

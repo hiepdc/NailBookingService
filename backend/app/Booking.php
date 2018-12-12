@@ -171,5 +171,26 @@ class Booking extends Model
         return $booking;
     }
 
-
+    public function getExistBooking($phone_number){
+        $bookings = DB::table('bookings')
+                      ->join('services', 'services.id', '=', 'bookings.service_id')
+                      ->join('customers', 'customers.id', '=', 'bookings.customer_id')
+                      ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
+                      ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
+                      ->select('bookings.id'
+                          ,'customers.customer_name'
+                          , 'customers.phone_number'
+                          , 'services.service_name'
+                          , 'stylists.stylist_name'
+                          , 'shifts.date'
+                          , 'bookings.start_time'
+                          , 'bookings.status')
+                      ->whereNull('bookings.deleted_at')
+                      ->where([
+                          ['customers.phone_number', $phone_number],
+                          ['bookings.status', 'booked']
+                      ])
+                      ->first();
+        return $bookings;
+    }
 }

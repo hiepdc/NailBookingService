@@ -474,4 +474,15 @@ class BookingController extends Controller
         return $data;
     }
 
+    public function checkExistBooking(Request $request){
+        try {
+            $booking = new Booking();
+            $result = $booking->getExistBooking($request->phone_number);
+            return response()->success($result);
+        } catch (Exception $e) {
+            response()->exception($e->getMessage(), $e->getCode());
+        }
+
+    }
+
 }

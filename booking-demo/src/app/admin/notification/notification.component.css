@@ -3,6 +3,8 @@
  * Copyright 2017 Martin Staněk
  * Licensed under MIT
  */
+ @import '~bootstrap/dist/css/bootstrap.min.css';
+
 .dropdown-container {
     position: absolute;
     top: 100%;

@@ -69,7 +69,7 @@ class BookingController extends Controller
             ' được phục vụ bởi ' . $stylist_name .
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
             // gửi tin nhắn to customer
-            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+//            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
@@ -144,7 +144,7 @@ class BookingController extends Controller
                        ' được phục vụ bởi ' . $stylist_name .
                        '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
 
-            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+//            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //add notification
             $notification = new Notification();
@@ -483,6 +483,25 @@ class BookingController extends Controller
             response()->exception($e->getMessage(), $e->getCode());
         }
 
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $deletebyBooking = Booking::find($id);
+            if (!$deletebyBooking) {
+                return response()->notFound("booking does not exist");
+            }
+            if($deletebyBooking->status != 'booked') {
+                $deletebyBooking->delete();
+            }else{
+                $customer = Customer::find($deletebyBooking->customer_id);
+                $this->deleteBooking($customer->phone_number);
+            }
+            return response()->success($deletebyBooking);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 
 }

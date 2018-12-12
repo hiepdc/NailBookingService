@@ -1,6 +1,78 @@
-<app-sidebar></app-sidebar>
-<div class="content col-md-10 split">
-  <router-outlet></router-outlet>
+<div class="container-fluid">
+  <aside id="left-panel" class="left-panel ">
+    <nav class="navbar navbar-expand-sm navbar-default">
+      <div id="main-menu" class="main-menu collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li [routerLinkActive]="['active']"><a routerLink="/admin/dashboard">Dashboard</a></li>
+          <!-- <li>
+                        <a routerLink="/admin/dashboard">Dashboard </a>
+                      </li> -->
+          <li class="menu-title">Managements</li><!-- /.menu-title -->
+          <li class="menu-item-has-children dropdown">
+            <a [routerLinkActive]="['active']" routerLink="/admin/shifts" class="dropdown-toggle" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Stylist</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-puzzle-piece"></i><a routerLink="/admin/shifts">Shift Schedule</a></li>
+              <li><i class="fa fa-bars"></i><a routerLink="/admin/stylists">List Stylist</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children">
+            <a routerLink="/admin/bookings"> <i class="menu-icon fa fa-table"></i>Oders</a>
 
+          </li>
+          <li class="menu-item-has-children dropdown">
+            <a routerLink="/admin/services" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Service</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-puzzle-piece"></i><a routerLink="/admin/services-items">Service Items</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children dropdown">
+            <a routerLink="/admin/customers"> <i class="menu-icon fa fa-th"></i>Customer</a>
+          </li>
+
+          <li class="menu-title">Others</li><!-- /.menu-title -->
+          <li class="menu-item-has-children dropdown">
+            <a routerLink="/admin/feedbacks" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Feedback</a>
+          </li>
+          <li class="menu-item-has-children dropdown">
+            <a routerLink="/admin/galeries" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false"> <i class="menu-icon fa fa-camera-retro"></i>Galery</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-puzzle-piece"></i><a routerLink="/admin/images">Gallery Images</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+  </aside>
+  <div id="right-panel" class="right-panel">
+    <header id="header" class="header">
+      <!-- <div class="top-right"> -->
+      <div class="header-menu">
+        <div class="header-left">
+          <app-notification></app-notification>
+          <ul class="user-area dropdown">
+            <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="user-avatar rounded-circle" src="..\..\..\assets\img\admin\admin.jpg" alt="User Avatar">
+            </a>
+            <div class="user-menu dropdown-menu">
+              <button type="button" class="btn btn-danger btn-sm" (click)="logout()">
+                <span class="glyphicon glyphicon-log-out"></span> Log out
+              </button>
+            </div>
+          </ul>
+        </div>
+
+
+      </div>
+    </header>
+    <div class="content">
+      <div class="animated fadeIn">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  <!-- <app-footer></app-footer> -->
 </div>
-<!-- <app-footer></app-footer> -->

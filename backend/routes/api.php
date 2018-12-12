@@ -37,8 +37,6 @@ Route::post('bookings/verify-pin','BookingController@verifyPIN');
 Route::post('bookings/add-new-booking','BookingController@addNewBooking');
 //edit booking
 Route::post('bookings/edit-booking','BookingController@editBooking');
-//delete booking  admin
-Route::delete('bookings/{phonenumber}','BookingController@deleteBooking');
 //delete booking
 Route::delete('bookings/delete-booking/{phonenumber}','BookingController@deleteBooking');
 //show booking
@@ -55,6 +53,8 @@ Route::post('bookings/checkout','BookingController@checkOut');
 Route::post('bookings/use-coin','BookingController@usecoin');
 //check exist booking
 Route::post('bookings/check-exist-booking', 'BookingController@checkExistBooking');
+
+Route::delete('bookings/{id}', 'BookingController@destroy');
 //show shift
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');

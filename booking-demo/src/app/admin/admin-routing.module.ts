@@ -7,6 +7,13 @@ import { ServiceComponent } from './service/service.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './_guards';
 import { BookingComponent } from './booking/booking.component';
+import { ServiceItemComponent } from './service-item/service-item.component';
+import { StylistComponent } from './stylist/stylist.component';
+import { ShiftComponent } from './shift/shift.component';
+import { CustomerComponent } from './customer/customer.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { GalleryImageComponent } from './gallery-image/gallery-image.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 const aroutes: Routes = [
   {
@@ -20,21 +27,45 @@ const aroutes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        path: 'notification',
-        component: NotificationComponent,
-      },
-      {
-        path: 'service',
-        component: ServiceComponent,
-      },
-      {
         path: 'dashboard',
         component: DashboardComponent,
       },
       {
-        path: 'booking',
+        path: 'services',
+        component: ServiceComponent,
+      },
+      {
+        path: 'service-items',
+        component: ServiceItemComponent,
+      },
+      {
+        path: 'bookings',
         component: BookingComponent,
       },
+      {
+        path: 'stylists',
+        component: StylistComponent,
+      },
+      {
+        path: 'shifts',
+        component: ShiftComponent,
+      },
+      {
+        path: 'customers',
+        component: CustomerComponent,
+      },
+      {
+        path: 'feedbacks',
+        component: FeedbackComponent,
+      },
+      {
+        path: 'galleries',
+        component: GalleryComponent,
+      },
+      {
+        path: 'gallery-images',
+        component: GalleryImageComponent,
+      }
     ]
   },
   { path: '**', redirectTo: '' }

@@ -19,7 +19,17 @@ export class BookingComponent implements OnInit {
   getBookingsFromService() : void{
     this.bookingService.getBookings().subscribe(
       api => {
-        this.bookings = api.data.data;
+        this.bookings = api.data;
+      }
+    )
+  }
+
+  deleteBooking(id: number): void{
+    this.bookingService.delelteBooking(id).subscribe(
+      api => {this.getBookingsFromService();},
+      error => {
+        console.log(error);
+        return;
       }
     )
   }

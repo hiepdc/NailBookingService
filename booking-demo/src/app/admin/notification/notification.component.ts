@@ -74,7 +74,7 @@ export class NotificationComponent implements OnInit {
         var listNotificationsHtml = ``;
         for (start; start < 7; start++) {
           var newNotificationHtml = `
-          <li class="notification active">
+          <li class="notification active dropdown-item">
               <div class="media">
                 <div class="media-left">
                   <div class="media-object">

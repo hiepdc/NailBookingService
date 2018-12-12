@@ -21,6 +21,13 @@ import { BookingService } from './booking/booking.service';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {ServicesService} from '../admin/service/services.service';
+import { CustomerComponent } from './customer/customer.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { GalleryComponent } from './gallery/gallery.component';
+import { StylistComponent } from './stylist/stylist.component';
+import { ShiftComponent } from './shift/shift.component';
+import { ServiceItemComponent } from './service-item/service-item.component';
+import { GalleryImageComponent } from './gallery-image/gallery-image.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -40,7 +47,14 @@ import {ServicesService} from '../admin/service/services.service';
     LoginComponent,
     BookingComponent,
     FooterComponent,
-    SidebarComponent
+    SidebarComponent,
+    CustomerComponent,
+    FeedbackComponent,
+    GalleryComponent,
+    StylistComponent,
+    ShiftComponent,
+    ServiceItemComponent,
+    GalleryImageComponent
     ],
   providers: [
     PusherService,

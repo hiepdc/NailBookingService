@@ -151,9 +151,10 @@ class Booking extends Model
                 , 'bookings.status'
                 , 'customers.coin')
             ->whereNull('bookings.deleted_at')
+//            ->where('shifts.date', $date)
             ->orderBy('bookings.id', 'desc')
 //            ->orderBy('bookings.status')
-            ->paginate(100);
+            ->get();
         return $bookings;
     }
 

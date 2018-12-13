@@ -16,7 +16,7 @@
               <th>Giờ</th>
               <th>Coin</th>
               <th>Trạng thái</th>
-              <th>Delete</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -36,14 +36,36 @@
                   {{booking.status}}
                 </span>
               </td>
+              <!-- <td>
+                  <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                      <button type="button" class="btn btn-default" (click)="checkIn(booking.id)" 
+                      [disabled]="booking.checkInDisable">Check in</button>
+                      <button class="btn btn-danger" (click)="checkOut(booking.id)" 
+                      [disabled]="booking.checkOutDisbale">Check out</button>
+                      <button class="btn btn-danger" (click)="deleteBooking(booking.id)" 
+                      [disabled]="booking.deleteDisable">Delete</button>
+                    </div>
+                
+              </td> -->
               <td>
-                <button class="btn btn-danger" (click)="deleteBooking(booking.id)">Delete</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Thực hiện
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <button class="btn btn-default" class="dropdown-item" type="button" (click)="checkIn(booking.id)" [disabled]="booking.checkInDisable">Check in</button>
+                      <button class="dropdown-item" type="button" (click)="checkOut(booking.id)" [disabled]="booking.checkOutDisbale">Check out</button>
+                      <button class="dropdown-item" type="button" (click)="deleteBooking(booking.id)" [disabled]="booking.deleteDisable">Delete</button>
+                      <button class="dropdown-item" type="button" (click)="deleteBooking(booking.id)" [disabled]="booking.deleteDisable">Use coin</button>
+                    </div>
+                  </div>
               </td>
             </tr>
           </tbody>
         </table>
         <div>
-          <pagination-controls class ="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+          <pagination-controls class="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true"
+            (pageChange)="page = $event"></pagination-controls>
         </div>
       </div>
     </div>

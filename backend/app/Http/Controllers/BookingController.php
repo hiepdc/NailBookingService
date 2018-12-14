@@ -12,6 +12,7 @@ use App\SpeedSMSAPI;
 use App\TwoFactorAPI;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Pusher\Pusher;
 
 class BookingController extends Controller
@@ -404,7 +405,7 @@ class BookingController extends Controller
             $customerId = $booking['customer_id'];
             $customerFinded = Customer::find($customerId);
             if(!$customerFinded){
-                return response()->notFound("customer does not exist");
+                return response()->notFound("booking does not exist");
             }
             $minCoin = 100;
             $coin = $customerFinded->coin;
@@ -511,5 +512,133 @@ class BookingController extends Controller
             return response()->exception($e->getMessage(), $e->getCode());
         }
     }
+
+    public function bookingOnMonthStatistic(Request $request)
+    {
+        try {
+            $time = $request->time;
+
+            for($i=1; $i<=12; $i++) {
+                if($i<10) $month = '-0'.$i;
+                else $month = '-'.$i;
+                $shiftOnMonth[$i] = DB::table('shifts')->select('id')
+                                      ->where('date','like', $time.$month.'%')
+                                      ->get();
+                $shiftOnMonthArr[$i] = $shiftOnMonth[$i]->map(function ($item, $key) {
+                    return $item->id;
+                });
+
+                $morningMonth[$i] = DB::table('bookings')->select('id')
+                                      ->whereIn('shift_id', $shiftOnMonthArr[$i])
+                                      ->whereBetween('start_time', [0,23])
+                                      ->count();
+
+                $eveningMonth[$i] = DB::table('bookings')->select('id')
+                                      ->whereIn('shift_id', $shiftOnMonthArr[$i])
+                                      ->whereBetween('start_time', [24,47])
+                                      ->count();
+
+                $wholeMonth[$i] = $morningMonth[$i] + $eveningMonth[$i];
+
+                $result[$i] = array($wholeMonth[$i], $morningMonth[$i], $eveningMonth[$i]);
+            }
+            $results = [
+                'morning' => $morningMonth,
+                'evening' => $eveningMonth,
+                'date' => $wholeMonth
+            ];
+            return response()->success((array)$results);
+        } catch (Exception $e) {
+            response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+//    public function bookingOnMonthStatistic(Request $request)
+//    {
+//        try {
+//            $time = $request->time;
+//            $result = array();
+//            for($i=1; $i<=12; $i++) {
+//                if($i<10) $month = '-0'.$i;
+//                else $month = '-'.$i;
+//                $shiftOnMonth[$i] = DB::table('shifts')->select('id')
+//                                      ->where('date','like', $time.$month.'%')
+//                                      ->get();
+//                $shiftOnMonthArr[$i] = $shiftOnMonth[$i]->map(function ($item, $key) {
+//                    return $item->id;
+//                });
+//
+//                $morningMonth[$i] = DB::table('bookings')->select('id')
+//                                      ->whereIn('shift_id', $shiftOnMonthArr[$i])
+//                                      ->whereBetween('start_time', [0,23])
+//                                      ->count();
+//
+//                $eveningMonth[$i] = DB::table('bookings')->select('id')
+//                                      ->whereIn('shift_id', $shiftOnMonthArr[$i])
+//                                      ->whereBetween('start_time', [24,47])
+//                                      ->count();
+//
+//                $wholeMonth[$i] = $morningMonth[$i] + $eveningMonth[$i];
+//
+//                $result[$i] = array($wholeMonth[$i], $morningMonth[$i], $eveningMonth[$i]);
+//            }
+//            return response()->success($result);
+//        } catch (Exception $e) {
+//            response()->exception($e->getMessage(), $e->getCode());
+//        }
+//    }
+    //== Tham so 'time' co dang 'year-month'
+    public function bookingOnWeekStatistic(Request $request)
+    {
+        try {
+            $time = $request->time;
+
+            $shiftOnWeek[1] = DB::table('shifts')->select('id')
+                                ->where('date','like', $time.'%')
+                                ->where('date' ,'>=', $time.'-01')
+                                ->where('date' ,'<=', $time.'-07')
+                                ->get();
+            $shiftOnWeek[2] = DB::table('shifts')->select('id')
+                                ->where('date','like', $time.'%')
+                                ->where('date' ,'>=', $time.'-08')
+                                ->where('date' ,'<=', $time.'-014')
+                                ->get();
+            $shiftOnWeek[3] = DB::table('shifts')->select('id')
+                                ->where('date','like', $time.'%')
+                                ->where('date' ,'>=', $time.'-15')
+                                ->where('date' ,'<=', $time.'-21')
+                                ->get();
+            $shiftOnWeek[4] = DB::table('shifts')->select('id')
+                                ->where('date','like', $time.'%')
+                                ->where('date' ,'>=', $time.'-22')
+                                ->where('date' ,'<=', $time.'-31')
+                                ->get();
+
+            for($i=1; $i<=4; $i++) {
+
+                $shiftOnWeekArr[$i] = $shiftOnWeek[$i]->map(function ($item, $key) {
+                    return $item->id;
+                });
+
+                $morningWeek[$i] = DB::table('bookings')->select('id')
+                                     ->whereIn('shift_id', $shiftOnWeekArr[$i])
+                                     ->whereBetween('start_time', [0,23])
+                                     ->count();
+
+                $eveningWeek[$i] = DB::table('bookings')->select('id')
+                                     ->whereIn('shift_id', $shiftOnWeekArr[$i])
+                                     ->whereBetween('start_time', [24,47])
+                                     ->count();
+
+                $wholeWeek[$i] = $morningWeek[$i] + $eveningWeek[$i];
+                $result[$i] = array($wholeWeek[$i], $morningWeek[$i], $eveningWeek[$i]);
+            }
+
+            return response()->success($result);
+        } catch (Exception $e) {
+            response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
 
 }

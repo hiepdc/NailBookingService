@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 
 /* Pink */
 .btn-primary:active,.btn-primary:not(:disabled):not(.disabled):active,.btn-primary.focus, .btn-primary:focus,.btn-default.focus, .btn-default:focus,.btn-default, .pager li>a:focus, .pager li>a:hover,a.list-group-item:focus, a.list-group-item:hover, button.list-group-item:focus, button.list-group-item:hover, .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover, .pagination>li>a:hover,.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover,.date-category,.navbar-default .navbar-nav>li>a::after , .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover, .spinner > div,.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover,.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover, .bg-color1,.btn:before,.contact-icon .top-icon,.nav-pills>li>a:focus, .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover, .nav-pills>li>a:hover{

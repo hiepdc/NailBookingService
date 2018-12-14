@@ -11,4 +11,5 @@ export class Booking{
     checkInDisable: boolean;
     checkOutDisbale: boolean;
     deleteDisable: boolean;
+    useCoinDisable: boolean;
 }

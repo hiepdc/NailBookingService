@@ -45,4 +45,18 @@ export class BookingService {
       catchError(error => of(new Api()))
     );
   }
+
+  useCoin(id: number): Observable<Api>{
+    return this.http.post<Api>(`${this.bookingURL}/use-coin`, {id: id}, httpOptions).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+  }
+
+  getChartMonth(time: number):Observable<Api>{
+    return this.http.post<Api>(`${this.bookingURL}/bookingOnMonthStatistic`, {time: time}, httpOptions).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+  }
 }

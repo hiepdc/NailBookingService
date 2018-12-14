@@ -55,6 +55,10 @@ Route::post('bookings/use-coin','BookingController@usecoin');
 Route::post('bookings/check-exist-booking', 'BookingController@checkExistBooking');
 
 Route::delete('bookings/{id}', 'BookingController@destroy');
+//input: year
+Route::post('bookings/bookingOnMonthStatistic','BookingController@bookingOnMonthStatistic');
+//input: year-month
+Route::post('bookings/bookingOnWeekStatistic','BookingController@bookingOnWeekStatistic');
 //show shift
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');

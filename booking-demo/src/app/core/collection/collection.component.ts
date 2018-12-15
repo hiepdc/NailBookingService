@@ -14,7 +14,7 @@ export class CollectionComponent implements OnInit {
 
   public albums: Array<IAlbum>;
   private _subscription: Subscription;
-  private collectionName: string;
+  public collectionName: string;
   private collectionId: number;
   private collections: Collection[];
 

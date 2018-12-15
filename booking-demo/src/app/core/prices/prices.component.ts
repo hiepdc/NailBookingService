@@ -17,7 +17,7 @@ export class PricesComponent implements OnInit {
   private serviceItemApi:ServiceItemApi;
   constructor(
     private bookingService:BookingService,
-    private loaderService:LoaderService
+    public loaderService:LoaderService
   ) { }
 
   ngOnInit() {

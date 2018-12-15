@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import { NotificationApi } from './models/notificationApi';
-
 declare const Pusher: any;
 
 const httpOptions = {
@@ -14,7 +13,8 @@ const httpOptions = {
 
 @Injectable()
 export class PusherService {
-  private notificationURL = "http://localhost:8000/api/notifications";
+
+  private notificationURL = `${environment.api_url}/notifications`;
   pusher: any;
   chanel: any;
   constructor(private http: HttpClient) {

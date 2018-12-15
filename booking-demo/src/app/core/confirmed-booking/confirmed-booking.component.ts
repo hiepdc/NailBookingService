@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { Router, Routes} from '@angular/router';
 
 import { BookingService } from '../booking.service';
 import { ConfirmBookingService } from '../confirm-booking.service'
@@ -16,11 +17,12 @@ import { BookingApi } from '../models/bookingApi';
 export class ConfirmedBookingComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private location: Location,
     private bookingService: BookingService,
     //private loaderService:LoaderService,
-    private confirmBookingService: ConfirmBookingService
+    private confirmBookingService: ConfirmBookingService,
+    private router:Router
   ) { }
 
   customerId: number;
@@ -30,6 +32,9 @@ export class ConfirmedBookingComponent implements OnInit {
   selectedDate: string;
   stylistName: string;
   stylist: Stylist;
+
+  displayChangeBooking: string = 'none';
+  displayConfirmDeleteBooking:string = 'none';
 
   ngOnInit() {
     // this.confirmBookingService.currentDate.subscribe(date => this.selectedDate = date);
@@ -41,12 +46,12 @@ export class ConfirmedBookingComponent implements OnInit {
   }
 
   getDataFromRoute(): void {
-    this.phoneNumber = this.route.snapshot.paramMap.get('phone');
-    this.customerName = this.route.snapshot.paramMap.get('customerName');
-    this.selectedHour = this.route.snapshot.paramMap.get('hour');
-    this.stylistName = this.route.snapshot.paramMap.get('stylistName');
-    this.selectedDate = this.route.snapshot.paramMap.get('date');
-    console.log("this.route.snapshot.paramMap: "+JSON.stringify(this.route.snapshot.paramMap));
+    this.phoneNumber = this.activatedRoute.snapshot.paramMap.get('phone');
+    this.customerName = this.activatedRoute.snapshot.paramMap.get('customerName');
+    this.selectedHour = this.activatedRoute.snapshot.paramMap.get('hour');
+    this.stylistName = this.activatedRoute.snapshot.paramMap.get('stylistName');
+    this.selectedDate = this.activatedRoute.snapshot.paramMap.get('date');
+    console.log("this.route.snapshot.paramMap: "+JSON.stringify(this.activatedRoute.snapshot.paramMap));
     console.log("this.route.snapshot.paramMap:phone "+this.phoneNumber);
 
     // this.route.queryParams.subscribe(params => {
@@ -54,6 +59,8 @@ export class ConfirmedBookingComponent implements OnInit {
     //   console.log(this.phoneNumber); // Print the parameter to the console. 
     // });
   }
+
+
 
   backToHome() {
     //1. delete booking 
@@ -68,6 +75,9 @@ export class ConfirmedBookingComponent implements OnInit {
     this.confirmBookingService.changeHour("");
     this.confirmBookingService.changeStylistName("");
     this.confirmBookingService.changeCustomerName("");
+
+    //bcak to home
+    this.router.navigate(['/home']);
   }
 
   goBack(): void {
@@ -77,6 +87,22 @@ export class ConfirmedBookingComponent implements OnInit {
 
   addPhoneNumberToConfirmBookingService() {
     this.confirmBookingService.changePhoneNumber(this.phoneNumber);
+  }
+
+  openChangeBooking() {
+    this.displayChangeBooking = 'block';
+  }
+
+  closeChangeBooking() {
+    this.displayChangeBooking = 'none';
+  }
+
+  openConfirmDeleteBooking() {
+    this.displayConfirmDeleteBooking = 'block';
+  }
+
+  closeConfirmDeleteBooking() {
+    this.displayConfirmDeleteBooking = 'none';
   }
 
   //#region function support
@@ -99,15 +125,15 @@ export class ConfirmedBookingComponent implements OnInit {
     }
   }
 
-  formatDate(date: Date): string {
-    var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+  // formatDate(date: Date): string {
+  //   var d = new Date(date),
+  //     month = '' + (d.getMonth() + 1),
+  //     day = '' + d.getDate(),
+  //     year = d.getFullYear();
 
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [day, month, year].join('-');
-  }
+  //   if (month.length < 2) month = '0' + month;
+  //   if (day.length < 2) day = '0' + day;
+  //   return [day, month, year].join('-');
+  // }
   //#endregion
 }

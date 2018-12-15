@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Compiler } from '@angular/core';
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoreComponent implements OnInit {
 
-  constructor() { }
+  constructor(private compiler:Compiler) { 
+    this.compiler.clearCache();
+  }
 
   ngOnInit() {
   }

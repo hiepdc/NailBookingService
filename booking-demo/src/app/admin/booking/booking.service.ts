@@ -59,4 +59,11 @@ export class BookingService {
       catchError(error => of(new Api()))
     );
   }
+  
+  getChartWeek(time: string):Observable<Api>{
+    return this.http.post<Api>(`${this.bookingURL}/bookingOnWeekStatistic`, {time: time}, httpOptions).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+  }
 }

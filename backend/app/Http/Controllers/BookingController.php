@@ -633,8 +633,13 @@ class BookingController extends Controller
                 $wholeWeek[$i] = $morningWeek[$i] + $eveningWeek[$i];
                 $result[$i] = array($wholeWeek[$i], $morningWeek[$i], $eveningWeek[$i]);
             }
-
-            return response()->success($result);
+            $results = [
+                'morning' => $morningWeek,
+                'evening' => $eveningWeek,
+                'date' => $wholeWeek
+            ];
+            return response()->success((array)$results);
+//            return response()->success($result);
         } catch (Exception $e) {
             response()->exception($e->getMessage(), $e->getCode());
         }

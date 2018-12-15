@@ -1,59 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import * as CanvasJS from '../models/canvasjs.min';
 import { BookingService } from '../booking/booking.service';
-import { forEach } from '@angular/router/src/utils/collection';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  dataPointsMonthDate = [];
   dataPointsMonthMorning = [];
   dataPointsMonthNoon = [];
-  // dataPointsMonthDate = [];
-  // chart :any;
+  chart : any;
+  years = [2018, 2019];
+  showComboboxMonth : any;
+  //week
+  dataPointsWeekDate = [];
+  dataPointsWeekMorning = [];
+  dataPointsWeekNoon = [];
+  chartWeek : any;
+  months = ['2018-12', '2018-11', '2018-05', '2018-04', '2018-03', '2018-02'];
+  showComboboxWeek : any;
   constructor(private bookingService: BookingService) { }
 
   ngOnInit() {
-    let dataPointsMonthDate = [];
-    let dataPointsMonthMorning = [];
-    let dataPointsMonthNoon = [];
-    this.bookingService.getChartMonth(2018).subscribe(
-      api => {
-        let date = api.data['date'];
-        let morning= api.data['morning'];
-        let evening= api.data['evening'];
-        const dateArray = Object.keys(date).map(i => date[i]);
-        const morningArray = Object.keys(morning).map(i => morning[i]);
-        const eveningArray = Object.keys(evening).map(i => evening[i]);
-        let i = 1;
-        for (let element of dateArray) {
-          dataPointsMonthDate.push({ label: `tháng ${i}`, y: element });
-          i++;
-        }
-        let j =1;
-        for (let element of morningArray) {
-          dataPointsMonthMorning.push({ label: `tháng ${i}`, y: element });
-          j++;
-        }
-        let k =1;
-        for (let element of eveningArray) {
-          dataPointsMonthNoon.push({ label: `tháng ${i}`, y: element });
-          k++;
-        }
-        chart.render();
-
-      },
-      error => {
-        console.log(error);
-        return;
-      }
-    )
-    let chart = new CanvasJS.Chart("chartContainer", {
+   // chart for month
+    this.chart = new CanvasJS.Chart("chartContainer", {
       theme: "light2",
       animationEnabled: true,
       title: {
-        text: "Thống kê lịch đặt"
+        text: "Thống kê lịch đặt trong năm"
       },
       axisY: {
         includeZero: false,
@@ -64,8 +39,8 @@ export class DashboardComponent implements OnInit {
         shared: "true"
       },
       legend: {
-        cursor: "pointer",
-        itemclick: toggleDataSeries
+        cursor: "pointer"
+        // itemclick: this.toggleDataSeries
       },
       data: [{
         type: "spline",
@@ -73,7 +48,7 @@ export class DashboardComponent implements OnInit {
         showInLegend: true,
         yValueFormatString: "##",
         name: "Buối sáng",
-        dataPoints: dataPointsMonthMorning
+        dataPoints: this.dataPointsMonthMorning
       },
       {
         type: "spline",
@@ -81,7 +56,7 @@ export class DashboardComponent implements OnInit {
         visible: true,
         yValueFormatString: "##",
         name: "Buổi chiều",
-        dataPoints: dataPointsMonthNoon
+        dataPoints: this.dataPointsMonthNoon
       },
       {
         type: "spline",
@@ -89,18 +64,146 @@ export class DashboardComponent implements OnInit {
         showInLegend: true,
         yValueFormatString: "##",
         name: "Cả ngày",
-        dataPoints: dataPointsMonthDate
+        dataPoints: this.dataPointsMonthDate
       }]
     });
-    function toggleDataSeries(e) {
-      if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-        e.dataSeries.visible = false;
-      } else {
-        e.dataSeries.visible = true;
-      }
-      chart.render();
-    }
+    this.getChartMonthFromService((new Date()).getFullYear());
 
+    //chart for week
+    this.chartWeek = new CanvasJS.Chart("chartContainerWeek", {
+      theme: "light2",
+      animationEnabled: true,
+      title: {
+        text: "Thống kê lịch đặt trong tháng"
+      },
+      axisY: {
+        includeZero: false,
+        title: "Số lượng lịch đặt",
+        // suffix: "lượt"
+      },
+      toolTip: {
+        shared: "true"
+      },
+      legend: {
+        cursor: "pointer"
+        // itemclick: this.toggleDataSeries
+      },
+      data: [{
+        type: "column",
+        visible: true,
+        showInLegend: true,
+        yValueFormatString: "##",
+        name: "Buối sáng",
+        dataPoints: this.dataPointsWeekMorning
+      },
+      {
+        type: "column",
+        showInLegend: true,
+        visible: true,
+        yValueFormatString: "##",
+        name: "Buổi chiều",
+        dataPoints: this.dataPointsWeekNoon
+      },
+      {
+        type: "column",
+        visible: true,
+        showInLegend: true,
+        yValueFormatString: "##",
+        name: "Cả ngày",
+        dataPoints: this.dataPointsWeekDate
+      }]
+    });
+    this.getChartWeekFromService(`${(new Date()).getFullYear()}-${(new Date()).getMonth()}`);
+  }
+  getChartMonthFromService(year: number) {
+    this.bookingService.getChartMonth(year).subscribe(
+      api => {
+        let date = api.data['date'];
+        let morning = api.data['morning'];
+        let evening = api.data['evening'];
+        const dateArray = Object.keys(date).map(i => date[i]);
+        const morningArray = Object.keys(morning).map(i => morning[i]);
+        const eveningArray = Object.keys(evening).map(i => evening[i]);
+        let i = 1;
+        this.dataPointsMonthDate.length = 0;
+        for (let element of dateArray) {
+          this.dataPointsMonthDate.push({ label: `tháng ${i}`, y: element });
+          i++;
+        }
+        let j = 1;
+        this.dataPointsMonthMorning.length = 0;
+        for (let element of morningArray) {
+          this.dataPointsMonthMorning.push({ label: `tháng ${i}`, y: element });
+          j++;
+        }
+        let k = 1;
+        this.dataPointsMonthNoon.length = 0;
+        for (let element of eveningArray) {
+          this.dataPointsMonthNoon.push({ label: `tháng ${i}`, y: element });
+          k++;
+        }
+        this.chart.render();
+        this.showComboboxMonth = true;
+
+      },
+      error => {
+        console.log(error);
+        return;
+      }
+    )
+  }
+  getChartWeekFromService(month: string) {
+    this.bookingService.getChartWeek(month).subscribe(
+      api => {
+        let date = api.data['date'];
+        console.log(date)
+        let morning = api.data['morning'];
+        let evening = api.data['evening'];
+        const dateArray = Object.keys(date).map(i => date[i]);
+        const morningArray = Object.keys(morning).map(i => morning[i]);
+        const eveningArray = Object.keys(evening).map(i => evening[i]);
+        let i = 1;
+        this.dataPointsWeekDate.length = 0;
+        for (let element of dateArray) {
+          this.dataPointsWeekDate.push({ label: `tuần ${i}`, y: element });
+          i++;
+        }
+        let j = 1;
+        this.dataPointsWeekMorning.length = 0;
+        for (let element of morningArray) {
+          this.dataPointsWeekMorning.push({ label: `tuần ${i}`, y: element });
+          j++;
+        }
+        let k = 1;
+        this.dataPointsWeekNoon.length = 0;
+        for (let element of eveningArray) {
+          this.dataPointsWeekNoon.push({ label: `tuần ${i}`, y: element });
+          k++;
+        }
+        this.chartWeek.render();
+        this.showComboboxWeek = true;
+      },
+      error => {
+        console.log(error);
+        return;
+      }
+    )
   }
 
+  selectYear(year: number){
+    this.getChartMonthFromService(year);
+  }
+
+  selectMonth(month: string){
+    this.getChartWeekFromService(month);
+  }
+
+  toggleDataSeries(e) {
+    if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+      e.dataSeries.visible = false;
+    } else {
+      e.dataSeries.visible = true;
+    }
+    this.chart.render();
+  }
 }

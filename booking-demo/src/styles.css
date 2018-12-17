@@ -903,6 +903,7 @@
       overflow-y: scroll!important;
       overflow-x: hidden!important;
     }
+
    }
    /* Large devices (large desktops, min 1200px ) */
    @media (min-width: 1200px) {
@@ -1013,7 +1014,7 @@
     }
     .navbar-collapse.collapse.in {
       display: block!important;
-      padding: 20px 10px;
+      /* padding: 20px 10px; */
       max-height: 400px;
       overflow-y: scroll!important;
       overflow-x: hidden!important;

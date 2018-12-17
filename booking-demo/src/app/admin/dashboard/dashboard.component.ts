@@ -20,10 +20,16 @@ export class DashboardComponent implements OnInit {
   chartWeek : any;
   months = ['2018-12', '2018-11', '2018-05', '2018-04', '2018-03', '2018-02'];
   showComboboxWeek : any;
+
+  //count total
+  countBookings: number;
+  countStylists: number;
+  countCustomers: number;
   constructor(private bookingService: BookingService) { }
 
   ngOnInit() {
    // chart for month
+   this.getTotalCountFromService();
     this.chart = new CanvasJS.Chart("chartContainer", {
       theme: "light2",
       animationEnabled: true,
@@ -205,5 +211,15 @@ export class DashboardComponent implements OnInit {
       e.dataSeries.visible = true;
     }
     this.chart.render();
+  }
+
+  getTotalCountFromService(){
+    this.bookingService.getCountTotal().subscribe(
+      api => {
+        this.countBookings = api.data['bookings'];
+        this.countStylists = api.data['stylists'];
+        this.countCustomers = api.data['customers'];
+      }
+    )
   }
 }

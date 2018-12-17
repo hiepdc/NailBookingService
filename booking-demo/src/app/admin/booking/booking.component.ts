@@ -14,46 +14,13 @@ export class BookingComponent implements OnInit {
   private rowSelection;
   selectedBooking: Booking;
   customer: Customer;
+  private columnDefs;
+  private components;
   @ViewChild('agGrid') agGrid: AgGridNg2;
 
-  columnDefs = [
-    // {headerName: 'ID', field: 'id'},
-    { headerName: 'Tên KH',  width: 300, field: 'customer_name' },
-    { headerName: 'SDT', field: 'phone_number' },
-    { headerName: 'Dịch vụ', field: 'service_name' },
-    { headerName: 'Stylist', field: 'stylist_name' },
-    {
-      headerName: 'Ngày',
-      width: 300,
-      field: 'date',
-      filter: 'agDateColumnFilter',
-      filterParams: {
-        comparator: function (filterLocalDateAtMidnight, cellValue) {
-          var dateAsString = cellValue;
-          if (dateAsString == null) return -1;
-          var dateParts = dateAsString.split("-");
-          var cellDate = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
-          if (filterLocalDateAtMidnight.getTime() == cellDate.getTime()) {
-            return 0;
-          }
-          if (cellDate < filterLocalDateAtMidnight) {
-            return -1;
-          }
-          if (cellDate > filterLocalDateAtMidnight) {
-            return 1;
-          }
-        },
-        browserDatePicker: true
-      },
-      suppressMenu: true
-    },
-    { headerName: 'Giờ', field: 'start_time' },
-    { headerName: 'Coin', field: 'coin' },
-    { headerName: 'Trạng thái', field: 'status' },
-  ]
   paginationPageSize = 50;
   bookings: Booking[];
-  id: number;
+  id: number;boolean
   checkInDisable: boolean;
   checkOutDisbale: boolean;
   deleteDisable: boolean;
@@ -61,10 +28,76 @@ export class BookingComponent implements OnInit {
   customerName: string;
   constructor(private bookingService: BookingService) {
     this.rowSelection = "single";
+    this.columnDefs = [
+      // {headerName: 'ID', field: 'id'},
+      {
+        headerName: 'Tên KH',
+        width: 300,
+        field: 'customer_name',
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        checkboxSelection: true
+      },
+      { headerName: 'SDT', field: 'phone_number', floatingFilterComponentParams: { suppressFilterButton: true } },
+      // { headerName: 'Dịch vụ',
+      //  field: 'service_name',
+      //  width: 140,
+      //  filter: "agSetColumnFilter"
+      //  },
+      {
+        headerName: "Dịch vụ",
+        field: "service_name",
+        width: 140,
+        filter: "agSetColumnFilter",
+        filterParams: {cellHeight: 20, values: ['A','B','C'], newRowsAction: 'keep' }
+      },
+      { headerName: 'Stylist', field: 'stylist_name', filter: "agSetColumnFilter" },
+      {
+        headerName: 'Ngày',
+        width: 300,
+        floatingFilterComponentParams: { suppressFilterButton: true },
+        field: 'date',
+        filter: 'agDateColumnFilter',
+        filterParams: {
+          comparator: function (filterLocalDateAtMidnight, cellValue) {
+            var dateAsString = cellValue;
+            if (dateAsString == null) return -1;
+            var dateParts = dateAsString.split("-");
+            var cellDate = new Date(Number(dateParts[0]), Number(dateParts[1]) - 1, Number(dateParts[2]));
+            if (filterLocalDateAtMidnight.getTime() == cellDate.getTime()) {
+              return 0;
+            }
+            if (cellDate < filterLocalDateAtMidnight) {
+              return -1;
+            }
+            if (cellDate > filterLocalDateAtMidnight) {
+              return 1;
+            }
+          },
+          browserDatePicker: true
+        },
+        suppressMenu: true
+      },
+      { headerName: 'Giờ', field: 'start_time' },
+      {
+        headerName: 'Coin',
+        field: 'coin', floatingFilterComponentParams: { suppressFilterButton: true },
+      },
+      {
+        headerName: 'Trạng thái',
+        field: 'status',
+        // floatingFilterComponentParams: { suppressFilterButton: true },
+        filter: "agSetColumnFilter",
+        filterParams: { suppressMiniFilter: true }
+      },
+    ];
   }
 
   ngOnInit() {
     this.getBookingsFromService();
+    this.checkInDisable = true;
+    this.checkOutDisbale = true;
+    this.deleteDisable = true;
+    this.useCoinDisable = true;
   }
 
   clearFilters() {
@@ -77,7 +110,6 @@ export class BookingComponent implements OnInit {
     this.gridColumnApi = params.columnApi;
     // this.getBookingsFromService();
   }
-
   onFirstDataRendered(params) {
     params.api.sizeColumnsToFit();
   }
@@ -95,7 +127,7 @@ export class BookingComponent implements OnInit {
     var checkInDisable = "";
     var checkOutDisbale = "";
     var deleteDisable = "";
-    var useCoinDisable ="";
+    var useCoinDisable = "";
     var coin = "";
     selectedRows.forEach(function (selectedRow, index) {
       if (index !== 0) {
@@ -120,7 +152,7 @@ export class BookingComponent implements OnInit {
     this.checkInDisable = (checkInDisable == "true");
     this.checkOutDisbale = (checkOutDisbale == 'true');
     this.deleteDisable = (deleteDisable == 'true');
-    this.useCoinDisable =(useCoinDisable == 'true');
+    this.useCoinDisable = (useCoinDisable == 'true');
     this.customerName = customer_name;
   }
 
@@ -128,10 +160,14 @@ export class BookingComponent implements OnInit {
     this.bookingService.getBookings().subscribe(
       api => {
         this.bookings = api.data;
+        this.checkInDisable = true;
+    this.checkOutDisbale = true;
+    this.deleteDisable = true;
+    this.useCoinDisable = true;
         for (let booking of this.bookings) {
-          if(booking.coin >= 100){
+          if (booking.coin >= 100) {
             booking.useCoinDisable = false;
-          }else{
+          } else {
             booking.useCoinDisable = true;
           }
           if (booking.status == 'booked') {
@@ -186,21 +222,39 @@ export class BookingComponent implements OnInit {
     )
   }
 
-  useCoin(id: number): void{
+  useCoin(id: number): void {
     this.bookingService.useCoin(id).subscribe(
       api => {
-        if(api.data === null){
+        if (api.data === null) {
           console.log(api.message);
-        }else{
+        } else {
           this.customer = api.data;
           console.log(this.customer);
         }
         this.getBookingsFromService();
       },
-      error =>{
+      error => {
         console.log(error);
         return;
       }
     )
   }
+}
+function countryCellRenderer(params) {
+  return params.value.name;// + ' (' + params.value.code + ')';
+}
+function countryKeyCreator(params) {
+  var countryObject = params.value;
+  var key = countryObject.name;
+  return key;
+}
+function patchData(data) {
+  data.forEach(function(row) {
+    var countryName = row.country;
+    var countryCode = countryName.substring(0, 2).toUpperCase();
+    row.country = {
+      name: countryName,
+      code: countryCode
+    };
+  });
 }

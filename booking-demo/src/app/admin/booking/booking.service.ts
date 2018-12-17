@@ -66,4 +66,11 @@ export class BookingService {
       catchError(error => of(new Api()))
     );
   }
+
+  getCountTotal() : Observable<Api>{
+    return this.http.get<Api>(`${this.bookingURL}/count-total`).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    )
+  }
 }

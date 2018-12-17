@@ -1,30 +1,25 @@
 <!-- <div class="grid-wrapper"> -->
-    <span class="button-group" *ngIf="id">
+<!-- <span class="button-group" *ngIf="id">
       <p class="dropdown-item">{{customerName}}</p>
-        <button class="dropdown-item" type="button" class="btn btn-primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
+        <button mat-raised-button color="accent" class="dropdown-item" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
         <button class="dropdown-item" type="button" class="btn btn-warning" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
         <button class="dropdown-item" type="button" class="btn btn-danger" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
         <button class="dropdown-item"  type="button" class="btn btn-primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
         <button class="dropdown-item" type="button" class="btn btn-primary" (click)="clearFilters()">Clear Filters</button>
-    </span>
-<ag-grid-angular 
-    #agGrid
-    id="myGrid"
-    style="width: 100%; height: 400px"
-    class="ag-theme-balham"
-    [enableSorting]="true"
-    [enableFilter]="false"
-    [rowData]="bookings" 
-    [columnDefs]="columnDefs"
-    [enableColResize]="true"
-    [pagination]="true"
-    [paginationPageSize]="paginationPageSize"
-    [floatingFilter]="true"
-    (firstDataRendered)="onFirstDataRendered($event)"
-    [rowSelection]="rowSelection"
-    (selectionChanged)="onSelectionChanged($event)"
-    (gridReady)="onGridReady($event)"
-    >
+    </span> -->
+<div class="button-row">
+  <p class="dropdown-item">{{customerName}}</p>
+  <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
+  <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
+  <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
+  <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
+  <button class="pull-right" mat-button color="primary" (click)="clearFilters()">Clear Filters</button>
+  <div class="clearfix"></div>
+</div>
+<ag-grid-angular #agGrid id="myGrid" style="width: 100%; height: 400px" class="ag-theme-balham" [enableSorting]="true"
+  [enableFilter]="true" [rowData]="bookings" [columnDefs]="columnDefs" [enableColResize]="true" [pagination]="true"
+  [paginationPageSize]="paginationPageSize" [floatingFilter]="true" (firstDataRendered)="onFirstDataRendered($event)"
+  [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReady($event)">
 </ag-grid-angular>
 <!-- </div> -->
 <!-- <div class="row">

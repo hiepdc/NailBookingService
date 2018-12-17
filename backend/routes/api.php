@@ -59,6 +59,7 @@ Route::delete('bookings/{id}', 'BookingController@destroy');
 Route::post('bookings/bookingOnMonthStatistic','BookingController@bookingOnMonthStatistic');
 //input: year-month
 Route::post('bookings/bookingOnWeekStatistic','BookingController@bookingOnWeekStatistic');
+Route::get('bookings/count-total', 'BookingController@getCountTotal');
 //show shift
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');

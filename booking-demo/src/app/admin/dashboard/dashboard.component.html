@@ -1,9 +1,83 @@
-<!--The content below is only a placeholder and can be replaced.-->
+<!-- /.row -->
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-address-book fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">{{countCustomers}}</div>
+                                <div>Khách hàng</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a routerLink="/admin/customers">
+                        <div class="panel-footer">
+                            <span class="pull-left">Xem chi tiết</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-female fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">{{countStylists}}</div>
+                                <div>Stylists</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a routerLink="/admin/stylists">
+                        <div class="panel-footer">
+                            <span class="pull-left">Xem chi tiết</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-shopping-cart fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right">
+                                <div class="huge">{{countBookings}}</div>
+                                <div>Lịch đặt</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a routerLink="/admin/bookings">
+                        <div class="panel-footer">
+                            <span class="pull-left">Xem chi tiết</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.row -->
 <div id="chartContainer" style="height: 300px; width: 80%; margin-left:auto;margin-right:auto;"></div>
 <select *ngIf="showComboboxMonth" class="form-control" #t (change)="selectYear(t.value)">year
     <option *ngFor="let year of years" [value]="year">{{year}}</option>
 </select>
-<div id="chartContainerWeek" style="height: 300px; width: 80%; margin-left:auto;margin-right:auto;"></div>
+<div id="chartContainerWeek" style="height: 200px; width: 80%; margin-left:auto;margin-right:auto;"></div>
 <select *ngIf="showComboboxMonth" class="form-control" #w (change)="selectMonth(w.value)">month
     <option *ngFor="let month of months" [value]="month">{{month}}</option>
 </select>

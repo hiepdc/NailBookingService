@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\Customer;
+use App\Feedback;
 use App\Notification;
 use App\Service;
 use App\Shift;
@@ -645,5 +646,15 @@ class BookingController extends Controller
         }
     }
 
+    public function getCountTotal(){
+        $countBookings = Booking::count();
+        $countCustomers = Customer::count();
+        $countStylists = Stylist::count();
+        $result = [];
+        $result['bookings'] = $countBookings;
+        $result['customers'] = $countCustomers;
+        $result['stylists'] = $countStylists;
+        return response()->success($result);
+    }
 
 }

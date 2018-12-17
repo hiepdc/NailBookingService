@@ -28,7 +28,7 @@ export class BookingService {
 
   private stylistURL = "http://api.chamtramnail.com/public/api/stylists";
   private shiftURL = "http://api.chamtramnail.com/public/api/shifts";
-  private bookingURL = "http://localhost:8000/api/bookings";
+  private bookingURL = "http://api.chamtramnail.com/public/api/bookings";
   private customerURL = "http://api.chamtramnail.com/public/api/customers";
   private serviceURL = "http://api.chamtramnail.com/public/api/services";
   private serviceItemUrl = "http://api.chamtramnail.com/public/api/service-items"

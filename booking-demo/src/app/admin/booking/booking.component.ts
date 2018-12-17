@@ -165,11 +165,6 @@ export class BookingComponent implements OnInit {
     this.deleteDisable = true;
     this.useCoinDisable = true;
         for (let booking of this.bookings) {
-          if (booking.coin >= 100) {
-            booking.useCoinDisable = false;
-          } else {
-            booking.useCoinDisable = true;
-          }
           if (booking.status == 'booked') {
             booking.checkInDisable = false;
             booking.checkOutDisbale = true;
@@ -182,6 +177,11 @@ export class BookingComponent implements OnInit {
             booking.checkInDisable = true;
             booking.checkOutDisbale = true;
             booking.deleteDisable = false;
+          }
+          if (booking.coin >= 100 && booking.status == 'pending') {
+            booking.useCoinDisable = false;
+          } else {
+            booking.useCoinDisable = true;
           }
         }
       }

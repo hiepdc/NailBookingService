@@ -1,3 +1,131 @@
-<p>
-  service-item works!
-</p>
+<!-- List nang cao -->
+<div class="content ">
+<div class="row">
+ <!-- Form to add data -->
+ <form [formGroup]="serviceForm" (ngSubmit)="storeService(serviceForm)">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" name="name" formControlName="name">
+    </div>
+    <div class="form-group">
+        <label for="desp">Description</label>
+        <input type="text" class="form-control" name="desp" formControlName="desp">
+    </div>
+    <div class="form-group">
+        <label for="service_id">Type</label>
+        <input type="number" class="form-control" name="service_id" min="0" max="99999" step=".01" formControlName="service_id">
+    </div>
+    <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" class="form-control" name="quantity" min="1" max="10" formControlName="quantity">
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="button" (click)="putProduct(product.id)" class="btn btn-primary">Update</button>
+
+</form>
+
+
+</div>
+
+
+
+<div class="row">
+    <div class="col-xl-10">
+      <div class="card">
+        <div class="card-body">
+          <a href="#">
+            <h4 class="box-title">List of Basic</h4>
+          </a>
+        </div>
+        <div class="card-body--">
+          <div class="table-stats order-table ov-h">
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>ServiceName</th>
+                  <th>Price</th>
+                  <th>
+                    Delete
+                  </th>
+                  <th>
+                    Edit
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let serviceItem of serviceItemApi.data[1]  | paginate: { id: 'listing_pagination',
+                itemsPerPage: 10,
+                currentPage: page,
+                totalItems: totalRec }">
+                  <td>{{serviceItem.id}}</td>
+                  <td>{{serviceItem.name}}</td>
+                  <td>{{serviceItem.price}}</td>
+                  <td>
+                    <button class="btn-danger" (click)="deleteService(serviceItem.id)">Delete</button>
+                  </td>
+                  <td> 
+                    <button class="btn-secondary">Edit</button> 
+                  </td>
+                </tr>                
+              </tbody>
+            </table>
+            <div>
+              <pagination-controls class ="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+            </div>
+          </div> <!-- /.table-stats -->
+        </div>
+      </div> <!-- /.card -->
+    </div> <!-- /.col-lg-8 -->
+
+
+    <div class="row">
+      <div class="col-xl-10">
+        <div class="card">
+          <div class="card-body">
+            <a href="#">
+              <h4 class="box-title">List of Advance</h4>
+            </a>
+          </div>
+          <div class="card-body--">
+            <div class="table-stats order-table ov-h">
+              <table class="table ">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>ServiceName</th>
+                    
+                    <th>Price</th>
+                    <th>
+                      Delete
+                    </th>
+                    <th>
+                      Edit
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let serviceItem of serviceItemApi.data[2]  | paginate: { id: 'listing_pagination',
+                  itemsPerPage: 10,
+                  currentPage: page,
+                  totalItems: totalRec }">
+                    <td>{{serviceItem.id}}</td>
+                    <td>{{serviceItem.name}}</td>
+                    <td>{{serviceItem.price}}</td>              
+                    <td>
+                      <button class="btn-danger" (click)="deleteService(serviceItem.id)">Delete</button>
+                    </td>
+                    <td> 
+                      <button class="btn-secondary">Edit</button> 
+                    </td>
+                  </tr>                
+                </tbody>
+              </table>
+              <div>
+                <pagination-controls class ="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+              </div>
+            </div> <!-- /.table-stats -->
+          </div>
+        </div> <!-- /.card -->
+      </div> <!-- /.col-lg-8 -->
+    </div>

@@ -8,6 +8,7 @@ import { NotificationComponent } from './notification/notification.component'
 import { PusherService } from './pusher.service';
 import { ServiceComponent } from './service/service.component';
 import { AgGridModule} from 'ag-grid-angular';
+import {ServiceItemService} from './service-item/service-item.service';
 // import { LoginComponent } from './login/login.component';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -63,7 +64,8 @@ import { StylistComponent } from './stylist/stylist.component';
     AuthenticationService,
     AuthGuard,
     BookingService,
-    ServicesService
+    ServicesService,
+    ServiceItemService
   ]
 })
 export class AdminModule { }

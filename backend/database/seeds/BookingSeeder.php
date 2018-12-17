@@ -51,19 +51,19 @@ class BookingSeeder extends Seeder
                 'status' => 'booked',
             ],
         ]);
-        foreach (range(1, 2000) as $index) {
+        foreach (range(1, 6000) as $index) {
             DB::table('bookings')->insert([
-                'shift_id' => rand(5, 800),
+                'shift_id' => rand(5, 2400),
                 'service_id' => rand(1, 2),
-                'customer_id' => rand(1, 30),
-                'start_time'=>'9',
+                'customer_id' => rand(1, 200),
+                'start_time'=> rand(0,25),
                 'status' => $faker->randomElement(['booked']),
             ]);
             DB::table('bookings')->insert([
-                'shift_id' => rand(400, 1000),
+                'shift_id' => rand(5, 2400),
                 'service_id' => rand(1, 2),
-                'customer_id' => rand(1, 30),
-                'start_time'=>'25',
+                'customer_id' => rand(1, 200),
+                'start_time'=> rand(26,47),
                 'status' => $faker->randomElement(['booked']),
             ]);
         }

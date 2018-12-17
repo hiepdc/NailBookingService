@@ -17,8 +17,8 @@ class ImageSeeder extends Seeder
             DB::table('images')->insert([
                 'gallery_id' => rand(1,10),
                 'caption' => $faker->paragraph($nbSentences = 1),
-                'thumb_link' => str_random(5).".png",
-                'image_link' => str_random(5).".png"
+                'thumb_link' => '../../assets/img/gallery/nail'. random_int(1,8). "_tn.jpg",
+                'image_link' => '../../assets/img/gallery/nail'. random_int(1,8). ".jpg",
             ]);
         }
     }

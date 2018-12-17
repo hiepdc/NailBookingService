@@ -14,6 +14,7 @@ import { StylistApi } from './models/stylistApi';
 import { PinApi } from './models/pinApi';
 import { ServiceApi} from './models/serviceApi';
 import { ServiceItemApi} from './models/serviceItemApi';
+import { environment } from '../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -26,12 +27,12 @@ const httpOptions2 = {
 @Injectable()
 export class BookingService {
 
-  private stylistURL = "http://api.chamtramnail.com/public/api/stylists";
-  private shiftURL = "http://api.chamtramnail.com/public/api/shifts";
-  private bookingURL = "http://api.chamtramnail.com/public/api/bookings";
-  private customerURL = "http://api.chamtramnail.com/public/api/customers";
-  private serviceURL = "http://api.chamtramnail.com/public/api/services";
-  private serviceItemUrl = "http://api.chamtramnail.com/public/api/service-items"
+  private stylistURL = `${environment.api_url}/stylists`;
+  private shiftURL = `${environment.api_url}/shifts`;
+  private bookingURL = `${environment.api_url}/bookings`;
+  private customerURL = `${environment.api_url}/customers`;
+  private serviceURL = `${environment.api_url}/services`;
+  private serviceItemUrl = `${environment.api_url}/service-items`;
   //get all stylist from db
   getServices(): Observable<ServiceApi> {
     return this.http.get<ServiceApi>(this.serviceURL).pipe(

@@ -14,32 +14,48 @@ class StylistSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
         DB::table('stylists')->insert([[
-            'stylist_name' => 'hiepdc',
+            'stylist_name' => 'Lệ Thủy',
             'phone_number' => '0976420019',
             'information' => $faker->paragraph($nbSentences = 1),
-            'image_link' => "../../assets/img/services/service1.jpg",
+            'image_link' => "../../assets/img/team/team1.jpg",
         ],
             [
-                'stylist_name' => 'longdq',
+                'stylist_name' => 'Thúy Vân',
                 'phone_number' => '0126420123',
                 'information' => $faker->paragraph($nbSentences = 1),
-                'image_link' => "../../assets/img/services/service2.jpg",
+                'image_link' => "../../assets/img/team/team2.jpg",
             ],
             [
-                'stylist_name' => 'hungxoi',
+                'stylist_name' => 'Thị Thắm',
                 'phone_number' => '0127420456',
                 'information' => $faker->paragraph($nbSentences = 1),
-                'image_link' => "../../assets/img/services/service3.jpg",
+                'image_link' => "../../assets/img/team/team3.jpg",
+            ],
+            [
+                'stylist_name' => 'Ngọc Huyền',
+                'phone_number' => '0976420019',
+                'information' => $faker->paragraph($nbSentences = 1),
+                'image_link' => "../../assets/img/team/team4.jpg",
+            ],
+            [
+                'stylist_name' => 'Thúy Kiều',
+                'phone_number' => '0126420123',
+                'information' => $faker->paragraph($nbSentences = 1),
+                'image_link' => "../../assets/img/team/team5.jpg",
+            ],
+            [
+                'stylist_name' => 'Thúy Na',
+                'phone_number' => '0127420456',
+                'information' => $faker->paragraph($nbSentences = 1),
+                'image_link' => "../../assets/img/team/team6.jpg",
+            ],
+            [
+                'stylist_name' => 'Thủy Tiên',
+                'phone_number' => '0127420456',
+                'information' => $faker->paragraph($nbSentences = 1),
+                'image_link' => "../../assets/img/team/team7.jpg",
             ]
         ]);
-        foreach (range(1, 7) as $index) {
-            DB::table('stylists')->insert([
-                'stylist_name' => $faker->name,
-                'phone_number' => "0976" . rand(123456, 999999),
-                'information' => $faker->paragraph($nbSentences = 1),
-                'image_link' => "../../assets/img/services/service4.jpg",
-            ]);
-        }
     }
 
 }

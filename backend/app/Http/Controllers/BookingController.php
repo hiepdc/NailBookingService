@@ -18,16 +18,6 @@ use Pusher\Pusher;
 
 class BookingController extends Controller
 {
-    public function showBookingForm($phonenumber)
-    {
-        try {
-            session(['phone_number' => $phonenumber]);
-            return response()->success(session('phone_number'), 'Chào mừng đến với nailbookingservice');
-        } catch (Exception $e) {
-            return response()->exception($e->getMessage(), $e->getCode());
-        }
-    }
-
     public function addNewBooking(Request $request)
     {
         try {

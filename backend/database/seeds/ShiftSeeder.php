@@ -72,7 +72,7 @@ class ShiftSeeder extends Seeder
             );
         }
         $datetime = new Carbon('2018-01-01');
-        foreach (range(1, 290) as $index) {
+        foreach (range(1, 350) as $index) {
             $date = $datetime->addDays(1)->format('Y-m-d');
             DB::table('shifts')->insert(
                 [

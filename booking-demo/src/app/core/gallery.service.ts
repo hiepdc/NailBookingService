@@ -8,7 +8,7 @@ import { CollectionApi } from './models/collectionApi';
 
 @Injectable()
 export class GalleryService {
-  private galleryUrl = "http://localhost:8000/api/galleries";
+  private galleryUrl = "http://api.chamtramnail.com/public/api/galleries";
 
   //get all stylist from db
   getAllGalleries(){

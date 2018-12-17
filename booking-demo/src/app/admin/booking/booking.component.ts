@@ -46,11 +46,9 @@ export class BookingComponent implements OnInit {
       {
         headerName: "Dịch vụ",
         field: "service_name",
-        width: 140,
-        filter: "agSetColumnFilter",
-        filterParams: {cellHeight: 20, values: ['A','B','C'], newRowsAction: 'keep' }
+        width:300
       },
-      { headerName: 'Stylist', field: 'stylist_name', filter: "agSetColumnFilter" },
+      { headerName: 'Stylist',  width: 300, field: 'stylist_name', filter: "agSetColumnFilter" },
       {
         headerName: 'Ngày',
         width: 300,

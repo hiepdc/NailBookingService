@@ -33,9 +33,6 @@ export class DashboardComponent implements OnInit {
     this.chart = new CanvasJS.Chart("chartContainer", {
       theme: "light2",
       animationEnabled: true,
-      title: {
-        text: "Thống kê lịch đặt trong năm"
-      },
       axisY: {
         includeZero: false,
         title: "Số lượng lịch đặt",
@@ -79,9 +76,6 @@ export class DashboardComponent implements OnInit {
     this.chartWeek = new CanvasJS.Chart("chartContainerWeek", {
       theme: "light2",
       animationEnabled: true,
-      title: {
-        text: "Thống kê lịch đặt trong tháng"
-      },
       axisY: {
         includeZero: false,
         title: "Số lượng lịch đặt",

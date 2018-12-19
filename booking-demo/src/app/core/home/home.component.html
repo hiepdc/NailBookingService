@@ -1,5 +1,9 @@
+<div *ngIf="loaderService.isLoading | async">
+  <app-pre-loader></app-pre-loader>
+</div>
+
 <!-- ===== content starts  ===== -->
-<div id="content" class="col-md-10 split">
+<div id="content" class="col-md-10 split" *ngIf="!(loaderService.isLoading | async)">
   <!-- ===== Home section starts  ===== -->
   <div id="home">
     <div class="slideshow">
@@ -14,17 +18,17 @@
         <div class="inside-wrapper home col-md-12">
           <h3>Welcome to Châm Trâm</h3>
           <div class="input_sdt">
-            <form #bookingForm="ngForm"> 
+            <form #bookingForm="ngForm">
               <div class="input-phone">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fas fa-phone"></i></span>
                   <input type="tel" placeholder="" class="form-control phone" maxlength="10" pattern="(03|09|07|08|05)+([0-9]{8})\b"
                     [(ngModel)]="phoneNumber" name="phone_number" required>
-                  <!-- <p>{{number}}</p> -->
+                  <!-- <p>{{phoneNumber}}</p> -->
                 </div>
               </div>
-              <button type="button" class="btn btn-booking" [disabled]="bookingForm.form.invalid"
-                      (click)="navigateToBooking()">Đặt Lịch Giữ Chỗ
+              <button type="button" class="btn btn-booking" [disabled]="bookingForm.form.invalid" (click)="checkExistBooking()">Đặt
+                Lịch Giữ Chỗ
                 <img src="../../../assets/img/home/arrow right.png">
               </button>
             </form>
@@ -42,3 +46,41 @@
   <!-- /home section ends -->
 </div>
 <!-- /content -->
+
+<!-- Modal Confirm Change Booking-->
+<div class="backdrop" [ngStyle]="{'display':displayChangeBooking}"></div>
+<div id="modalChangeBooking" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayChangeBooking}">
+  <div class="modal-dialog changeBoooking" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeChangeBooking()"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <h4 class="modal-title">Anh/chị có muốn đổi lịch hay hủy lịch</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-a" (click)="closeChangeBooking()">Đóng</button>
+        <button type="button" class="btn btn-a" (click)="deleteBooking()">Hủy Lịch</button>
+        <button type="button" class="btn btn-a" (click)="changeBooking()">Đổi Lịch</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal !-->
+
+<!-- Modal Notifi Delete Booking Success-->
+<div class="backdrop" [ngStyle]="{'display':displayNotifiDeleteBooking}"></div>
+<div id="modalNotifiDeleteBooking" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayNotifiDeleteBooking}">
+  <div class="modal-dialog notifiDeleteBoooking" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="closeNotifiDeleteBooking()"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <h4 class="modal-title">Anh/chị đã hủy lịch thành công</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-a" (click)="closeNotifiDeleteBooking()">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

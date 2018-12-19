@@ -113,7 +113,7 @@ export class BookingService {
         phone_number: phoneNumber,
       };
       return this.http.post<BookingApi>(url, body, httpOptions).pipe(
-        tap((bookingApi) => console.log(BookingApi)),
+        tap((bookingApi) => console.log(bookingApi)),
         catchError(error => of(new BookingApi()))
       );
     }

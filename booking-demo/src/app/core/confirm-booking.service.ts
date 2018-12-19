@@ -10,12 +10,14 @@ export class ConfirmBookingService {
   private stylistName = new BehaviorSubject('');
   private phoneNumber = new BehaviorSubject('');
   private customerName = new BehaviorSubject('');
+  private notifiDeleteBooking = new BehaviorSubject('');
   //currentMessage = this.messageSource.asObservable();
   currentHour = this.selectedHour.asObservable();
   currentDate = this.selectedDate.asObservable();
   currentStylistName = this.stylistName.asObservable();
   currentPhoneNumber = this.phoneNumber.asObservable();
   currentCustomerName = this.customerName.asObservable();
+  currentNotifiDeleteBooking = this.notifiDeleteBooking.asObservable();
 
   constructor() { }
 
@@ -33,6 +35,10 @@ export class ConfirmBookingService {
   }
   changeCustomerName(customerName: string) {
     this.customerName.next(customerName)
+  }
+
+  changeNotifiDeleteBooking(notifiDeleteBooking: string){
+    this.notifiDeleteBooking.next(notifiDeleteBooking);
   }
 
 }

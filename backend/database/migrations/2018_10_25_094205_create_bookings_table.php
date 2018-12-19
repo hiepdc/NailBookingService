@@ -24,7 +24,7 @@ class CreateBookingsTable extends Migration
                 $table->integer('customer_id')->unsigned();
                 $table->foreign('customer_id')->references('id')->on('customers');
                 $table->integer('start_time');
-                $table->string('status');
+                $table->string('status', 20);
                 $table->softDeletes();
             });
         }

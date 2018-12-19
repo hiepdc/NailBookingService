@@ -36,7 +36,7 @@
    .menu-item-name {
     text-align: left;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 13px;
     /* border-bottom: 1px dotted rgb(213, 213, 213); */
     width: 100%;
     color: darkslategrey;
@@ -53,7 +53,7 @@
     float: right;
     color: #333;
     /* margin-top: -32px; */
-    font-size: 22px;
+    font-size: 17px;
     /* width: 30%; */
    }
    .margin1 {

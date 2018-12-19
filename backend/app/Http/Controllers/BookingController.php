@@ -26,12 +26,15 @@ class BookingController extends Controller
             if ($booking->getStatusBookedByPhonenumber($request->phone_number) > 0) {
                 return response()->success(null, 'Bạn có chắc chắn muốn đổi lịch');
             }
-            //add customer
+//            //add customer
             $customer = new Customer();
-            //2.kiểm tra khách hàng đã có trong hệ thống chưa
-            if ($customer->getCustomerByPhonenumber($request->phone_number) == 0) {
-                $customer->addNewCustomer($request->customer_name, $request->phone_number);
+            if($request->has('customer_name')){
+                $customer->updateCustomerName($request->phone_number, $request->customer_name);
             }
+//            //2.kiểm tra khách hàng đã có trong hệ thống chưa
+//            if ($customer->getCustomerByPhonenumber($request->phone_number) == 0) {
+//                $customer->addNewCustomer($request->customer_name, $request->phone_number);
+//            }
             $shift = new Shift();
             $service_id = $request->service_id;
             $customer_id = $customer->getIDByPhonenumber($request->phone_number);
@@ -267,6 +270,9 @@ class BookingController extends Controller
                 return response()->success(null, 'Mã xác nhận đã hết hạn');
             }
             $verified = $result['data'];
+            //add customer
+            $customer = new Customer();
+            $customer->addNewCustomer("no name", $request->phone_number);
             return response()->success($verified, 'Bạn vừa nhập mã pin thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

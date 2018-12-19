@@ -8,39 +8,39 @@
                           <a routerLink="/admin/dashboard">Dashboard </a>
                         </li> -->
             <li class="menu-title">Managements</li><!-- /.menu-title -->
-            <li class="menu-item-has-children dropdown">
+            <li class="menu-item-has-children show dropdown">
               <a [routerLinkActive]="['active']" routerLink="/admin/shifts" class="dropdown-toggle" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Stylist</a>
+                aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users-cog"></i>Stylist</a>
               <ul class="sub-menu children dropdown-menu">
-                <li><i class="fa fa-puzzle-piece"></i><a routerLink="/admin/shifts">Shift Schedule</a></li>
+                <li><i class="fas fa-calendar-alt"></i><a routerLink="/admin/shifts">Shift Schedule</a></li>
                 <li><i class="fa fa-bars"></i><a routerLink="/admin/stylists">List Stylist</a></li>
               </ul>
             </li>
             <li class="menu-item-has-children">
-              <a routerLink="/admin/bookings"> <i class="menu-icon fa fa-table"></i>Oders</a>
+              <a routerLink="/admin/bookings"> <i class="menu-icon fas fa-cart-plus"></i>Order</a>
   
             </li>
-            <li class="menu-item-has-children dropdown">
+            <li class="menu-item-has-children show dropdown">
               <a routerLink="/admin/services" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Service</a>
+                aria-expanded="false"> <i class="menu-icon fab fa-sellcast"></i>Service</a>
               <ul class="sub-menu children dropdown-menu">
-                <li><i class="fa fa-puzzle-piece"></i><a routerLink="/admin/services-items">Service Items</a></li>
+                <li><i class="fas fa-dollar-sign"></i><a routerLink="/admin/services-items">Service Item</a></li>
               </ul>
             </li>
             <li class="menu-item-has-children dropdown">
-              <a routerLink="/admin/customers"> <i class="menu-icon fa fa-th"></i>Customer</a>
+              <a routerLink="/admin/customers"> <i class="menu-icon fa fa-users"></i>Customer</a>
             </li>
   
             <li class="menu-title">Others</li><!-- /.menu-title -->
             <li class="menu-item-has-children dropdown">
               <a routerLink="/admin/feedbacks" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"> <i class="menu-icon fa fa-envelope"></i>Feedback</a>
+                aria-expanded="false"> <i class="menu-icon far fa-comment-alt"></i>Feedback</a>
             </li>
-            <li class="menu-item-has-children dropdown">
+            <li class="menu-item-has-children show dropdown">
               <a routerLink="/admin/galeries" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false"> <i class="menu-icon fa fa-camera-retro"></i>Galery</a>
+                aria-expanded="false"> <i class="menu-icon fa fa-camera-retro"></i>Gallery</a>
               <ul class="sub-menu children dropdown-menu">
-                <li><i class="fa fa-puzzle-piece"></i><a routerLink="/admin/images">Gallery Images</a></li>
+                <li><i class="far fa-images"></i><a routerLink="/admin/images">Gallery Image</a></li>
               </ul>
             </li>
           </ul>

@@ -12,11 +12,6 @@ class CustomerSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();
-        DB::table('customers')->insert([
-            'customer_name' => "Công Hiệp",
-            'phone_number' => "0976420018",
-            'coin' => "200"
-        ]);
         foreach (range(1, 50) as $index) {
             DB::table('customers')->insert([
                 [

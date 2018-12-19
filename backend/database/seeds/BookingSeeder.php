@@ -14,57 +14,31 @@ class BookingSeeder extends Seeder
     {
         //
         $faker = Faker\Factory::create();
-        DB::table('bookings')->insert([
-            [
-                'shift_id' => '1',
-                'service_id' => '1',
-                'customer_id' => '1',
-                'start_time' => '24',
-                'status' => 'booked',
-            ],
-            [
-                'shift_id' => '1',
-                'service_id' => '2',
-                'customer_id' => '2',
-                'start_time' => '24',
-                'status' => 'booked',
-            ],
-            [
-                'shift_id' => '1',
-                'service_id' => '1',
-                'customer_id' => '3',
-                'start_time' => '24',
-                'status' => 'booked',
-            ],
-            [
-                'shift_id' => '1',
-                'service_id' => '2',
-                'customer_id' => '4',
-                'start_time' => '24',
-                'status' => 'booked',
-            ],
-            [
-                'shift_id' => '1',
-                'service_id' => '2',
-                'customer_id' => '5',
-                'start_time' => '24',
-                'status' => 'booked',
-            ],
-        ]);
-        foreach (range(1, 3000) as $index) {
+        foreach (range(1, 50) as $index) {
+            DB::table('bookings')->insert([
+                [
+                    'shift_id' => rand(1,14),
+                    'service_id' => rand(1,2),
+                    'customer_id' => rand(1, 200),
+                    'start_time' => rand(0,47),
+                    'status' => 'booked',
+                ]
+            ]);
+        }
+        foreach (range(1, 2500) as $index) {
             DB::table('bookings')->insert([
                 'shift_id' => rand(211, 2450),
                 'service_id' => rand(1, 2),
                 'customer_id' => rand(1, 200),
                 'start_time'=> rand(0,25),
-                'status' => $faker->randomElement(['booked']),
+                'status' => $faker->randomElement(['finished']),
             ]);
             DB::table('bookings')->insert([
                 'shift_id' => rand(211, 2450),
                 'service_id' => rand(1, 2),
                 'customer_id' => rand(1, 200),
                 'start_time'=> rand(26,47),
-                'status' => $faker->randomElement(['booked']),
+                'status' => $faker->randomElement(['finished']),
             ]);
         }
     }

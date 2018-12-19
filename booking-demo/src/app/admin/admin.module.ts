@@ -9,6 +9,7 @@ import { PusherService } from './pusher.service';
 import { ServiceComponent } from './service/service.component';
 import { AgGridModule} from 'ag-grid-angular';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import {MatChipsModule} from '@angular/material/chips';
 // import { LoginComponent } from './login/login.component';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -42,7 +43,8 @@ import { StylistComponent } from './stylist/stylist.component';
     NgxPaginationModule,
     AgGridModule.withComponents([]),
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatChipsModule
   ],
   declarations: [
     AdminComponent,

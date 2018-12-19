@@ -1,4 +1,7 @@
 
 .my-pagination /deep/ .ngx-pagination .current {
-    background: rgb(0, 153, 255);
+    background: black;
     }
+.huge{
+    font-size: 40px;
+}

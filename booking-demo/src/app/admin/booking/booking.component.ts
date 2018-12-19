@@ -9,13 +9,13 @@ import { Customer } from '../models/customer';
   styleUrls: ['./booking.component.css']
 })
 export class BookingComponent implements OnInit {
-  private gridApi;
+  gridApi;
   private gridColumnApi;
-  private rowSelection;
+  rowSelection;
   selectedBooking: Booking;
   customer: Customer;
-  private columnDefs;
-  private components;
+  columnDefs;
+  components;
   @ViewChild('agGrid') agGrid: AgGridNg2;
 
   paginationPageSize = 50;
@@ -38,17 +38,13 @@ export class BookingComponent implements OnInit {
         checkboxSelection: true
       },
       { headerName: 'SDT', field: 'phone_number', floatingFilterComponentParams: { suppressFilterButton: true } },
-      // { headerName: 'Dịch vụ',
-      //  field: 'service_name',
-      //  width: 140,
-      //  filter: "agSetColumnFilter"
-      //  },
       {
         headerName: "Dịch vụ",
         field: "service_name",
-        width:300
+        width:300,
+        floatingFilterComponentParams: { suppressFilterButton: true }
       },
-      { headerName: 'Stylist',  width: 300, field: 'stylist_name', filter: "agSetColumnFilter" },
+      { headerName: 'Stylist',  width: 300, field: 'stylist_name',floatingFilterComponentParams: { suppressFilterButton: true } },
       {
         headerName: 'Ngày',
         width: 300,
@@ -75,17 +71,17 @@ export class BookingComponent implements OnInit {
         },
         suppressMenu: true
       },
-      { headerName: 'Giờ', field: 'start_time' },
+      { headerName: 'Giờ', field: 'start_time', floatingFilterComponentParams: { suppressFilterButton: true }},
       {
         headerName: 'Coin',
-        field: 'coin', floatingFilterComponentParams: { suppressFilterButton: true },
+        field: 'coin', floatingFilterComponentParams: { suppressFilterButton: true }
       },
       {
         headerName: 'Trạng thái',
         field: 'status',
         // floatingFilterComponentParams: { suppressFilterButton: true },
-        filter: "agSetColumnFilter",
-        filterParams: { suppressMiniFilter: true }
+        // filterParams: { suppressMiniFilter: true },
+        floatingFilterComponentParams: { suppressFilterButton: true }
       },
     ];
   }
@@ -112,8 +108,10 @@ export class BookingComponent implements OnInit {
     params.api.sizeColumnsToFit();
   }
 
-  onSelectionChanged() {
-    var selectedRows = this.gridApi.getSelectedRows();
+  onSelectionChanged(event: any) {
+    console.log(event)
+    var selectedRows = event.api.getSelectedRows();
+    console.log(this.gridApi)
     var id = "";
     var customer_name = "";
     var phone_number = "";
@@ -127,31 +125,33 @@ export class BookingComponent implements OnInit {
     var deleteDisable = "";
     var useCoinDisable = "";
     var coin = "";
-    selectedRows.forEach(function (selectedRow, index) {
-      if (index !== 0) {
-        // id += ", ";
-      }
-      id += selectedRow.id;
-      customer_name += selectedRow.customer_name;
-      phone_number += selectedRow.phone_number;
-      stylist_name += selectedRow.stylist_name;
-      service_name += selectedRow.service_name;
-      date += selectedRow.date;
-      start_time += selectedRow.start_time;
-      status += selectedRow.status;
-      checkInDisable += selectedRow.checkInDisable;
-      checkOutDisbale += selectedRow.checkOutDisbale;
-      deleteDisable += selectedRow.deleteDisable;
-      useCoinDisable += selectedRow.useCoinDisable;
-      coin += selectedRow.coin;
-    });
+    // selectedRows.forEach(function (selectedRow, index) {
+    //   if (index !== 0) {
+    //     // id += ", ";
+    //   }
+    //   id += selectedRow.id;
+    //   console.log(id);
+    //   customer_name += selectedRow.customer_name;
+    //   phone_number += selectedRow.phone_number;
+    //   stylist_name += selectedRow.stylist_name;
+    //   service_name += selectedRow.service_name;
+    //   date += selectedRow.date;
+    //   start_time += selectedRow.start_time;
+    //   status += selectedRow.status;
+    //   checkInDisable += selectedRow.checkInDisable;
+    //   checkOutDisbale += selectedRow.checkOutDisbale;
+    //   deleteDisable += selectedRow.deleteDisable;
+    //   useCoinDisable += selectedRow.useCoinDisable;
+    //   coin += selectedRow.coin;
+    // });
 
-    this.id = +id;
-    this.checkInDisable = (checkInDisable == "true");
-    this.checkOutDisbale = (checkOutDisbale == 'true');
-    this.deleteDisable = (deleteDisable == 'true');
-    this.useCoinDisable = (useCoinDisable == 'true');
-    this.customerName = customer_name;
+    // this.id = +id;
+    // console.log(this.id)
+    // this.checkInDisable = (checkInDisable == "true");
+    // this.checkOutDisbale = (checkOutDisbale == 'true');
+    // this.deleteDisable = (deleteDisable == 'true');
+    // this.useCoinDisable = (useCoinDisable == 'true');
+    // this.customerName = customer_name;
   }
 
   getBookingsFromService(): void {
@@ -237,22 +237,4 @@ export class BookingComponent implements OnInit {
       }
     )
   }
-}
-function countryCellRenderer(params) {
-  return params.value.name;// + ' (' + params.value.code + ')';
-}
-function countryKeyCreator(params) {
-  var countryObject = params.value;
-  var key = countryObject.name;
-  return key;
-}
-function patchData(data) {
-  data.forEach(function(row) {
-    var countryName = row.country;
-    var countryCode = countryName.substring(0, 2).toUpperCase();
-    row.country = {
-      name: countryName,
-      code: countryCode
-    };
-  });
 }

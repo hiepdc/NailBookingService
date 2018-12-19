@@ -11,14 +11,14 @@ export class DashboardComponent implements OnInit {
   dataPointsMonthMorning = [];
   dataPointsMonthNoon = [];
   chart : any;
-  years = [2018, 2019];
+  years = [2018];
   showComboboxMonth : any;
   //week
   dataPointsWeekDate = [];
   dataPointsWeekMorning = [];
   dataPointsWeekNoon = [];
   chartWeek : any;
-  months = ['2018-12', '2018-11', '2018-05', '2018-04', '2018-03', '2018-02'];
+  months = ['2018-12', '2018-11', '2018-10', '2018-09', '2018-08', '2018-07', '2018-06','2018-05', '2018-04', '2018-03', '2018-02'];
   showComboboxWeek : any;
 
   //count total

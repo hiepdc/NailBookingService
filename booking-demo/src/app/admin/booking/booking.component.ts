@@ -27,7 +27,6 @@ export class BookingComponent implements OnInit {
   useCoinDisable: boolean;
   customerName: string;
   constructor(private bookingService: BookingService) {
-    this.rowSelection = "single";
     this.columnDefs = [
       // {headerName: 'ID', field: 'id'},
       {
@@ -35,7 +34,7 @@ export class BookingComponent implements OnInit {
         width: 300,
         field: 'customer_name',
         floatingFilterComponentParams: { suppressFilterButton: true },
-        checkboxSelection: true
+        // checkboxSelection: true
       },
       { headerName: 'SDT', field: 'phone_number', floatingFilterComponentParams: { suppressFilterButton: true } },
       {
@@ -84,10 +83,11 @@ export class BookingComponent implements OnInit {
         floatingFilterComponentParams: { suppressFilterButton: true }
       },
     ];
+    this.rowSelection = "single";
   }
 
   ngOnInit() {
-    this.getBookingsFromService();
+    // this.getBookingsFromService();
     this.checkInDisable = true;
     this.checkOutDisbale = true;
     this.deleteDisable = true;
@@ -99,18 +99,13 @@ export class BookingComponent implements OnInit {
     this.gridApi.onFilterChanged();
   }
 
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    // this.getBookingsFromService();
-  }
   onFirstDataRendered(params) {
     params.api.sizeColumnsToFit();
   }
 
-  onSelectionChanged(event: any) {
+  onSelectionChanged() {
     console.log(event)
-    var selectedRows = event.api.getSelectedRows();
+    var selectedRows = this.gridApi.getSelectedRows();
     console.log(this.gridApi)
     var id = "";
     var customer_name = "";
@@ -125,33 +120,33 @@ export class BookingComponent implements OnInit {
     var deleteDisable = "";
     var useCoinDisable = "";
     var coin = "";
-    // selectedRows.forEach(function (selectedRow, index) {
-    //   if (index !== 0) {
-    //     // id += ", ";
-    //   }
-    //   id += selectedRow.id;
-    //   console.log(id);
-    //   customer_name += selectedRow.customer_name;
-    //   phone_number += selectedRow.phone_number;
-    //   stylist_name += selectedRow.stylist_name;
-    //   service_name += selectedRow.service_name;
-    //   date += selectedRow.date;
-    //   start_time += selectedRow.start_time;
-    //   status += selectedRow.status;
-    //   checkInDisable += selectedRow.checkInDisable;
-    //   checkOutDisbale += selectedRow.checkOutDisbale;
-    //   deleteDisable += selectedRow.deleteDisable;
-    //   useCoinDisable += selectedRow.useCoinDisable;
-    //   coin += selectedRow.coin;
-    // });
+    selectedRows.forEach(function (selectedRow, index) {
+      if (index !== 0) {
+        // id += ", ";
+      }
+      id += selectedRow.id;
+      console.log(id);
+      customer_name += selectedRow.customer_name;
+      phone_number += selectedRow.phone_number;
+      stylist_name += selectedRow.stylist_name;
+      service_name += selectedRow.service_name;
+      date += selectedRow.date;
+      start_time += selectedRow.start_time;
+      status += selectedRow.status;
+      checkInDisable += selectedRow.checkInDisable;
+      checkOutDisbale += selectedRow.checkOutDisbale;
+      deleteDisable += selectedRow.deleteDisable;
+      useCoinDisable += selectedRow.useCoinDisable;
+      coin += selectedRow.coin;
+    });
 
-    // this.id = +id;
-    // console.log(this.id)
-    // this.checkInDisable = (checkInDisable == "true");
-    // this.checkOutDisbale = (checkOutDisbale == 'true');
-    // this.deleteDisable = (deleteDisable == 'true');
-    // this.useCoinDisable = (useCoinDisable == 'true');
-    // this.customerName = customer_name;
+    this.id = +id;
+    console.log(this.id)
+    this.checkInDisable = (checkInDisable == "true");
+    this.checkOutDisbale = (checkOutDisbale == 'true');
+    this.deleteDisable = (deleteDisable == 'true');
+    this.useCoinDisable = (useCoinDisable == 'true');
+    this.customerName = customer_name;
   }
 
   getBookingsFromService(): void {
@@ -184,6 +179,12 @@ export class BookingComponent implements OnInit {
         }
       }
     )
+  }
+
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+    this.getBookingsFromService();
   }
 
   deleteBooking(id: number): void {

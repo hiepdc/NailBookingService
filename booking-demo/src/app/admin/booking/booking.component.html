@@ -1,51 +1,38 @@
-<div class="row">
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-header">
-        <i class="fa fa-align-justify"></i> Quản lý order
-      </div>
-      <div class="card-body">
-        <table class="table table-hover table-sm ">
-          <thead>
-            <tr>
-              <th>Tên KH</th>
-              <th>SDT</th>
-              <th>Dịch vụ</th>
-              <th>Stylist</th>
-              <th>Ngày</th>
-              <th>Giờ</th>
-              <th>Coin</th>
-              <th>Trạng thái</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let booking of bookings | paginate: { id: 'listing_pagination',
-            itemsPerPage: 10,
-            currentPage: page,
-            totalItems: totalRec }">
-              <td>{{booking.customer_name}}</td>
-              <td>{{booking.phone_number}}</td>
-              <td>{{booking.service_name}}</td>
-              <td>{{booking.stylist_name}}</td>
-              <td>{{booking.date}}</td>
-              <td>{{booking.start_time}}</td>
-              <td>{{booking.coin}}</td>
-              <td>
-                <span>
-                  {{booking.status}}
-                </span>
-              </td>
-              <td>
-                <button class="btn btn-danger" (click)="deleteBooking(booking.id)">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div>
-          <pagination-controls class ="my-pagination" id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+<!-- <div class="button-row"> -->
+    <div class="panel panel-success">
+        <div class="panel-heading">{{customerName}}</div>
+        <div class="panel-body">
+            <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
+            <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
+            <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
+            <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
+            <button class="pull-right" mat-stroked-button color="primary" (click)="clearFilters()">Clear filters</button>
+            <div class="clearfix"></div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+  <!-- <p class="dropdown-item">{{customerName}}</p>
+  <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
+  <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
+  <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
+  <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
+  <button class="pull-right" mat-stroked-button color="primary" (click)="clearFilters()">Clear filters</button>
+  <div class="clearfix"></div>
+</div> -->
+<ag-grid-angular 
+#agGrid 
+id="myGrid" 
+style="width: 100%; height: 400px" 
+class="ag-theme-balham" 
+[enableSorting]="true"
+[enableFilter]="true"
+[rowData]="bookings"
+[columnDefs]="columnDefs"
+[enableColResize]="true"
+[pagination]="true"
+[paginationPageSize]="paginationPageSize"
+[floatingFilter]="true"
+[rowSelection]="rowSelection"
+(selectionChanged)="onSelectionChanged($event)"
+(firstDataRendered)="onFirstDataRendered($event)"
+(gridReady)="onGridReady($event)">
+</ag-grid-angular>

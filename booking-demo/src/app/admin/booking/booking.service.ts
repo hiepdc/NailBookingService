@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
+import { of } from 'rxjs/observable/of';
 import { Api } from '../models/api';
 import { tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -24,10 +24,53 @@ export class BookingService {
       )
     );
   }
+
   delelteBooking(id: number): Observable<Api>{
     return this.http.delete<Api>(`${this.bookingURL}/${id}`, httpOptions).pipe(
       tap(api => console.log(api)),
       catchError(error => of(new Api()))
     );
+  }
+
+  checkIn(id :number): Observable<Api>{
+    return this.http.get<Api>(`${this.bookingURL}/checkin/${id}`).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+  }
+  
+  checkOut(id :number): Observable<Api>{
+    return this.http.get<Api>(`${this.bookingURL}/checkout/${id}`).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+  }
+
+  useCoin(id: number): Observable<Api>{
+    return this.http.post<Api>(`${this.bookingURL}/use-coin`, {id: id}, httpOptions).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+  }
+
+  getChartMonth(time: number):Observable<Api>{
+    return this.http.post<Api>(`${this.bookingURL}/bookingOnMonthStatistic`, {time: time}, httpOptions).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+  }
+  
+  getChartWeek(time: string):Observable<Api>{
+    return this.http.post<Api>(`${this.bookingURL}/bookingOnWeekStatistic`, {time: time}, httpOptions).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+  }
+
+  getCountTotal() : Observable<Api>{
+    return this.http.get<Api>(`${this.bookingURL}/count-total`).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    )
   }
 }

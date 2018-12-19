@@ -1,59 +1,73 @@
 <!-- ===== Sidebar starts ===== -->
 <div id="sidebar" class="split col-md-2">
-  <div class="affix-sidebar col-md-12">
-      <div class="sidebar-nav">
-          <div class="navbar navbar-default" role="navigation">
-              <div class="navbar-header">
-                  <!-- collapse button -->
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-                      <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                  <!-- Logo -->
-                  <div class="brand">
-                      <a routerLink="/index"> <img src="../../../assets/img/logo.png" alt="" class="img-responsive center-block">
-                      </a>
-                  </div>
-                  <!-- /brand -->
-              </div>
-              <!-- /navbar-header  -->
-              <div class="navbar-collapse collapse sidebar-navbar-collapse">
-                  <ul class="nav navbar-nav" id="sidenav01">
-                      <li [routerLinkActive]="['active']"><a routerLink="/home" >TRANG CHỦ</a></li>
-                      <li [routerLinkActive]="['active']"><a routerLink="/services" [routerLinkActive]="['active']">DỊCH VỤ</a></li>
-                      <li [routerLinkActive]="['active']"><a routerLink="/booking" [routerLinkActive]="['active']">ĐẶT LỊCH</a></li>
-                      <li [routerLinkActive]="['active']"><a routerLink="/gallery"[routerLinkActive]="['active']">ALBUM ẢNH</a></li>
-                      <li [routerLinkActive]="['active']"><a routerLink="/prices"[routerLinkActive]="['active']">BẢNG GIÁ</a></li>
-                      <li [routerLinkActive]="['active']"><a routerLink="/blog"[routerLinkActive]="['active']">BLOG</a></li>
-                      <li [routerLinkActive]="['active']"><a routerLink="/aboutus"[routerLinkActive]="['active']">GIỚI THIỆU</a></li>
-                      <li [routerLinkActive]="['active']"><a routerLink="/contact"[routerLinkActive]="['active']">LIÊN HỆ</a></li>
-                  </ul>
-                  <!-- navbar-nav -->
-              </div>
-              <!--/.nav-collapse -->
-          </div>
-          <!--/navbar -->
-      </div>
-      <!--/sidebar-nav -->
-      <div class="navbar-info hidden-sm hidden-xs hidden-md">
-          <p class="small-text">
-              <i class="fas fa-map-marker-alt margin-icon"></i> 35 Ngô Sĩ Liên -
-              Hà Nội
-          </p>
-          <p class="small-text">
-              <i class="far fa-clock margin-icon"></i>Thứ Hai - Chủ Nhật:
-              9am-9pm <br />
-          </p>
-          <!--Social icons -->
-          <div class="social-media ">
-              <a href="#" title=""><i class="fab fa-twitter"></i></a>
-              <a href="#" title=""><i class="fab fa-facebook"></i></a>
-              <a href="#" title=""><i class="fab fa-google-plus"></i></a>
-              <a href="#" title=""><i class="fab fa-instagram"></i></a>
-          </div>
-      </div>
-      <!-- /navbar-info -->
-  </div>
-  <!-- /affix-sidebar  -->
+    <div class="affix-sidebar col-md-12">
+        <div class="sidebar-nav">
+            <div class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <!-- collapse button -->
+                    <button type="button" class="navbar-toggle" (click)="toggleNavbar()">
+                        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Logo -->
+                    <div class="brand">
+                        <a routerLink="/home"> <img src="../../../assets/img/logo.png" alt="" class="img-responsive center-block">
+                        </a>
+                    </div>
+                    <!-- /brand -->
+                </div>
+                <!-- /navbar-header  -->
+                <div class="collapse navbar-collapse " id="navbarDiv" [ngClass]="{'in': navbarOpen}">
+                    <ul class="nav navbar-nav" id="sidenav01">
+                        <li routerLinkActive="active">
+                            <a routerLink="/home" (click)="closeNavbar()" >TRANG CHỦ</a>
+                        </li>
+                        <li routerLinkActive="active">
+                            <a routerLink="/services" (click)="closeNavbar()">DỊCH VỤ</a>
+                        </li>
+                        <li routerLinkActive="active">
+                            <a routerLink="/booking" [routerLinkActive]="['active']"  
+                            (click)="closeNavbar()">ĐẶT LỊCH</a>
+                            </li>
+                        <li [routerLinkActive]="['active']">
+                            <a routerLink="/gallery" [routerLinkActive]="['active']" 
+                            (click)="closeNavbar()">ALBUM
+                                ẢNH</a></li>
+                        <li [routerLinkActive]="['active']">
+                            <a routerLink="/prices" [routerLinkActive]="['active']" (click)="closeNavbar()">BẢNG
+                                GIÁ</a></li>
+                        <!-- <li [routerLinkActive]="['active']"><a routerLink="/blog" [routerLinkActive]="['active']" (click)="closeNavbar()">BLOG</a></li> -->
+                        <li [routerLinkActive]="['active']"><a routerLink="/aboutus" [routerLinkActive]="['active']" (click)="closeNavbar()">GIỚI
+                                THIỆU</a></li>
+                        <!-- <li [routerLinkActive]="['active']"><a routerLink="/contact" [routerLinkActive]="['active']" (click)="closeNavbar()">LIÊN
+                                HỆ</a></li> -->
+                    </ul>
+                    <!-- navbar-nav -->
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/navbar -->
+        </div>
+        <!--/sidebar-nav -->
+        <div class="navbar-info hidden-sm hidden-xs hidden-md">
+            <p class="small-text">
+                <i class="fas fa-map-marker-alt margin-icon"></i> 35 Ngô Sĩ Liên -
+                Hà Nội
+            </p>
+            <p class="small-text">
+                <i class="far fa-clock margin-icon"></i>Thứ Hai - Chủ Nhật:
+                9am-9pm <br />
+            </p>
+            <!--Social icons -->
+            <!-- <div class="social-media ">
+                <a href="#" title=""><i class="fab fa-twitter"></i></a>
+                <a href="#" title=""><i class="fab fa-facebook"></i></a>
+                <a href="#" title=""><i class="fab fa-google-plus"></i></a>
+                <a href="#" title=""><i class="fab fa-instagram"></i></a>
+            </div> -->
+        </div>
+        <!-- /navbar-info -->
+    </div>
+    <!-- /affix-sidebar  -->
 </div>
 <!-- ===== / sidebar ends ===== -->

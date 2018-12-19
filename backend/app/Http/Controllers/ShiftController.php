@@ -117,12 +117,9 @@ class ShiftController extends Controller
         $arr = explode(',', $status);
         sort($arr);
         $arr2chieu = array();
-
         for ($i = 0; $i <= sizeof($arr) - 1; $i++) {
             $arr1chieu = array();
             array_push($arr1chieu, $arr[$i]);
-            //@long trường hợp ko có giá trị nào
-            //@long xóa dấu ","
             while ($i < sizeof($arr) - 1 && $arr[$i + 1] == $arr[$i] + 1) {
                 array_push($arr1chieu, $arr[$i + 1]);
                 $i++;
@@ -130,8 +127,6 @@ class ShiftController extends Controller
             array_push($arr2chieu, $arr1chieu);
             unset($arr1chieu);
         }
-
-
         $statusArr = array();
         foreach ($arr2chieu as $key => $value) {
             if (sizeof($value) >= $sizeOfTime) {

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class Booking extends Model
@@ -152,9 +153,12 @@ class Booking extends Model
                 , 'customers.coin')
             ->whereNull('bookings.deleted_at')
 //            ->where('shifts.date', $date)
-            ->orderBy('bookings.id', 'desc')
-//            ->orderBy('bookings.status')
+            ->orderBy('shifts.date', 'desc')
+           ->orderBy('bookings.start_time', 'asc')
             ->get();
+        foreach($bookings as $booking){
+            $booking->start_time = $this->convertTime($booking->start_time);
+        }
         return $bookings;
     }
 
@@ -194,4 +198,22 @@ class Booking extends Model
                       ->first();
         return $bookings;
     }
+
+    public function getstatusBooking($id){
+       $booking = Booking::find($id);
+       $status = $booking->status;
+       return $status;
+    }
+
+    function convertTime($index){
+        $carbon = new Carbon('8:45:00');
+        $allTime = array();
+        foreach(range(0, 47) as $value){
+            $eachTime = $carbon->addMinutes(15)->format('H:i:s');
+            $allTime[] =$eachTime;
+        }
+        $realTime = $allTime[$index];
+        return $realTime;
+    }
+
 }

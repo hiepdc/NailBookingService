@@ -10,4 +10,5 @@ export const environment = {
     cluster: 'ap1',
   },
   api_url: "http://localhost:8000/api"
+  // api_url:"http://api.chamtramnail.com/public/api"
 };

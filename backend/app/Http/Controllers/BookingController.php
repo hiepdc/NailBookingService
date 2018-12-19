@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\Customer;
+use App\Feedback;
 use App\Notification;
 use App\Service;
 use App\Shift;
@@ -12,20 +13,11 @@ use App\SpeedSMSAPI;
 use App\TwoFactorAPI;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Pusher\Pusher;
 
 class BookingController extends Controller
 {
-    public function showBookingForm($phonenumber)
-    {
-        try {
-            session(['phone_number' => $phonenumber]);
-            return response()->success(session('phone_number'), 'Chào mừng đến với nailbookingservice');
-        } catch (Exception $e) {
-            return response()->exception($e->getMessage(), $e->getCode());
-        }
-    }
-
     public function addNewBooking(Request $request)
     {
         try {
@@ -34,12 +26,15 @@ class BookingController extends Controller
             if ($booking->getStatusBookedByPhonenumber($request->phone_number) > 0) {
                 return response()->success(null, 'Bạn có chắc chắn muốn đổi lịch');
             }
-            //add customer
+//            //add customer
             $customer = new Customer();
-            //2.kiểm tra khách hàng đã có trong hệ thống chưa
-            if ($customer->getCustomerByPhonenumber($request->phone_number) == 0) {
-                $customer->addNewCustomer($request->customer_name, $request->phone_number);
+            if($request->has('customer_name')){
+                $customer->updateCustomerName($request->phone_number, $request->customer_name);
             }
+//            //2.kiểm tra khách hàng đã có trong hệ thống chưa
+//            if ($customer->getCustomerByPhonenumber($request->phone_number) == 0) {
+//                $customer->addNewCustomer($request->customer_name, $request->phone_number);
+//            }
             $shift = new Shift();
             $service_id = $request->service_id;
             $customer_id = $customer->getIDByPhonenumber($request->phone_number);
@@ -69,7 +64,7 @@ class BookingController extends Controller
             ' được phục vụ bởi ' . $stylist_name .
             '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
             // gửi tin nhắn to customer
-//            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
@@ -144,7 +139,7 @@ class BookingController extends Controller
                        ' được phục vụ bởi ' . $stylist_name .
                        '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
 
-//            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //add notification
             $notification = new Notification();
@@ -275,6 +270,9 @@ class BookingController extends Controller
                 return response()->success(null, 'Mã xác nhận đã hết hạn');
             }
             $verified = $result['data'];
+            //add customer
+            $customer = new Customer();
+            $customer->addNewCustomer("no name", $request->phone_number);
             return response()->success($verified, 'Bạn vừa nhập mã pin thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -348,14 +346,18 @@ class BookingController extends Controller
         }
     }
 
-    public function checkIn(Request $request)
+    public function checkIn($id)
     {
         try {
             //update coin
-            $id = $request->id;
+//            $id = $request->id;
             $booking = Booking::find($id);
             if(!$booking){
                 return response()->notFound("booking does not exist");
+            }
+            $status = $booking->status;
+            if($status != 'booked'){
+                return response()->success(null, 'Booking đã được check-in');
             }
             $customerId = $booking->customer_id;
             $service_id = $booking->service_id;
@@ -372,13 +374,17 @@ class BookingController extends Controller
         }
     }
 
-    public function checkOut(Request $request)
+    public function checkOut($id)
     {
         try {
-            $id = $request->id;
+//            $id = $request->id;
             $booking = Booking::find($id);
             if(!$booking){
                 return response()->notFound("booking does not exist");
+            }
+            $status = $booking->status;
+            if($status == 'booked' || $status == 'finished'){
+                return response()->success(null, 'Lịch đặt đã được check-out hoặc chưa được check-in');
             }
             $booking = new Booking();
             $checkOutBooking = $booking->checkOut($id);
@@ -396,7 +402,7 @@ class BookingController extends Controller
             $customerId = $booking['customer_id'];
             $customerFinded = Customer::find($customerId);
             if(!$customerFinded){
-                return response()->notFound("customer does not exist");
+                return response()->notFound("booking does not exist");
             }
             $minCoin = 100;
             $coin = $customerFinded->coin;
@@ -502,6 +508,149 @@ class BookingController extends Controller
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
+    }
+
+    public function bookingOnMonthStatistic(Request $request)
+    {
+        try {
+            $time = $request->time;
+
+            for($i=1; $i<=12; $i++) {
+                if($i<10) $month = '-0'.$i;
+                else $month = '-'.$i;
+                $shiftOnMonth[$i] = DB::table('shifts')->select('id')
+                                      ->where('date','like', $time.$month.'%')
+                                      ->get();
+                $shiftOnMonthArr[$i] = $shiftOnMonth[$i]->map(function ($item, $key) {
+                    return $item->id;
+                });
+
+                $morningMonth[$i] = DB::table('bookings')->select('id')
+                                      ->whereIn('shift_id', $shiftOnMonthArr[$i])
+                                      ->whereBetween('start_time', [0,23])
+                                      ->count();
+
+                $eveningMonth[$i] = DB::table('bookings')->select('id')
+                                      ->whereIn('shift_id', $shiftOnMonthArr[$i])
+                                      ->whereBetween('start_time', [24,47])
+                                      ->count();
+
+                $wholeMonth[$i] = $morningMonth[$i] + $eveningMonth[$i];
+
+                $result[$i] = array($wholeMonth[$i], $morningMonth[$i], $eveningMonth[$i]);
+            }
+            $results = [
+                'morning' => $morningMonth,
+                'evening' => $eveningMonth,
+                'date' => $wholeMonth
+            ];
+            return response()->success((array)$results);
+        } catch (Exception $e) {
+            response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+//    public function bookingOnMonthStatistic(Request $request)
+//    {
+//        try {
+//            $time = $request->time;
+//            $result = array();
+//            for($i=1; $i<=12; $i++) {
+//                if($i<10) $month = '-0'.$i;
+//                else $month = '-'.$i;
+//                $shiftOnMonth[$i] = DB::table('shifts')->select('id')
+//                                      ->where('date','like', $time.$month.'%')
+//                                      ->get();
+//                $shiftOnMonthArr[$i] = $shiftOnMonth[$i]->map(function ($item, $key) {
+//                    return $item->id;
+//                });
+//
+//                $morningMonth[$i] = DB::table('bookings')->select('id')
+//                                      ->whereIn('shift_id', $shiftOnMonthArr[$i])
+//                                      ->whereBetween('start_time', [0,23])
+//                                      ->count();
+//
+//                $eveningMonth[$i] = DB::table('bookings')->select('id')
+//                                      ->whereIn('shift_id', $shiftOnMonthArr[$i])
+//                                      ->whereBetween('start_time', [24,47])
+//                                      ->count();
+//
+//                $wholeMonth[$i] = $morningMonth[$i] + $eveningMonth[$i];
+//
+//                $result[$i] = array($wholeMonth[$i], $morningMonth[$i], $eveningMonth[$i]);
+//            }
+//            return response()->success($result);
+//        } catch (Exception $e) {
+//            response()->exception($e->getMessage(), $e->getCode());
+//        }
+//    }
+    //== Tham so 'time' co dang 'year-month'
+    public function bookingOnWeekStatistic(Request $request)
+    {
+        try {
+            $time = $request->time;
+
+            $shiftOnWeek[1] = DB::table('shifts')->select('id')
+                                ->where('date','like', $time.'%')
+                                ->where('date' ,'>=', $time.'-01')
+                                ->where('date' ,'<=', $time.'-07')
+                                ->get();
+            $shiftOnWeek[2] = DB::table('shifts')->select('id')
+                                ->where('date','like', $time.'%')
+                                ->where('date' ,'>=', $time.'-08')
+                                ->where('date' ,'<=', $time.'-014')
+                                ->get();
+            $shiftOnWeek[3] = DB::table('shifts')->select('id')
+                                ->where('date','like', $time.'%')
+                                ->where('date' ,'>=', $time.'-15')
+                                ->where('date' ,'<=', $time.'-21')
+                                ->get();
+            $shiftOnWeek[4] = DB::table('shifts')->select('id')
+                                ->where('date','like', $time.'%')
+                                ->where('date' ,'>=', $time.'-22')
+                                ->where('date' ,'<=', $time.'-31')
+                                ->get();
+
+            for($i=1; $i<=4; $i++) {
+
+                $shiftOnWeekArr[$i] = $shiftOnWeek[$i]->map(function ($item, $key) {
+                    return $item->id;
+                });
+
+                $morningWeek[$i] = DB::table('bookings')->select('id')
+                                     ->whereIn('shift_id', $shiftOnWeekArr[$i])
+                                     ->whereBetween('start_time', [0,23])
+                                     ->count();
+
+                $eveningWeek[$i] = DB::table('bookings')->select('id')
+                                     ->whereIn('shift_id', $shiftOnWeekArr[$i])
+                                     ->whereBetween('start_time', [24,47])
+                                     ->count();
+
+                $wholeWeek[$i] = $morningWeek[$i] + $eveningWeek[$i];
+                $result[$i] = array($wholeWeek[$i], $morningWeek[$i], $eveningWeek[$i]);
+            }
+            $results = [
+                'morning' => $morningWeek,
+                'evening' => $eveningWeek,
+                'date' => $wholeWeek
+            ];
+            return response()->success((array)$results);
+//            return response()->success($result);
+        } catch (Exception $e) {
+            response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function getCountTotal(){
+        $countBookings = Booking::count();
+        $countCustomers = Customer::count();
+        $countStylists = Stylist::count();
+        $result = [];
+        $result['bookings'] = $countBookings;
+        $result['customers'] = $countCustomers;
+        $result['stylists'] = $countStylists;
+        return response()->success($result);
     }
 
 }

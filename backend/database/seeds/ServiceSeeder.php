@@ -16,14 +16,14 @@ class ServiceSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         DB::table('services')->insert([
-            'service_name' => 'Combo cơ bản',
-            'description' => 'Đá bay mệt mỏi mùa hè với 7 bước Everly Combo mới duy nhất tại Everly. Trọn gói chỉ 100K, hoàn toàn thư giãn và sau đó bạn sẽ đẹp hoàn hảo!',
+            'service_name' => 'Nhóm dịch vụ cơ bản',
+            'description' => 'Tận hưởng combo 7 bước tỏa sáng thư giản. Trọn gói chỉ 100K, hoàn toàn thư giãn và sau đó bạn sẽ đẹp hoàn hảo!',
             'time_service' => 1,
             'coin_service' => 10,
         ]);
         DB::table('services')->insert([
-            'service_name' => 'Combo nâng cao',
-            'description' => "COMBO LÀM NAILS 7 BƯỚC & NỐI MI - 200K:",
+            'service_name' => 'Nhóm dịch vụ nâng cao',
+            'description' => "Tận hưởn combo 7 bước và nhiều dịch vụ nâng cao khác.",
             'time_service' => 2,
             'coin_service' => 20,
 

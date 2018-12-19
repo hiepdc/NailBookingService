@@ -44,9 +44,34 @@
 .input-phone{
   width: 100%;
 }
+
+.btn{
+    float: right;
+    margin: 0px 2px 0 2px;
+  }
+
+  .btn-a{
+
+  }
+
+  .backdrop{
+    background-color:rgba(0,0,0,0.6);
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    z-index: 1;
+ }
+
+ .modal-content{
+   text-align: center;
+ }
+
+
 /*=========================== Media queries ============================ */
 /* Small devices (landscape phones, 544px) */
-@media (max-width: 544px){
+@media (max-width: 480px){
   .inside-wrapper.home {
       padding: 0!important;
  }
@@ -57,14 +82,44 @@
       font-size: 25px;
  }
   .btn-booking{
-      font-size: 28px;
+    font-size: 19px;
+    height: 70px;
  }
   h3{
       font-size: 2em;
  }
+
+ .modal-dialog{
+    overflow-y: initial !important
+  }
+
+  .modal-body h5{
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  
+  .modal-header h4{
+    font-size: 19px;
+  }
+  
+  .modal{
+    overflow-y: scroll;
+  }
+
+  .btn{
+    font-size: 14px;
+    /* margin-right: 10px; */
+  }
 }
 /* Medium devices (tablets, 768px) The navbar toggle appears at this breakpoint */
 @media (max-width: 768px) {
+    .modal-dialog{
+        overflow-y: initial !important;
+        margin-top: 95px;
+    }
+    .modal{
+      overflow-y: scroll;
+    }
 }
 /* Medium- Large devices (desktops, 992px) */
 @media (max-width: 992px) {

@@ -1,4 +1,7 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
+
 .my-pagination /deep/ .ngx-pagination .current {
-    background: rgb(0, 153, 255);
+    background: black;
     }
+.huge{
+    font-size: 40px;
+}

@@ -46,20 +46,25 @@ Route::get('bookings','BookingController@listBooking');
 //fillter booking
 Route::post('bookings/search','BookingController@searchBooking');
 //checkin booking
-Route::post('bookings/checkin','BookingController@checkIn');
+Route::get('bookings/checkin/{id}','BookingController@checkIn');
 //checkout booking
-Route::post('bookings/checkout','BookingController@checkOut');
+Route::get('bookings/checkout/{id}','BookingController@checkOut');
 //use coin booking
 Route::post('bookings/use-coin','BookingController@usecoin');
 //check exist booking
 Route::post('bookings/check-exist-booking', 'BookingController@checkExistBooking');
 
 Route::delete('bookings/{id}', 'BookingController@destroy');
+//input: year
+Route::post('bookings/bookingOnMonthStatistic','BookingController@bookingOnMonthStatistic');
+//input: year-month
+Route::post('bookings/bookingOnWeekStatistic','BookingController@bookingOnWeekStatistic');
+Route::get('bookings/count-total', 'BookingController@getCountTotal');
 //show shift
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
 //display shift of stylist
-Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBooking');
+Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBookingTimeWithStylist');
 //display shift default
 //Route::get('shifts/stylist/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 

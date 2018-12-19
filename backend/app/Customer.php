@@ -69,5 +69,10 @@ class Customer extends Model
         return $customer;
     }
 
+    public function updateCustomerName($phone_number, $customer_name){
+        $customer = Customer::where('phone_number', $phone_number)
+            ->update(['customer_name' => $customer_name]);
+        return $customer;
+    }
 
 }

@@ -18,7 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->integer('booking_id')->unsigned();
             $table->foreign('booking_id') ->references('id')->on('bookings');
             $table->integer('status');
-            $table->string('type');
+            $table->string('type', 20);
             $table->timestamps();
         });
     }

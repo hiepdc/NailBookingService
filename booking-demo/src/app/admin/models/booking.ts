@@ -8,4 +8,8 @@ export class Booking{
     start_time: string;
     status: string;
     coin: number;
+    checkInDisable: boolean;
+    checkOutDisbale: boolean;
+    deleteDisable: boolean;
+    useCoinDisable: boolean;
 }

@@ -14,6 +14,7 @@ import { StylistApi } from './models/stylistApi';
 import { PinApi } from './models/pinApi';
 import { ServiceApi} from './models/serviceApi';
 import { ServiceItemApi} from './models/serviceItemApi';
+import { environment } from '../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -26,12 +27,12 @@ const httpOptions2 = {
 @Injectable()
 export class BookingService {
 
-  private stylistURL = "http://localhost:8000/api/stylists";
-  private shiftURL = "http://localhost:8000/api/shifts";
-  private bookingURL = "http://localhost:8000/api/bookings";
-  private customerURL = "http://localhost:8000/api/customers";
-  private serviceURL = "http://localhost:8000/api/services";
-  private serviceItemUrl = "http://localhost:8000/api/service-items"
+  private stylistURL = `${environment.api_url}/stylists`;
+  private shiftURL = `${environment.api_url}/shifts`;
+  private bookingURL = `${environment.api_url}/bookings`;
+  private customerURL = `${environment.api_url}/customers`;
+  private serviceURL = `${environment.api_url}/services`;
+  private serviceItemUrl = `${environment.api_url}/service-items`;
   //get all stylist from db
   getServices(): Observable<ServiceApi> {
     return this.http.get<ServiceApi>(this.serviceURL).pipe(
@@ -104,6 +105,18 @@ export class BookingService {
       catchError(error => of(new PinApi()))
     );
   }
+
+    //kiem tra xem khach hang da co lich dat nao chua
+    checkExistBooking(phoneNumber: string){
+      const url = `${this.bookingURL}/check-exist-booking`;
+      var body = {
+        phone_number: phoneNumber,
+      };
+      return this.http.post<BookingApi>(url, body, httpOptions).pipe(
+        tap((bookingApi) => console.log(bookingApi)),
+        catchError(error => of(new BookingApi()))
+      );
+    }
 
   addNewBooking(phoneNumber: string,
     stylist_id: number, date: string,

@@ -7,6 +7,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotificationComponent } from './notification/notification.component'
 import { PusherService } from './pusher.service';
 import { ServiceComponent } from './service/service.component';
+import { AgGridModule} from 'ag-grid-angular';
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import {MatChipsModule} from '@angular/material/chips';
 // import { LoginComponent } from './login/login.component';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -24,10 +27,10 @@ import {ServicesService} from '../admin/service/services.service';
 import { CustomerComponent } from './customer/customer.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { GalleryComponent } from './gallery/gallery.component';
-import { StylistComponent } from './stylist/stylist.component';
 import { ShiftComponent } from './shift/shift.component';
 import { ServiceItemComponent } from './service-item/service-item.component';
 import { GalleryImageComponent } from './gallery-image/gallery-image.component';
+import { StylistComponent } from './stylist/stylist.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +40,11 @@ import { GalleryImageComponent } from './gallery-image/gallery-image.component';
     RouterModule,
     FormsModule,
     HttpModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    AgGridModule.withComponents([]),
+    MatButtonModule,
+    MatCheckboxModule,
+    MatChipsModule
   ],
   declarations: [
     AdminComponent,
@@ -51,10 +58,10 @@ import { GalleryImageComponent } from './gallery-image/gallery-image.component';
     CustomerComponent,
     FeedbackComponent,
     GalleryComponent,
-    StylistComponent,
     ShiftComponent,
     ServiceItemComponent,
-    GalleryImageComponent
+    GalleryImageComponent,
+    StylistComponent
     ],
   providers: [
     PusherService,

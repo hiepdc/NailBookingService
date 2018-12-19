@@ -11,11 +11,49 @@ class GallerySeeder extends Seeder
      */
     public function run()
     {
-        foreach (range(1, 10) as $index) {
+//        foreach (range(1, 12) as $index) {
             DB::table('galleries')->insert([
-                'name' => "BST móng tay mùa xuân". str_random(3),
-                'image_link' => str_random(5) . ".png",
+                [
+                    'name' => "BST HALLOWEEN",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST hoa-lá-cành",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST biển",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST tết",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST trung thu",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST giáng sinh",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST móng tay mùa xuân",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST móng tay mùa hạ",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST móng tay mùa thu",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
+                [
+                    'name' => "BST móng tay mùa đông",
+                    'image_link' => '../../assets/img/gallery/gallery'. random_int(1,12). ".jpg",
+                ],
             ]);
-        }
+//        }
     }
 }

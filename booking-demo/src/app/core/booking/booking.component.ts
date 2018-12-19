@@ -81,7 +81,7 @@ export class BookingComponent implements OnInit {
   afterTomorrow = new Date(this.day_now.setDate(this.day_now.getDate() + 1));
   weeksOfzhTW = ["Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
   threeDay = ["Hôm nay", "Ngày mai", "Ngày kia"];
-  selectedDate: string = this.formatDate(this.today);
+  selectedDate: string = this.formatDateYYYYmmdd(this.today);
   threeDate = [
     {
       "label": "Hôm nay",
@@ -128,6 +128,10 @@ export class BookingComponent implements OnInit {
   remainingAttempts: number;
   //booking
   bookingApi: BookingApi;
+  bookingServiceName: string;
+  bookingStylistName: string;
+  bookingDate: string;
+  bookingTime: string;
 
   //change booking
   displayChangeBooking: string = 'none';
@@ -137,7 +141,6 @@ export class BookingComponent implements OnInit {
 
   //booking form 2
   displayBookingForm2: string = 'none';
-
 
   //#endregion
 
@@ -221,26 +224,60 @@ export class BookingComponent implements OnInit {
           //khách hàng đã có trong hệ thống
           this.customerName = this.checkPhoneApi.data.customer.customer_name;
           this.customerId = this.checkPhoneApi.data.customer.id;
+          //0. kiểm tra khách hàng đã có lịch chưa
+          this.bookingService.checkExistBooking(this.phoneNumber).subscribe(
+            (bookingApi: BookingApi) => {
+              this.bookingApi = bookingApi;
+              if (this.bookingApi.data === null) {
+                //1.thực hiện add booking với khách hàng đã có trong hệ thống
+                this.bookingService.addNewBooking(this.phoneNumber,
+                  this.stylistId, this.selectedDate, +this.selectedHour,
+                  +this.selectedService, this.customerName).subscribe(
+                    (bookingApi: BookingApi) => {
+                      this.bookingApi = bookingApi;
+                      //1.close modal change booking
+                      this.closeChangeBooking();
+                      //2.send data to service
+                      this.addDataToConfirmBookingService();
+                      var hour = this.changeStatusToStartTime(this.selectedHour);
+                      var date = this.formatDateToDDMMYYYY(this.selectedDate);
+                      this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
+                    },
+                    error => { console.log(error); return }
+                  );
+              } else {
+                //hiển thị dialog thông báo Anh/chị có chắc chắn muốn đổi lịch không
+                this.bookingServiceName = this.bookingApi.data.service_name;
+                this.bookingStylistName = this.bookingApi.data.stylist_name;
+                this.bookingDate = this.formatDateToDDMMYYYY(this.bookingApi.data.date);
+                this.bookingTime = this.changeStatusToStartTime(this.bookingApi.data.start_time+"");
+                this.openChangeBooking();
+              }
+            },
+            error => { console.log(error); return }
+          );
+
           //1.thực hiện add booking với khách hàng đã có trong hệ thống
-          this.bookingService.addNewBooking(this.phoneNumber,
-            this.stylistId, this.selectedDate, +this.selectedHour,
-            +this.selectedService, this.customerName).subscribe(
-              (bookingApi: BookingApi) => {
-                this.bookingApi = bookingApi;
-                if (this.bookingApi.data === null) {
-                  //hiển thị dialog thông báo Anh/chị có chắc chắn muốn đổi lịch không
-                  this.openChangeBooking();
-                } else {
-                  //1.close modal change booking
-                  this.closeChangeBooking();
-                  //2.send data to service
-                  this.addDataToConfirmBookingService();
-                  var hour = this.changeStatusToStartTime(this.selectedHour);
-                  this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, this.selectedDate, this.stylistName]);
-                }
-              },
-              error => { console.log(error); return }
-            );
+          // this.bookingService.addNewBooking(this.phoneNumber,
+          //   this.stylistId, this.selectedDate, +this.selectedHour,
+          //   +this.selectedService, this.customerName).subscribe(
+          //     (bookingApi: BookingApi) => {
+          //       this.bookingApi = bookingApi;
+          //       if (this.bookingApi.data === null) {
+          //         //hiển thị dialog thông báo Anh/chị có chắc chắn muốn đổi lịch không
+          //         this.openChangeBooking();
+          //       } else {
+          //         //1.close modal change booking
+          //         this.closeChangeBooking();
+          //         //2.send data to service
+          //         this.addDataToConfirmBookingService();
+          //         var hour = this.changeStatusToStartTime(this.selectedHour);
+          //         var date = this.formatDateToDDMMYYYY(this.selectedDate);
+          //         this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
+          //       }
+          //     },
+          //     error => { console.log(error); return }
+          //   );
         } else {
           //khách hàng chưa có trong hệ thống
           //1.hiển thị modal verifyCode
@@ -297,7 +334,8 @@ export class BookingComponent implements OnInit {
             //2.send data to service
             this.addDataToConfirmBookingService();
             var hour = this.changeStatusToStartTime(this.selectedHour);
-            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, this.selectedDate, this.stylistName]);
+            var date = this.formatDateToDDMMYYYY(this.selectedDate);
+            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
           } else {
             this.openErrorMessage();
           }
@@ -329,7 +367,8 @@ export class BookingComponent implements OnInit {
             //2.send data to service
             this.addDataToConfirmBookingService();
             var hour = this.changeStatusToStartTime(this.selectedHour);
-            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, this.selectedDate, this.stylistName]);
+            var date = this.formatDateToDDMMYYYY(this.selectedDate);
+            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
           }
         },
         error => { console.log(error); return }
@@ -339,7 +378,7 @@ export class BookingComponent implements OnInit {
 
   selectDate(dateTime: DateTime): void {
     //this.dateTime = dateTime;
-    this.selectedDate = this.formatDate(dateTime.date);
+    this.selectedDate = this.formatDateYYYYmmdd(dateTime.date);
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
     console.log("selectedDate" + this.selectedDate);
     this.selectedHour = "";
@@ -389,52 +428,6 @@ export class BookingComponent implements OnInit {
     this.displayBookingForm2 = 'none';
   }
 
-  // onSubmitBooking(form: NgForm): void {
-  //   console.log(form.value);
-  //   this.bookingService.checkPhoneOfCustomer(form.value).subscribe(
-  //     pinApi => { this.pinApi = pinApi; console.log(this.pinApi.success); }
-  //   );
-
-  // if (this.pinApi.success === true) {
-  //   if (this.stylistId === -1) {
-  //     //addd default
-  //     this.bookingService.addNewBookingDefault(
-  //       this.pinApi.data.customer_name, +this.phoneNumber,
-  //       this.selectedDate, +this.selectedHour, this.selectedService).subscribe(
-  //         bookingApi => {
-  //           this.bookingApi = bookingApi; console.log(`booking api: ${JSON.stringify(this.bookingApi)}`);
-  //           if (this.bookingApi.success == "true") {
-  //             this.submitted = true;
-  //             this.verifyCode = true;
-  //           } else {
-  //             this.submitted = false;
-  //           }
-  //         });
-  //   } else {
-  //     //add 
-  //     this.bookingService.addNewBooking(
-  //       this.pinApi.data.customer_name, +this.phoneNumber,
-  //       this.stylistId, this.selectedDate, +this.selectedHour, this.selectedService).subscribe(
-  //         bookingApi => {
-  //           this.bookingApi = bookingApi; console.log(`booking api: ${JSON.stringify(this.bookingApi)}`);
-  //           if (this.bookingApi.success == "true") {
-  //             this.submitted = true;
-  //             this.verifyCode = true;
-  //           } else {
-  //             this.submitted = false;
-  //           }
-  //         });
-  //   }
-  // } else {
-  //   //gửi verify code
-  //   //bookings/verify-pin
-  //   //verified, pin, phone, remaining
-  //   //neu verified == true
-  //   //thif chuyen qua for nhap ten
-  //   this.verifyCode = false;
-  // }
-  // }
-
   //#region function support
 
   changeStatusToStartTime(status: string): string {
@@ -457,7 +450,7 @@ export class BookingComponent implements OnInit {
   }
 
   //transform date by format yyyy-MM-dd
-  formatDate(date: Date): string {
+  formatDateYYYYmmdd(date: Date): string {
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),
       day = '' + d.getDate(),
@@ -466,6 +459,11 @@ export class BookingComponent implements OnInit {
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
     return [year, month, day].join('-');
+  }
+
+  formatDateToDDMMYYYY(date: string) {
+    var split = date.split('-');
+    return [split[2], split[1], split[0]].join('-');
   }
 
   changeSelectedServiceToServiceName(selectedService: string): string {

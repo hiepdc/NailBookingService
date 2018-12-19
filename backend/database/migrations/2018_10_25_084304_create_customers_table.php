@@ -17,8 +17,8 @@ class CreateCustomersTable extends Migration
         {
             Schema::create('customers', function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('customer_name');
-                $table->char('phone_number');
+                $table->string('customer_name', 50);
+                $table->string('phone_number', 10)->unique();
                 $table->integer('coin');
                 $table->softDeletes();
             });

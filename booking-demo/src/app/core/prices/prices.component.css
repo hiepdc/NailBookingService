@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 #prices .nav-tabs{
     margin-bottom:30px;
    }
@@ -35,11 +37,12 @@
    /* menu Name */
    .menu-item-name {
     text-align: left;
-    font-weight: 700;
-    font-size: 18px;
-    /* border-bottom: 1px dotted rgb(213, 213, 213); */
+    font-weight: 600;
+    font-size: 19px;
     width: 100%;
-    color: darkslategrey;
+    color: black;
+    margin-right: 10px;
+    font-family: 'Montserrat', sans-serif;
    }
    /* menu Description */
    .menu-item-description {

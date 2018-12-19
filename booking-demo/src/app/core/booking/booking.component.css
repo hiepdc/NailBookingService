@@ -216,11 +216,11 @@
   .timeline{margin-top: -4px;}
  
  .ng-valid[required], .ng-valid.required  {
-   border: 2px solid #42A948; /* green */
+   border-bottom: 3px solid #42A948; /* green */
  }
  
  .ng-invalid:not(form)  {
-   border: 1px solid /*#af2624*/ #87314e; 
+   border-bottom: 2px solid /*#af2624*/ #87314e; 
  }
 
  /* For Firefox */
@@ -435,4 +435,13 @@ input[type=number]::-webkit-outer-spin-button {
 /* Large devices ( min 1500px) */
 @media (min-width: 1500px) {
   
+ }
+
+
+ .timeline:before{
+  width: 0;
+ }
+
+ .timeline{
+  padding: 0;
  }

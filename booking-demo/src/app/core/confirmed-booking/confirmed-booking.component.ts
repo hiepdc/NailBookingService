@@ -75,7 +75,8 @@ export class ConfirmedBookingComponent implements OnInit {
     this.confirmBookingService.changeHour("");
     this.confirmBookingService.changeStylistName("");
     this.confirmBookingService.changeCustomerName("");
-
+    this.confirmBookingService.changeNotifiDeleteBooking("block");
+    
     //bcak to home
     this.router.navigate(['/home']);
   }

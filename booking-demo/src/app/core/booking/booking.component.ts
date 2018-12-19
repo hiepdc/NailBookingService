@@ -250,7 +250,7 @@ export class BookingComponent implements OnInit {
                 this.bookingServiceName = this.bookingApi.data.service_name;
                 this.bookingStylistName = this.bookingApi.data.stylist_name;
                 this.bookingDate = this.formatDateToDDMMYYYY(this.bookingApi.data.date);
-                this.bookingTime = this.changeStatusToStartTime(this.bookingApi.data.start_time);
+                this.bookingTime = this.changeStatusToStartTime(this.bookingApi.data.start_time+"");
                 this.openChangeBooking();
               }
             },

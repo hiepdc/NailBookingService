@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Lightbox, LightboxConfig, LightboxEvent, LIGHTBOX_EVENT, IEvent, IAlbum } from 'ngx-lightbox';
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute } from '@angular/router';
 import { GalleryService } from '../gallery.service';
 import { Collection } from '../models/collection';

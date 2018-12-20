@@ -43,6 +43,8 @@ Route::delete('bookings/delete-booking/{phonenumber}','BookingController@deleteB
 Route::get('bookings/show/{id}','BookingController@show');
 //list bookings
 Route::get('bookings','BookingController@listBooking');
+//list bookings today
+Route::get('bookings/today','BookingController@getBookingToday');
 //fillter booking
 Route::post('bookings/search','BookingController@searchBooking');
 //checkin booking
@@ -64,7 +66,7 @@ Route::get('bookings/count-total', 'BookingController@getCountTotal');
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
 //display shift of stylist
-Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBookingTimeWithStylist');
+Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBooking');
 //display shift default
 //Route::get('shifts/stylist/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 

@@ -75,6 +75,43 @@
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-8">
+            <div class="panel panel-success">
+                    <div class="panel-heading">{{customerName}}</div>
+                    <div class="panel-body">
+                        <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
+                        <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
+                        <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
+                        <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
+                        <button class="pull-right" mat-stroked-button color="primary" (click)="clearFilters()">Clear filters</button>
+                        <div class="clearfix"></div>
+                        <ag-grid-angular #agGrid id="myGrid" style="width: 100%; height: 400px" class="ag-theme-balham" [enableSorting]="true"
+                    [enableFilter]="true" [rowData]="bookings" [columnDefs]="columnDefs" [enableColResize]="true" [pagination]="true"
+                    [paginationPageSize]="paginationPageSize" [floatingFilter]="true" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
+                    (firstDataRendered)="onFirstDataRendered($event)" (gridReady)="onGridReady($event)">
+                </ag-grid-angular>
+                    </div>
+                </div>
+            
+            <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Thống kê theo tháng
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <select *ngIf="showComboboxMonth" #w (change)="selectMonth(w.value)">month
+                                    <option *ngFor="let month of months" [value]="month">{{month}}</option>
+                                </select>
+                            </div>
+        
+                        </div>
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div id="chartContainerWeek" style="height: 300px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+        
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-bar-chart-o fa-fw"></i> Thống kê theo năm
@@ -90,26 +127,6 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
                 <div id="chartContainer" style="height: 300px; width: 100%; margin-left:auto;margin-right:auto;"></div>
-            </div>
-            <!-- /.panel-body -->
-        </div>
-        <!-- /.panel -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i> Thống kê theo tháng
-                <div class="pull-right">
-                    <div class="btn-group">
-                        <select *ngIf="showComboboxMonth" #w (change)="selectMonth(w.value)">month
-                            <option *ngFor="let month of months" [value]="month">{{month}}</option>
-                        </select>
-                    </div>
-
-                </div>
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div id="chartContainerWeek" style="height: 300px; width: 100%; margin-left:auto;margin-right:auto;"></div>
-
             </div>
             <!-- /.panel-body -->
         </div>

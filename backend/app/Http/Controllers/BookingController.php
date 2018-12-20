@@ -437,10 +437,20 @@ class BookingController extends Controller
     public function listBooking()
     {
         try {
+            $booking = new Booking();
+            $listBooking = $booking->listBooking();
+            return response()->success($listBooking);
+        } catch (Exception $e) {
+            response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function getBookingToday(){
+        try {
             $carbon = Carbon::now();
             $date = $carbon->format('Y-m-d');
             $booking = new Booking();
-            $listBooking = $booking->listBooking($date);
+            $listBooking = $booking->getBookingToday($date);
             return response()->success($listBooking);
         } catch (Exception $e) {
             response()->exception($e->getMessage(), $e->getCode());

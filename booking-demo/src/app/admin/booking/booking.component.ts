@@ -9,8 +9,14 @@ import { Customer } from '../models/customer';
   styleUrls: ['./booking.component.css']
 })
 export class BookingComponent implements OnInit {
+  // constructor(private bookingService: BookingService) {
+
+  // }
+  // ngOnInit() {
+
+  // }
   gridApi;
-  private gridColumnApi;
+  gridColumnApi;
   rowSelection;
   selectedBooking: Booking;
   customer: Customer;
@@ -20,7 +26,7 @@ export class BookingComponent implements OnInit {
 
   paginationPageSize = 50;
   bookings: Booking[];
-  id: number;boolean
+  id: number;
   checkInDisable: boolean;
   checkOutDisbale: boolean;
   deleteDisable: boolean;
@@ -103,7 +109,7 @@ export class BookingComponent implements OnInit {
     params.api.sizeColumnsToFit();
   }
 
-  onSelectionChanged() {
+  onSelectionChanged(event) {
     console.log(event)
     var selectedRows = this.gridApi.getSelectedRows();
     console.log(this.gridApi)

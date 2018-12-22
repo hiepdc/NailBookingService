@@ -1,9 +1,10 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit ,ViewChild, ViewContainerRef} from '@angular/core';
 import * as CanvasJS from '../models/canvasjs.min';
 import { BookingService } from '../booking/booking.service';
 import { Booking } from '../models/booking';
 import { AgGridNg2 } from 'ag-grid-angular';
 import { Customer } from '../models/customer';
+import { ToastsManager } from 'ng2-toastr';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -41,14 +42,19 @@ export class DashboardComponent implements OnInit {
 
   paginationPageSize = 50;
   bookings: Booking[];
-  id: number;boolean
+  id: number;
   checkInDisable: boolean;
   checkOutDisbale: boolean;
   deleteDisable: boolean;
   useCoinDisable: boolean;
   customerName: string;
-  //end booking  <---------------------->
-  constructor(private bookingService: BookingService) {
+  // end booking  <---------------------->
+  constructor(
+    private bookingService: BookingService,
+    public toastr: ToastsManager,
+    _vcr: ViewContainerRef
+    ) {
+      this.toastr.setRootViewContainerRef(_vcr);
     // for booking <---------------------->
     this.columnDefs = [
       // {headerName: 'ID', field: 'id'},
@@ -316,21 +322,21 @@ export class DashboardComponent implements OnInit {
 
   onSelectionChanged(event) {
     console.log(event)
-    var selectedRows = this.gridApi.getSelectedRows();
+    const selectedRows = this.gridApi.getSelectedRows();
     console.log(this.gridApi)
-    var id = "";
-    var customer_name = "";
-    var phone_number = "";
-    var stylist_name = "";
-    var service_name = "";
-    var date = "";
-    var start_time = "";
-    var status = "";
-    var checkInDisable = "";
-    var checkOutDisbale = "";
-    var deleteDisable = "";
-    var useCoinDisable = "";
-    var coin = "";
+    let id = "";
+    let customer_name = "";
+    let phone_number = "";
+    let stylist_name = "";
+    let service_name = "";
+    let date = "";
+    let start_time = "";
+    let status = "";
+    let checkInDisable = "";
+    let checkOutDisbale = "";
+    let deleteDisable = "";
+    let useCoinDisable = "";
+    let coin = "";
     selectedRows.forEach(function (selectedRow, index) {
       if (index !== 0) {
         // id += ", ";
@@ -400,7 +406,8 @@ export class DashboardComponent implements OnInit {
 
   deleteBooking(id: number): void {
     this.bookingService.delelteBooking(id).subscribe(
-      api => { this.getBookingsFromService(); },
+      api => { this.getBookingsFromService();
+        this.toastr.warning('Xóa thành công lịch đặt'); },
       error => {
         console.log(error);
         return;
@@ -412,6 +419,7 @@ export class DashboardComponent implements OnInit {
     this.bookingService.checkIn(id).subscribe(
       api => {
         this.getBookingsFromService();
+        this.toastr.success('Đã checkin thành công');
       },
       error => {
         console.log(error);
@@ -424,6 +432,7 @@ export class DashboardComponent implements OnInit {
     this.bookingService.checkOut(id).subscribe(
       api => {
         this.getBookingsFromService();
+        this.toastr.success('Đã checkout thành công');
       },
       error => {
         console.log(error);
@@ -442,6 +451,7 @@ export class DashboardComponent implements OnInit {
           console.log(this.customer);
         }
         this.getBookingsFromService();
+        this.toastr.info('Đã sử dụng điểm tích lũy thành công');
       },
       error => {
         console.log(error);

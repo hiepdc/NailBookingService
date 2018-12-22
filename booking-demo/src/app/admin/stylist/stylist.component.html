@@ -1,3 +1,71 @@
-<p>
-  stylist works!
-</p>
+<!-- <div class="container mat-elevation-z8">
+
+    <div class="form">
+      <mat-form-field floatPlaceholder="never" color="accent">
+        <input matInput #filter placeholder="Filter issues">
+      </mat-form-field>
+    </div> -->
+<mat-table #table [dataSource]="stylists" matSort class="mat-cell">
+
+    <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="stylist_name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Tên</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.stylist_name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phone_number">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Số ĐT</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.phone_number}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="information">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Thông tin</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.information}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="image_link">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Ảnh đại diện</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.image_link}}</mat-cell>
+    </ng-container>
+
+    <!-- actions -->
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button color="primary" (click)="addNew()">
+                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+            </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let row; let i=index;">
+            <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)">
+                <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
+                <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator #paginator
+                   [pageIndex]="0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+<!-- <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+      No results
+    </div>
+  
+    <mat-paginator #paginator
+                   [length]="dataSource.filteredData.length"
+                   [pageIndex]="0"
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+  </div> -->

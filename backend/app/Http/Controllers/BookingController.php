@@ -26,15 +26,12 @@ class BookingController extends Controller
             if ($booking->getStatusBookedByPhonenumber($request->phone_number) > 0) {
                 return response()->success(null, 'Bạn có chắc chắn muốn đổi lịch');
             }
-//            //add customer
+            //add customer
             $customer = new Customer();
-            if($request->has('customer_name')){
-                $customer->updateCustomerName($request->phone_number, $request->customer_name);
+            //2.kiểm tra khách hàng đã có trong hệ thống chưa
+            if ($customer->getCustomerByPhonenumber($request->phone_number) == 0) {
+                $customer->addNewCustomer($request->customer_name, $request->phone_number);
             }
-//            //2.kiểm tra khách hàng đã có trong hệ thống chưa
-//            if ($customer->getCustomerByPhonenumber($request->phone_number) == 0) {
-//                $customer->addNewCustomer($request->customer_name, $request->phone_number);
-//            }
             $shift = new Shift();
             $service_id = $request->service_id;
             $customer_id = $customer->getIDByPhonenumber($request->phone_number);
@@ -52,23 +49,21 @@ class BookingController extends Controller
             }
             //4.mesage to customer
             $service_name_arr = Service::find($request->service_id)
-                ->select('service_name')
-                ->first();
+                                       ->select('service_name')
+                                       ->first();
             $service_name = $service_name_arr->service_name;
             $stylist_name_arr = Stylist::find($stylist_id);
             $stylist_name = $stylist_name_arr->stylist_name;
             $message = 'Cảm ơn anh/chị ' . $request->customer_name .
-                ' đã đặt lịch vào lúc ' . $this->convertTime($request->start_time) .
-                ' ngày ' . $request->date .
-                ' cho gói dịch vụ ' . $service_name .
-            ' được phục vụ bởi ' . $stylist_name .
-            '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
+                       ' đã đặt lịch vào lúc ' . $this->convertTime($request->start_time) .
+                       ' ngày ' . $request->date .
+                       ' cho gói dịch vụ ' . $service_name .
+                       ' được phục vụ bởi ' . $stylist_name .
+                       '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
             // gửi tin nhắn to customer
             $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
-
             //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
-
             //6.update status of shift
             $oldStatus = $shift->getStatusByStylistID($stylist_id, $request->date);
             $sts = $oldStatus->status;
@@ -76,7 +71,6 @@ class BookingController extends Controller
             $sizeOfTime = $service->getTimeService($request->service_id) * 4;
             $status = $this->updateShiftStatusAfterBooking($sts, $request->start_time, $sizeOfTime);
             $shift->updateStatusByStylistID($stylist_id, $request->date, $status);
-
             //7.add notification
             $notification = new Notification();
             $notification->addNotificaion($newBooking->id, 'new');
@@ -85,9 +79,7 @@ class BookingController extends Controller
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
-
     }
-
     public function editBooking(Request $request)
     {
         try {
@@ -270,16 +262,11 @@ class BookingController extends Controller
                 return response()->success(null, 'Mã xác nhận đã hết hạn');
             }
             $verified = $result['data'];
-            //add customer
-            $customer = new Customer();
-            $customer->addNewCustomer("no name", $request->phone_number);
             return response()->success($verified, 'Bạn vừa nhập mã pin thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
-
     }
-
     public function show($id)
     {
         try {

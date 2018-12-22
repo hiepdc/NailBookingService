@@ -161,7 +161,7 @@
             <input type="text" class="inputPin form-control" maxlength="4" pattern="^\d{4}$" required [(ngModel)]="inputPinNumber"
               name="inputPinNumber" />
             <p [hidden]="!verified" class="notification">Anh/Chị điền sai pin code quá 3 lần. Vui lòng lấy mã Pin mới sau
-              10 phút</p>
+              3 phút</p>
             <p [hidden]="!flagRemainingAttempts" class="notification">Anh/Chị còn {{remainingAttempts}} lần nhập sai</p>
           </div>
           <div class="modal-footer">

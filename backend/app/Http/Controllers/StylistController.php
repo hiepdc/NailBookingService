@@ -14,6 +14,13 @@ class StylistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function index1(){
+        return view('DemoUpload');
+    }
+
+    public function doUpload(Request $request){
+        //xử lý upload ở đây
+    }
     public function index()
     {
         try {
@@ -43,6 +50,11 @@ class StylistController extends Controller
     public function store(Request $request)
     {
         try {
+//            if($request->hasFile('image_link')){
+//                $file = $request->image_link;
+//                $file->move('upload', $file->getClientOriginalName());
+//                return($file);
+//            }
             $checkStylist = Stylist::where('phone_number', $request->phone_number)
                                      ->count();
             if($checkStylist >0){

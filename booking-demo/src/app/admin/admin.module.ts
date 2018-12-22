@@ -4,12 +4,14 @@ import { NgxPaginationModule} from 'ngx-pagination';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { NotificationComponent } from './notification/notification.component'
+import { NotificationComponent } from './notification/notification.component';
 import { PusherService } from './pusher.service';
 import { ServiceComponent } from './service/service.component';
 import { AgGridModule} from 'ag-grid-angular';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatChipsModule} from '@angular/material/chips';
+// import { ToastModule } from 'ng2-toastr/ng2-toastr';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { LoginComponent } from './login/login.component';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -31,6 +33,12 @@ import { ShiftComponent } from './shift/shift.component';
 import { ServiceItemComponent } from './service-item/service-item.component';
 import { GalleryImageComponent } from './gallery-image/gallery-image.component';
 import { StylistComponent } from './stylist/stylist.component';
+import { StylistService } from './stylist/stylist.service';
+import {
+  MatDialogModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule,
+  MatTableModule, MatToolbarModule,
+} from '@angular/material';
+import { AddDialogComponent } from './stylist/dialogs/add-dialog/add-dialog.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -44,7 +52,11 @@ import { StylistComponent } from './stylist/stylist.component';
     AgGridModule.withComponents([]),
     MatButtonModule,
     MatCheckboxModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule,
+    MatTableModule, MatToolbarModule
+    // ToastModule.forRoot(),
+    // BrowserAnimationsModule
   ],
   declarations: [
     AdminComponent,
@@ -61,14 +73,19 @@ import { StylistComponent } from './stylist/stylist.component';
     ShiftComponent,
     ServiceItemComponent,
     GalleryImageComponent,
-    StylistComponent
+    StylistComponent,
+    AddDialogComponent
+    ],
+    entryComponents: [
+      AddDialogComponent
     ],
   providers: [
     PusherService,
     AuthenticationService,
     AuthGuard,
     BookingService,
-    ServicesService
+    ServicesService,
+    StylistService
   ]
 })
 export class AdminModule { }

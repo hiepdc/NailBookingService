@@ -1,5 +1,5 @@
 <!-- /.row -->
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-10 col-md-offset-1">
         <div class="row">
             <div class="col-md-4">
@@ -71,47 +71,48 @@
         </div>
     </div>
 
-</div>
+</div> -->
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-8">
-            <div class="panel panel-success">
-                    <div class="panel-heading">{{customerName}}</div>
-                    <div class="panel-body">
-                        <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
-                        <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
-                        <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
-                        <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
-                        <button class="pull-right" mat-stroked-button color="primary" (click)="clearFilters()">Clear filters</button>
-                        <div class="clearfix"></div>
-                        <ag-grid-angular #agGrid id="myGrid" style="width: 100%; height: 400px" class="ag-theme-balham" [enableSorting]="true"
-                    [enableFilter]="true" [rowData]="bookings" [columnDefs]="columnDefs" [enableColResize]="true" [pagination]="true"
-                    [paginationPageSize]="paginationPageSize" [floatingFilter]="true" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
+        <div class="panel panel-success">
+            <div class="panel-heading">{{customerName}}</div>
+            <div class="panel-body">
+                <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
+                <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
+                <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
+                <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
+                <button class="pull-right" mat-stroked-button color="primary" (click)="clearFilters()">Clear filters</button>
+                <div class="clearfix"></div>
+                <ag-grid-angular #agGrid id="myGrid" style="width: 100%; height: 400px" class="ag-theme-balham"
+                    [enableSorting]="true" [enableFilter]="true" [rowData]="bookings" [columnDefs]="columnDefs"
+                    [enableColResize]="true" [pagination]="true" [paginationPageSize]="paginationPageSize"
+                    [floatingFilter]="true" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
                     (firstDataRendered)="onFirstDataRendered($event)" (gridReady)="onGridReady($event)">
                 </ag-grid-angular>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> Thống kê theo tháng
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <select *ngIf="showComboboxMonth" #w (change)="selectMonth(w.value)">month
+                            <option *ngFor="let month of months" [value]="month">{{month}}</option>
+                        </select>
                     </div>
+
                 </div>
-            
-            <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> Thống kê theo tháng
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <select *ngIf="showComboboxMonth" #w (change)="selectMonth(w.value)">month
-                                    <option *ngFor="let month of months" [value]="month">{{month}}</option>
-                                </select>
-                            </div>
-        
-                        </div>
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div id="chartContainerWeek" style="height: 300px; width: 100%; margin-left:auto;margin-right:auto;"></div>
-        
-                    </div>
-                    <!-- /.panel-body -->
-                </div>
-                <!-- /.panel -->
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div id="chartContainerWeek" style="height: 300px; width: 100%; margin-left:auto;margin-right:auto;"></div>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-bar-chart-o fa-fw"></i> Thống kê theo năm
@@ -136,65 +137,74 @@
     <div class="col-lg-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <i class="fa fa-bell fa-fw"></i> Notifications Panel
+                <i class="fa fa-bell fa-fw"></i> Thông tin chung
             </div>
-            <!-- /.panel-heading -->
             <div class="panel-body">
                 <div class="list-group">
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-comment fa-fw"></i> New Comment
-                        <span class="pull-right text-muted small"><em>4 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                        <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                        <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-tasks fa-fw"></i> New Task
-                        <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                        <span class="pull-right text-muted small"><em>11:32 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                        <span class="pull-right text-muted small"><em>11:13 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                        <span class="pull-right text-muted small"><em>10:57 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                        <span class="pull-right text-muted small"><em>9:49 AM</em>
-                        </span>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <i class="fa fa-money fa-fw"></i> Payment Received
-                        <span class="pull-right text-muted small"><em>Yesterday</em>
-                        </span>
-                    </a>
+                    <div class="panel panel-yellow list-group-item">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <i class="fa fa-shopping-cart fa-2x"></i>
+                                </div>
+                                <div class="col-xs-10 text-right">
+                                    <div class="huge">{{countBookings}}</div>
+                                    <div>Lịch đặt</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a routerLink="/admin/bookings">
+                            <div class="panel-footer">
+                                <span class="pull-left">Xem chi tiết</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="panel panel-green list-group-item">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-address-book fa-2x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{countCustomers}}</div>
+                                    <div>Khách hàng</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a routerLink="/admin/customers">
+                            <div class="panel-footer">
+                                <span class="pull-left">Xem chi tiết</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="panel panel-primary list-group-item">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-female fa-2x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{countStylists}}</div>
+                                    <div>Stylists</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a routerLink="/admin/stylists">
+                            <div class="panel-footer">
+                                <span class="pull-left">Xem chi tiết</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <!-- /.list-group -->
-                <a href="#" class="btn btn-default btn-block">View All Alerts</a>
             </div>
-            <!-- /.panel-body -->
         </div>
-        <!-- /.panel -->
     </div>
-    <!-- /.col-lg-4 -->
 </div>
 <!-- /.row -->
 <!-- <div id="chartContainer" style="height: 300px; width: 80%; margin-left:auto;margin-right:auto;"></div>

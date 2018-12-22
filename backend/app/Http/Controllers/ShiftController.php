@@ -42,9 +42,12 @@ class ShiftController extends Controller
                 $sizeOfTime = $service->getTimeService($serviceID) * 4;
                 $shift = new Shift();
                 $status = $shift->getStatusByStylistID($stylistID, $date);
+                if($status === null){
+                    return response()->success([], 'hiện stylist này chưa có lịch vào ngày '.$date);
+                }
                 $sts = $status->status;
                 $shiftDefaultByStylistID = $this->getAvailableBookingTime($sts, $sizeOfTime);
-                return response()->success($shiftDefaultByStylistID);
+                return response()->success($status);
             }else{
                 $service = new Service();
                 $sizeOfTime = $service->getTimeService($serviceID);

@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class ConfirmBookingService {
 
-  //private messageSource = new BehaviorSubject('default message');
+  // private messageSource = new BehaviorSubject('default message');
   private selectedHour = new BehaviorSubject('');
   private selectedDate = new BehaviorSubject('');
   private stylistName = new BehaviorSubject('');

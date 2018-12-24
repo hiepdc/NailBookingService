@@ -15,8 +15,9 @@ class ImageController extends Controller
     public function index()
     {
         try {
-            $image = Image::all();
-            return response()->success($image);
+            $image = new Image();
+            $images = $image->getAllImages();
+            return response()->success($images);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

@@ -1,71 +1,61 @@
-<!-- <div class="container mat-elevation-z8">
+<div class="example-header">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Tìm kiếm">
+    </mat-form-field>
+</div>
 
-    <div class="form">
-      <mat-form-field floatPlaceholder="never" color="accent">
-        <input matInput #filter placeholder="Filter issues">
-      </mat-form-field>
-    </div> -->
-<mat-table #table [dataSource]="stylists" matSort class="mat-cell">
+<div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource " matSort class="mat-cell">
 
-    <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> STT</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;">{{i + 1}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="stylist_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Tên</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.stylist_name}}</mat-cell>
+        </ng-container>
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="stylist_name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Tên</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.stylist_name}}</mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="phone_number">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Số ĐT</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.phone_number}}</mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="phone_number">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Số ĐT</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.phone_number}}</mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="information">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Thông tin</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.information}}</mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="information">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Thông tin</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.information}}</mat-cell>
-    </ng-container>
+        <ng-container matColumnDef="image_link">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Ảnh đại diện</mat-header-cell>
+            <mat-cell *matCellDef="let row"><img [src]=row.image_link style="width: 50px; height: 50px;" /></mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="image_link">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Ảnh đại diện</mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.image_link}}</mat-cell>
-    </ng-container>
+        <!-- actions -->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>
+                <button mat-raised-button color="primary" (click)="addNew()">
+                    <i class="fas fa-plus-circle"></i>Tạo mới
+                </button>
+            </mat-header-cell>
 
-    <!-- actions -->
-    <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-            <button mat-icon-button color="primary" (click)="addNew()">
-                <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-            </button>
-        </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i=index;">
+                <button mat-button (click)="EditItem(row.id, row.stylist_name, row.phone_number, row.information, row.image_link)">
+                    <span style="color: Dodgerblue;">
+                        <i class="fa fa-edit"></i>Sửa
+                    </span>
+                </button>
+                <button mat-button (click)="deleteItem(row.id)">
+                    <span style="color: Tomato;">
+                        <i class="far fa-trash-alt"></i>Xóa
+                    </span>
+                </button>
+            </mat-cell>
+        </ng-container>
 
-        <mat-cell *matCellDef="let row; let i=index;">
-            <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)">
-                <mat-icon aria-label="Edit">edit</mat-icon>
-            </button>
-
-            <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
-                <mat-icon aria-label="Delete">delete</mat-icon>
-            </button>
-        </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
-<mat-paginator #paginator
-                   [pageIndex]="0"
-                   [pageSize]="10"
-                   [pageSizeOptions]="[5, 10, 25, 100]">
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
     </mat-paginator>
-<!-- <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
-      No results
-    </div>
-  
-    <mat-paginator #paginator
-                   [length]="dataSource.filteredData.length"
-                   [pageIndex]="0"
-                   [pageSize]="10"
-                   [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
-  </div> -->
+</div>

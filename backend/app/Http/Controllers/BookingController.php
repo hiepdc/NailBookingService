@@ -59,7 +59,7 @@ class BookingController extends Controller
                        ' ngày ' . $request->date .
                        ' cho gói dịch vụ ' . $service_name .
                        ' được phục vụ bởi ' . $stylist_name .
-                       '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
+                       '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop (0976420019).';
             // gửi tin nhắn to customer
             $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
             //5.add new booking
@@ -129,7 +129,7 @@ class BookingController extends Controller
                        ' ngày ' . $request->date .
                        ' cho gói dịch vụ ' . $service_name .
                        ' được phục vụ bởi ' . $stylist_name .
-                       '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop xinh đẹp : 0976420019.';
+                       '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop (0976420019).';
 
             $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 

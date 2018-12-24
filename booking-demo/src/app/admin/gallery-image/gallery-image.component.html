@@ -1,3 +1,57 @@
-<p>
-  gallery-image works!
-</p>
+<div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Tìm kiếm">
+    </mat-form-field>
+  </div>
+  
+  <div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource " matSort class="mat-cell">
+  
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> STT</mat-header-cell>
+        <mat-cell *matCellDef="let row; let i = index;">{{i + 1}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Bộ sưu tập</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="caption">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Caption</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.caption}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="thumb_link">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Ảnh Thumb</mat-header-cell>
+            <mat-cell *matCellDef="let row"><img [src]=row.thumb_link style="width: 50px; height: 50px;" /></mat-cell>
+          </ng-container>
+      <ng-container matColumnDef="image_link">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Ảnh</mat-header-cell>
+        <mat-cell *matCellDef="let row"><img [src]=row.image_link style="width: 50px; height: 50px;" /></mat-cell>
+      </ng-container>
+      <!-- actions -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-raised-button color="primary" (click)="addNew()">
+            <i class="fas fa-plus-circle"></i>Tạo mới
+          </button>
+        </mat-header-cell>
+  
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-button (click)="EditItem(row.id, row.name, row.caption, row.thumb_link, row.image_link)">
+            <span style="color: Dodgerblue;">
+              <i class="fa fa-edit"></i>Sửa
+            </span>
+          </button>
+          <button mat-button (click)="deleteItem(row.id)">
+            <span style="color: Tomato;">
+              <i class="far fa-trash-alt"></i>Xóa
+            </span>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>

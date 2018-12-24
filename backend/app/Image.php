@@ -29,4 +29,16 @@ class Image extends Model
         }
         return $result;
     }
+
+    public function getAllImages(){
+        $images = DB::table('images')
+                          ->join('galleries', 'galleries.id', '=', 'images.gallery_id')
+                          ->select('images.id',
+                              'galleries.name',
+                              'images.caption',
+                              'images.thumb_link',
+                              'images.image_link')
+                          ->get();
+        return $images;
+    }
 }

@@ -15,7 +15,16 @@ class ServiceItem extends Model
     public function service(){
         return $this->belongsTo(Service::class);
     }
-
+    public function getAll(){
+        $serviceItems = DB::table('service_items')
+                      ->join('services', 'services.id', '=', 'service_items.service_id')
+            ->select('service_items.id',
+                'service_items.name',
+                'services.service_name',
+                'service_items.price')
+            ->get();
+        return $serviceItems;
+    }
     public function  getAllServiceItems(){
         $services = Service::select('id')
             ->get();

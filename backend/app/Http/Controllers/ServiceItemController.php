@@ -23,7 +23,16 @@ class ServiceItemController extends Controller
             return response()->exception($e->getMessage(), $e->getCode());
         }
     }
-
+    public function getAll()
+    {
+        try {
+            $serviceItem = new ServiceItem();
+            $serviceItems = $serviceItem->getAll();
+            return response()->success($serviceItems);
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {FormControl, Validators} from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { FormControl, Validators } from '@angular/forms';
 import { Stylist } from '../../../models/stylist';
 import { StylistService } from '../../stylist.service';
 @Component({
@@ -9,14 +9,15 @@ import { StylistService } from '../../stylist.service';
   styleUrls: ['./add-dialog.component.css']
 })
 export class AddDialogComponent implements OnInit {
+  file: File;
   formControl = new FormControl('', [
     Validators.required
     // Validators.email,
   ]);
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Stylist,
-    public stylistService: StylistService
-    ) { }
+    private stylistService: StylistService
+  ) { }
 
   ngOnInit() {
   }
@@ -28,15 +29,17 @@ export class AddDialogComponent implements OnInit {
   }
 
   submit() {
-  // emppty stuff
+    // emppty stuff
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  public confirmAdd(): void {
-    console.log(this.data);
-    this.stylistService.addStylist(this.data.stylist_name, this.data.phone_number, this.data.information, this.data.information);
+  getFiles(event) {
+    //  this.data.image_link = event.srcElement.files[0];
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      this.data.image_link = file;
+    }
   }
 }

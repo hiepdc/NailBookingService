@@ -1,0 +1,35 @@
+<h3 mat-dialog-title>Chỉnh sửa Stylist</h3>
+<form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput #input class="form-control" placeholder="Tên stylist" [(ngModel)]="data.stylist_name" name="stylist_name"
+        required>
+      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput #inputstate class="form-control" placeholder="Số điện thoại" [(ngModel)]="data.phone_number"
+        name="phone_number" minlength="10" maxlength="10" required>
+      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form">
+    <mat-form-field color="primary">
+      <textarea matInput placeholder="Thông tin" [(ngModel)]="data.information" name="information"> </textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <!-- <mat-form-field color="primary"> -->
+        <label>Ảnh đại diện</label>
+        <input type="file" class="form-control" required (change)="getFiles($event)">
+      <!-- </mat-form-field> -->
+    </div>  
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="data">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>  
+  </form>

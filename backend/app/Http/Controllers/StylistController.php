@@ -24,7 +24,7 @@ class StylistController extends Controller
     public function index()
     {
         try {
-            $listStylist = Stylist::all();
+            $listStylist = Stylist::orderBy('id', 'desc')->get();
             return response()->success($listStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -50,22 +50,39 @@ class StylistController extends Controller
     public function store(Request $request)
     {
         try {
-//            if($request->hasFile('image_link')){
-//                $file = $request->image_link;
-//                $file->move('upload', $file->getClientOriginalName());
-//                return($file);
-//            }
             $checkStylist = Stylist::where('phone_number', $request->phone_number)
-                                     ->count();
+                                   ->count();
             if($checkStylist >0){
-                return response()->success(null, 'Số điện thoại đã tồn tại trong hệ thống.');
+                return response()->success(null, 'Số điện thoại đã được sử dụng, vui lòng kiểm tra lại số điện thoại.');
+            }
+            $file = $request->image_link;
+            if($request->hasFile('image_link')){
+                $image_name = time(). '-' . $file->getClientOriginalName();
+                $file->move('upload/stylists/', $image_name);
+                $image_link = 'http://localhost:8000/upload/stylists/'. $image_name;
+//                $image = Image::make(sprintf('uploads/stylists/%s', $image_name))->resize(351, 355)->save();
+//                return($file);
+            }else{
+                $image_link = 'http://localhost:8000/upload/stylists/'. 'default.png';
             }
             $stylist = Stylist::create([
                 'stylist_name' => $request->stylist_name,
                 'phone_number' => $request->phone_number,
                 'information' => $request->information,
-                'image_link' => $request->image_link,
+                'image_link' =>  $image_link,
+//                'image_link' => 'http://localhost:8000/upload/'.$request->image_link,
             ]);
+//            $checkStylist = Stylist::where('phone_number', $request->phone_number)
+//                                     ->count();
+//            if($checkStylist >0){
+//                return response()->success(null, 'Số điện thoại đã tồn tại trong hệ thống.');
+//            }
+//            $stylist = Stylist::create([
+//                'stylist_name' => $request->stylist_name,
+//                'phone_number' => $request->phone_number,
+//                'information' => $request->information,
+//                'image_link' => $request->image_link,
+//            ]);
             return response()->success($stylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -118,7 +135,34 @@ class StylistController extends Controller
             if (!$stylist) {
                 return response()->notFound("stylist does not exist");
             }
-            $updatedStylist = $stylist->update($request->only(['stylist_name', 'phone_number', 'information']));
+            $checkStylist = Stylist::where([
+                ['phone_number', $request->phone_number],
+                ['id', '<>', $id]
+                ])->count();
+            if($checkStylist >0){
+                return response()->success(null, 'Số điện thoại đã được sử dụng, vui lòng kiểm tra lại số điện thoại.');
+            }
+            $file = $request->image_link;
+            if($request->hasFile('image_link')){
+                $image_name = time(). '-' . $file->getClientOriginalName();
+                $file->move('upload/stylists/', $image_name);
+                $image_link = 'http://localhost:8000/upload/stylists/'. $image_name;
+                $updatedStylist = $stylist->update([
+                    'stylist_name' => $request->stylist_name,
+                    'phone_number' => $request->phone_number,
+                    'information' => $request->information,
+                    'image_link' => $image_link
+//                'image_link' => 'http://localhost:8000/upload/'.$request->image_link,
+                ]);
+            }else{
+                $updatedStylist = $stylist->update([
+                    'stylist_name' => $request->stylist_name,
+                    'phone_number' => $request->phone_number,
+                    'information' => $request->information
+                ]);
+            }
+
+//            $updatedStylist = $stylist->update($request->only(['stylist_name', 'phone_number', 'information', 'image_link']));
             return response()->success($updatedStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

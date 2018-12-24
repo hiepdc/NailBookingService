@@ -20,7 +20,7 @@ use Illuminate\Http\Request;
 Route::resource('services', 'ServiceController');
 //api for stylists
 Route::post('stylists','StylistController@store');
-Route::put('stylists/{id}','StylistController@update');
+Route::post('stylists/{id}','StylistController@update');
 Route::get('stylists','StylistController@index');
 Route::get('stylists/{id}','StylistController@show');
 Route::delete('stylists/{id}','StylistController@destroy');
@@ -91,6 +91,14 @@ Route::get('notifications/mark-all-read', 'NotificationController@markAllRead');
 
 Route::get('galleries', 'GalleryController@index');
 Route::get('galleries/{id}', "GalleryController@show");
+Route::get('images', 'ImageController@index');
+//Route::apiResource('service-items', 'ServiceItemController');
+//api for stylists
+Route::post('service-items','ServiceItemController@store');
+Route::post('service-items/{id}','ServiceItemController@update');
+Route::get('service-items','ServiceItemController@index');
+Route::get('service-items/{id}','ServiceItemController@show');
+Route::delete('service-items/{id}','ServiceItemController@destroy');
 
-Route::apiResource('service-items', 'ServiceItemController');
 Route::get('services/{id}/service-items', 'ServiceItemController@showServiceItems');
+Route::get('service-items-all', 'ServiceItemController@getAll');

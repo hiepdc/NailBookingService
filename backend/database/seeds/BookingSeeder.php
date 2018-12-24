@@ -14,10 +14,10 @@ class BookingSeeder extends Seeder
     {
         //
         $faker = Faker\Factory::create();
-        foreach (range(1, 50) as $index) {
+        foreach (range(1, 300) as $index) {
             DB::table('bookings')->insert([
                 [
-                    'shift_id' => rand(1,14),
+                    'shift_id' => rand(1,98),
                     'service_id' => rand(1,2),
                     'customer_id' => rand(1, 200),
                     'start_time' => rand(0,47),
@@ -25,16 +25,16 @@ class BookingSeeder extends Seeder
                 ]
             ]);
         }
-        foreach (range(1, 2500) as $index) {
+        foreach (range(1, 700) as $index) {
             DB::table('bookings')->insert([
-                'shift_id' => rand(211, 2450),
+                'shift_id' => rand(99, 480),
                 'service_id' => rand(1, 2),
                 'customer_id' => rand(1, 200),
                 'start_time'=> rand(0,25),
                 'status' => $faker->randomElement(['finished']),
             ]);
             DB::table('bookings')->insert([
-                'shift_id' => rand(211, 2450),
+                'shift_id' => rand(99, 480),
                 'service_id' => rand(1, 2),
                 'customer_id' => rand(1, 200),
                 'start_time'=> rand(26,47),

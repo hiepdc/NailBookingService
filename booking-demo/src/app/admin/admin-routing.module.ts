@@ -35,7 +35,7 @@ const aroutes: Routes = [
         component: ServiceComponent,
       },
       {
-        path: 'service-items',
+        path: 'services-items',
         component: ServiceItemComponent,
       },
       {

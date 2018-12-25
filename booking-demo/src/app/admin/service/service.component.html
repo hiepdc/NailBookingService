@@ -1,3 +1,56 @@
-<p>
-  service works!
-</p>
+<div class="example-header">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Tìm kiếm">
+    </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource " matSort class="mat-cell">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> STT</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index;">{{i + 1}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="service_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Loại dịch vụ</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.service_name}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Mô tả</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.description}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="time_service">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Thời gian thực hiện</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.time_service}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="coin_service">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Điểm tích lũy nhận được khỉ sử dụng dịch vụ</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.coin_service}}</mat-cell>
+        </ng-container>
+
+
+        <!-- actions -->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>
+                <!-- <button mat-raised-button color="primary" (click)="addNew()">
+                    <i class="fas fa-plus-circle"></i>Tạo mới
+                </button> -->
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let row; let i=index;">
+                <button mat-button (click)="EditItem(row.id, row.service_name, row.description, row.time_service, row.coin_service)">
+                    <span style="color: Dodgerblue;">
+                        <i class="fa fa-edit"></i>Sửa
+                    </span>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+    </mat-paginator>
+</div>

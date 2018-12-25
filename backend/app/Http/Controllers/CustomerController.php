@@ -16,7 +16,7 @@ class CustomerController extends Controller
     public function index()
     {
         try {
-            $customers = Customer::paginate(10);
+            $customers = Customer::all();
             return response()->success($customers);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

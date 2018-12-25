@@ -1,0 +1,36 @@
+<h3 mat-dialog-title>Tạo mới dịch vụ</h3>
+<form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput #input class="form-control" placeholder="Tên dịch vụ" [(ngModel)]="data.name" name="name"
+        required>
+      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form">
+    <!-- <mat-form-field color="primary">
+      <input matInput #inputstate class="form-control" placeholder="Nhóm dịch vụ" [(ngModel)]="data.service_name"
+        name="service_name" minlength="10" maxlength="10" required>
+      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field> -->
+    <mat-form-field>
+        <p>Nhóm dịch vụ</p>
+        <select matNativeControl required [(ngModel)]="data.service_name">
+          <option value="volvo">Nhóm dịch vụ cơ bản</option>
+          <option value="saab">Nhóm dịch vụ nâng cao</option>
+        </select>
+        <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+  </div>
+
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput placeholder="Giá" [(ngModel)]="data.price" name="price">
+      </mat-form-field>
+    </div>
+  
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="data">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>  
+  </form>

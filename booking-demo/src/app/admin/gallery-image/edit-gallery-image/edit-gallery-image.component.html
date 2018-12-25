@@ -1,0 +1,36 @@
+<h3 mat-dialog-title>Chỉnh sửa ảnh cho bộ sưu tập</h3>
+<form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <div class="form">
+        <mat-form-field>
+            <p>Chọn bộ sưu tập</p>
+            <select matNativeControl required [(ngModel)]="data.name">
+              <option value="volvo">BST HALLOWEEN</option>
+              <option value="saab">BST GIÁNG SINH</option>
+            </select>
+            <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+      </div>
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput #input class="form-control" placeholder="Caption" [(ngModel)]="data.caption" name="caption"
+        required>
+      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+    <div class="form">
+      <!-- <mat-form-field color="primary"> -->
+        <p>Ảnh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        <input type="file" class="form-control" required (change)="getFiles($event)">
+      <!-- </mat-form-field> -->
+    </div>  
+    <div class="form">
+        <!-- <mat-form-field color="primary"> -->
+          <p>Ảnh(Thumb)&nbsp;</p>
+          <input type="file" class="form-control" required (change)="getFiles($event)">
+        <!-- </mat-form-field> -->
+      </div>
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="data">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>  
+  </form>

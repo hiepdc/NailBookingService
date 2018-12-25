@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmedBookingComponent } from './confirmed-booking.component';
+import { AppModule } from '../../app.module';
+import { CoreModule } from '../core.module';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('ConfirmedBookingComponent', () => {
   let component: ConfirmedBookingComponent;
@@ -8,7 +11,8 @@ describe('ConfirmedBookingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmedBookingComponent ]
+      imports: [AppModule, CoreModule],
+      providers: [ {provide: APP_BASE_HREF, useValue: '/'} ]
     })
     .compileComponents();
   }));

@@ -42,9 +42,12 @@ class ShiftController extends Controller
                 $sizeOfTime = $service->getTimeService($serviceID) * 4;
                 $shift = new Shift();
                 $status = $shift->getStatusByStylistID($stylistID, $date);
+                if($status === null){
+                    return response()->success([], 'hiện stylist này chưa có lịch vào ngày '.$date);
+                }
                 $sts = $status->status;
                 $shiftDefaultByStylistID = $this->getAvailableBookingTime($sts, $sizeOfTime);
-                return response()->success($shiftDefaultByStylistID);
+                return response()->success($status);
             }else{
                 $service = new Service();
                 $sizeOfTime = $service->getTimeService($serviceID);
@@ -117,9 +120,12 @@ class ShiftController extends Controller
         $arr = explode(',', $status);
         sort($arr);
         $arr2chieu = array();
+
         for ($i = 0; $i <= sizeof($arr) - 1; $i++) {
             $arr1chieu = array();
             array_push($arr1chieu, $arr[$i]);
+            //@long trường hợp ko có giá trị nào
+            //@long xóa dấu ","
             while ($i < sizeof($arr) - 1 && $arr[$i + 1] == $arr[$i] + 1) {
                 array_push($arr1chieu, $arr[$i + 1]);
                 $i++;
@@ -127,6 +133,8 @@ class ShiftController extends Controller
             array_push($arr2chieu, $arr1chieu);
             unset($arr1chieu);
         }
+
+
         $statusArr = array();
         foreach ($arr2chieu as $key => $value) {
             if (sizeof($value) >= $sizeOfTime) {
@@ -157,13 +165,13 @@ class ShiftController extends Controller
             $numberOfStylist = sizeof(Stylist::all());
             for($i = 0; $i < $numberOfStylist; $i++) {
                 $shift = Shift::create([
-                    'stylist_id' => $request->stylist_id."$i", 
-                    'date' => $request->date."$i", 
-                    'start_time' => $request->start_time."$i", 
-                    'end_time' => $request->end_time."$i", 
+                    'stylist_id' => $request->stylist_id."$i",
+                    'date' => $request->date."$i",
+                    'start_time' => $request->start_time."$i",
+                    'end_time' => $request->end_time."$i",
                     'status' => $request->status."$i"
                 ]);
-            } 
+            }
             return response()->success($shift, 'Bạn đã tạo thành công lịch làm việc');
 
         } catch (Exception $e) {
@@ -208,16 +216,16 @@ class ShiftController extends Controller
 
     //Thoi gian lam viec va thuc hien order theo ngay
     //Thoi gian da thuc hien order (theo ngay + stylist)
-        //Lay tat ca cac order da duoc thuc hien (theo ngay + stylist) 
-        //BookingController->getBookingTime($startTime, $sizeOfTime)
+    //Lay tat ca cac order da duoc thuc hien (theo ngay + stylist)
+    //BookingController->getBookingTime($startTime, $sizeOfTime)
     public function getBookedStatusByStylist($date, $stylist_id) {
         $orders = DB::table('booking')
-            ->where([
-                ['date','=',$date],
-                ['stylist_id','=',$stylist_id],
-            ])
-            ->get();
-         $finishStatus = "";
+                    ->where([
+                        ['date','=',$date],
+                        ['stylist_id','=',$stylist_id],
+                    ])
+                    ->get();
+        $finishStatus = "";
         foreach ($orders as $key => $value) {
             # code...
             $bookingController = new BookingController();
@@ -235,7 +243,7 @@ class ShiftController extends Controller
         $array = Array();
 
         foreach ($stylists as $key => $value) {
-            $array[$value->id]=$this->getBookedStatusByStylist($date,$value->id); 
+            $array[$value->id]=$this->getBookedStatusByStylist($date,$value->id);
         }
         return $array;
     }
@@ -247,7 +255,7 @@ class ShiftController extends Controller
         $array = Array();
 
         foreach ($shifts as $key => $value) {
-            $array[$value->stylist_id]=$this->getStatusFromTime($value->start_time, $value->end_time); 
+            $array[$value->stylist_id]=$this->getStatusFromTime($value->start_time, $value->end_time);
         }
         return $array;
     }
@@ -262,7 +270,7 @@ class ShiftController extends Controller
     public function getStatusFromTime($startTime, $endTime) {
         $startNumber = $this->getNumberFromTime($startTime);
         $endNumber = $this->getNumberFromTime($endTime);
-        
+
         $status = $startNumber;
 
         for($i=$startNumber+1;$i < $endNumber; $i++) {
@@ -289,5 +297,15 @@ class ShiftController extends Controller
         }
         $updateStatus = trim($updateStatus, ",");
         return $updateStatus;
+    }
+
+    public function getAllShiftThisWeek(){
+        try {
+            $shift = new Shift();
+            $shiftThisWeek = $shift->getAllShiftThisWeek();
+            return response()->success($shiftThisWeek, 'successfully');
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
     }
 }

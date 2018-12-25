@@ -135,7 +135,7 @@ class Booking extends Model
         return $bookings;
     }
 
-    public function listBooking($date)
+    public function listBooking()
     {
         $bookings = DB::table('bookings')
             ->join('services', 'services.id', '=', 'bookings.service_id')
@@ -156,6 +156,36 @@ class Booking extends Model
             ->orderBy('shifts.date', 'desc')
            ->orderBy('bookings.start_time', 'asc')
             ->get();
+        foreach($bookings as $booking){
+            $booking->start_time = $this->convertTime($booking->start_time);
+        }
+        return $bookings;
+    }
+
+
+    public function getBookingToday($date)
+    {
+        $bookings = DB::table('bookings')
+                      ->join('services', 'services.id', '=', 'bookings.service_id')
+                      ->join('customers', 'customers.id', '=', 'bookings.customer_id')
+                      ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
+                      ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
+                      ->select('bookings.id'
+                          ,'customers.customer_name'
+                          , 'customers.phone_number'
+                          , 'services.service_name'
+                          , 'stylists.stylist_name'
+                          , 'shifts.date'
+                          , 'bookings.start_time'
+                          , 'bookings.status'
+                          , 'customers.coin')
+                      ->whereNull('bookings.deleted_at')
+                      ->where([
+                          ['shifts.date', $date],
+                          ['bookings.status', '<>', 'finished']
+                      ])
+                      ->orderBy('bookings.start_time', 'asc')
+                      ->get();
         foreach($bookings as $booking){
             $booking->start_time = $this->convertTime($booking->start_time);
         }

@@ -29,7 +29,5 @@ export class GalleryService {
       catchError(error => of(new CollectionApi()))
     );
   }
-
   constructor(private http: HttpClient) { }
-
 }

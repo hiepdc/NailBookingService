@@ -16,5 +16,15 @@ getTestBed().initTestEnvironment(
 );
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
+
+// Then we find one component test.
+//const context = require.context('./', true, /booking.service\.spec\.ts$/);
+
+// Then we find module admin test.
+// const context = require.context('app/admin/', true, /\.spec\.ts$/);
+
+// Then we find module core test.
+// const context = require.context('app/', true, /apitest\.spec\.ts$/);
+
 // And load the modules.
 context.keys().map(context);

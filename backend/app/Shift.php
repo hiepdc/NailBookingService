@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -70,5 +71,30 @@ class Shift extends Model
             ->first();
         return $id;
 
+    }
+    public function getAllShiftThisWeek(){
+        $carbon = Carbon::now();
+        $from = $carbon->format('Y-m-d');
+        $to = $carbon->addDays(7);
+        $shifts = DB::table('shifts')
+            ->join('stylists', 'shifts.stylist_id', '=', 'stylists.id')
+            ->select('shifts.id',
+                'stylists.stylist_name',
+                'shifts.date',
+                'shifts.start_time',
+                'shifts.end_time',
+                'shifts.status')
+            ->whereBetween('shifts.date', [$from, $to])
+            ->get();
+        foreach ($shifts as $shift){
+            if($shift->start_time == 0 && $shift->end_time == 23){
+                $shift->status= 1;
+            }else if($shift->start_time == 24 && $shift->end_time == 47){
+                $shift->status= 2;
+            }else{
+                $shift->status = 3;
+            }
+        }
+        return $shifts;
     }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable} from 'rxjs';
+import { Observable} from 'rxjs/observable';
 import { of } from 'rxjs/observable/of';
 import { Api } from '../models/api';
 import { tap, catchError } from 'rxjs/operators';
@@ -25,6 +25,15 @@ export class BookingService {
     );
   }
 
+  getBookingsToday(): Observable<Api>{
+    return this.http.get<Api>(`${this.bookingURL}/today`).pipe(
+      tap(receivedBookings => {
+        console.log(receivedBookings)
+      }),
+      catchError(error => of(new Api())
+      )
+    );
+  }
   delelteBooking(id: number): Observable<Api>{
     return this.http.delete<Api>(`${this.bookingURL}/${id}`, httpOptions).pipe(
       tap(api => console.log(api)),
@@ -67,7 +76,7 @@ export class BookingService {
     );
   }
 
-  getCountTotal() : Observable<Api>{
+  getCountTotal(): Observable<Api>{
     return this.http.get<Api>(`${this.bookingURL}/count-total`).pipe(
       tap(api => console.log(api)),
       catchError(error => of(new Api()))

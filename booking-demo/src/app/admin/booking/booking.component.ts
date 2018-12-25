@@ -1,16 +1,23 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { BookingService } from './booking.service';
 import { Booking } from '../models/booking';
 import { AgGridNg2 } from 'ag-grid-angular';
 import { Customer } from '../models/customer';
+import { ToastsManager } from 'ng2-toastr';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.css']
 })
 export class BookingComponent implements OnInit {
+  // constructor(private bookingService: BookingService) {
+
+  // }
+  // ngOnInit() {
+
+  // }
   gridApi;
-  private gridColumnApi;
+  gridColumnApi;
   rowSelection;
   selectedBooking: Booking;
   customer: Customer;
@@ -20,13 +27,17 @@ export class BookingComponent implements OnInit {
 
   paginationPageSize = 50;
   bookings: Booking[];
-  id: number;boolean
+  id: number;
   checkInDisable: boolean;
   checkOutDisbale: boolean;
   deleteDisable: boolean;
   useCoinDisable: boolean;
   customerName: string;
-  constructor(private bookingService: BookingService) {
+  constructor(
+    private bookingService: BookingService,
+    public toastr: ToastsManager,
+    _vcr: ViewContainerRef
+  ) {
     this.columnDefs = [
       // {headerName: 'ID', field: 'id'},
       {
@@ -40,10 +51,10 @@ export class BookingComponent implements OnInit {
       {
         headerName: "Dịch vụ",
         field: "service_name",
-        width:300,
+        width: 300,
         floatingFilterComponentParams: { suppressFilterButton: true }
       },
-      { headerName: 'Stylist',  width: 300, field: 'stylist_name',floatingFilterComponentParams: { suppressFilterButton: true } },
+      { headerName: 'Stylist', width: 300, field: 'stylist_name', floatingFilterComponentParams: { suppressFilterButton: true } },
       {
         headerName: 'Ngày',
         width: 300,
@@ -70,7 +81,7 @@ export class BookingComponent implements OnInit {
         },
         suppressMenu: true
       },
-      { headerName: 'Giờ', field: 'start_time', floatingFilterComponentParams: { suppressFilterButton: true }},
+      { headerName: 'Giờ', field: 'start_time', floatingFilterComponentParams: { suppressFilterButton: true } },
       {
         headerName: 'Coin',
         field: 'coin', floatingFilterComponentParams: { suppressFilterButton: true }
@@ -83,7 +94,8 @@ export class BookingComponent implements OnInit {
         floatingFilterComponentParams: { suppressFilterButton: true }
       },
     ];
-    this.rowSelection = "single";
+    this.rowSelection = 'single';
+    this.toastr.setRootViewContainerRef(_vcr);
   }
 
   ngOnInit() {
@@ -103,7 +115,7 @@ export class BookingComponent implements OnInit {
     params.api.sizeColumnsToFit();
   }
 
-  onSelectionChanged() {
+  onSelectionChanged(event) {
     console.log(event)
     var selectedRows = this.gridApi.getSelectedRows();
     console.log(this.gridApi)
@@ -154,9 +166,9 @@ export class BookingComponent implements OnInit {
       api => {
         this.bookings = api.data;
         this.checkInDisable = true;
-    this.checkOutDisbale = true;
-    this.deleteDisable = true;
-    this.useCoinDisable = true;
+        this.checkOutDisbale = true;
+        this.deleteDisable = true;
+        this.useCoinDisable = true;
         for (let booking of this.bookings) {
           if (booking.status == 'booked') {
             booking.checkInDisable = false;
@@ -189,7 +201,10 @@ export class BookingComponent implements OnInit {
 
   deleteBooking(id: number): void {
     this.bookingService.delelteBooking(id).subscribe(
-      api => { this.getBookingsFromService(); },
+      api => {
+        this.getBookingsFromService();
+        this.toastr.warning('Xóa thành công lịch đặt');
+      },
       error => {
         console.log(error);
         return;
@@ -201,6 +216,7 @@ export class BookingComponent implements OnInit {
     this.bookingService.checkIn(id).subscribe(
       api => {
         this.getBookingsFromService();
+        this.toastr.success('Đã checkin thành công');
       },
       error => {
         console.log(error);
@@ -213,6 +229,7 @@ export class BookingComponent implements OnInit {
     this.bookingService.checkOut(id).subscribe(
       api => {
         this.getBookingsFromService();
+        this.toastr.success('Đã checkout thành công');
       },
       error => {
         console.log(error);
@@ -231,6 +248,7 @@ export class BookingComponent implements OnInit {
           console.log(this.customer);
         }
         this.getBookingsFromService();
+        this.toastr.info('Đã sử dụng điểm tích lũy thành công');
       },
       error => {
         console.log(error);

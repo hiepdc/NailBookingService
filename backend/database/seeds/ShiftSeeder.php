@@ -14,7 +14,7 @@ class ShiftSeeder extends Seeder
     public function run()
     {
         $carbon = Carbon::yesterday();
-        foreach (range(1, 30) as $index) {
+        foreach (range(1, 14) as $index) {
             $date = $carbon->addDays(1)->format('Y-m-d');
             DB::table('shifts')->insert(
                 [
@@ -71,8 +71,8 @@ class ShiftSeeder extends Seeder
                 ]
             );
         }
-        $datetime = new Carbon('2018-01-01');
-        foreach (range(1, 350) as $index) {
+        $datetime = new Carbon('2018-11-01');
+        foreach (range(1, 55) as $index) {
             $date = $datetime->addDays(1)->format('Y-m-d');
             DB::table('shifts')->insert(
                 [

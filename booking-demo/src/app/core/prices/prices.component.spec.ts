@@ -1,6 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PricesComponent } from './prices.component';
+import { Component } from '@angular/core';
+import { AppModule } from '../../app.module';
+import { CoreModule } from '../core.module';
+import { APP_BASE_HREF } from '@angular/common';
+
+@Component({
+  selector: 'app-pre-loader',
+  template: ''
+})
+class MockPreLoaderComponent {
+}
 
 describe('PricesComponent', () => {
   let component: PricesComponent;
@@ -8,7 +19,9 @@ describe('PricesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PricesComponent ]
+     // declarations: [ PricesComponent ]
+      imports: [AppModule, CoreModule],
+      providers: [ {provide: APP_BASE_HREF, useValue: '/'} ]
     })
     .compileComponents();
   }));

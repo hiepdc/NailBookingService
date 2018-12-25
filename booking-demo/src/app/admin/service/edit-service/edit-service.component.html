@@ -1,0 +1,35 @@
+<h3 mat-dialog-title>Chỉnh sửa gói dịch vụ</h3>
+<form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput #input class="form-control" placeholder="Tên gói dịch vụ" [(ngModel)]="data.service_name" name="service_name"
+        required>
+      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput placeholder="Mô tả" [(ngModel)]="data.description" name="description">
+    </mat-form-field>
+  </div>
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput #inputstate class="form-control" placeholder="Thời gian thực hiện" [(ngModel)]="data.time_service"
+        name="time_service" minlength="10" maxlength="10" required>
+      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput #inputstate class="form-control" placeholder="Điểm tích lũy nhận được khỉ sử dụng dịch vụ"
+        [(ngModel)]="data.coin_service" name="coin_service" minlength="10" maxlength="10" required>
+      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="data">Save</button>
+    <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+  </div>
+</form>

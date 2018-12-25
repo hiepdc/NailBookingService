@@ -74,6 +74,77 @@
 </div> -->
 <!-- /.row -->
 <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-4">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-shopping-cart fa-2x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            <div class="huge">{{countBookings}}</div>
+                            <div>Lịch đặt</div>
+                        </div>
+                    </div>
+                </div>
+                <a routerLink="/admin/bookings">
+                    <div class="panel-footer">
+                        <span class="pull-left">Xem chi tiết</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-address-book fa-2x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{countCustomers}}</div>
+                            <div>Khách hàng</div>
+                        </div>
+                    </div>
+                </div>
+                <a routerLink="/admin/customers">
+                    <div class="panel-footer">
+                        <span class="pull-left">Xem chi tiết</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-female fa-2x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{countStylists}}</div>
+                            <div>Stylists</div>
+                        </div>
+                    </div>
+                </div>
+                <a routerLink="/admin/stylists">
+                    <div class="panel-footer">
+                        <span class="pull-left">Xem chi tiết</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row">
     <div class="col-lg-8">
         <!-- <div class="panel panel-success">
             <div class="panel-heading">{{customerName}}</div>
@@ -93,6 +164,30 @@
             </div>
         </div> -->
 
+
+        <div class="panel panel-success">
+            <div class="panel-heading">{{customerName}}</div>
+            <div class="panel-body">
+                <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
+                <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
+                <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
+                <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
+                <button class="pull-right" mat-stroked-button color="primary" (click)="clearFilters()">Clear filters</button>
+                <div class="clearfix"></div>
+                <ag-grid-angular #agGrid id="myGrid" style="width: 100%; height: 400px" class="ag-theme-balham"
+                    [enableSorting]="true" [enableFilter]="true" [rowData]="bookings" [columnDefs]="columnDefs"
+                    [enableColResize]="true" [pagination]="true" [paginationPageSize]="paginationPageSize"
+                    [floatingFilter]="true" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
+                    (firstDataRendered)="onFirstDataRendered($event)" (gridReady)="onGridReady($event)">
+                </ag-grid-angular>
+            </div>
+        </div>
+        <!-- /.panel -->
+
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-8 -->
+    <div class="col-lg-4">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-bar-chart-o fa-fw"></i> Thống kê theo tháng
@@ -112,24 +207,6 @@
             </div>
             <!-- /.panel-body -->
         </div>
-        <div class="panel panel-success">
-                <div class="panel-heading">{{customerName}}</div>
-                <div class="panel-body">
-                    <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
-                    <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button>
-                    <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
-                    <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button>
-                    <button class="pull-right" mat-stroked-button color="primary" (click)="clearFilters()">Clear filters</button>
-                    <div class="clearfix"></div>
-                    <ag-grid-angular #agGrid id="myGrid" style="width: 100%; height: 400px" class="ag-theme-balham"
-                        [enableSorting]="true" [enableFilter]="true" [rowData]="bookings" [columnDefs]="columnDefs"
-                        [enableColResize]="true" [pagination]="true" [paginationPageSize]="paginationPageSize"
-                        [floatingFilter]="true" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
-                        (firstDataRendered)="onFirstDataRendered($event)" (gridReady)="onGridReady($event)">
-                    </ag-grid-angular>
-                </div>
-            </div>
-        <!-- /.panel -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-bar-chart-o fa-fw"></i> Thống kê theo năm
@@ -147,79 +224,6 @@
                 <div id="chartContainer" style="height: 300px; width: 100%; margin-left:auto;margin-right:auto;"></div>
             </div>
             <!-- /.panel-body -->
-        </div>
-        <!-- /.panel -->
-    </div>
-    <!-- /.col-lg-8 -->
-    <div class="col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <i class="fa fa-bell fa-fw"></i> Thông tin chung
-            </div>
-            <div class="panel-body">
-                <div class="list-group">
-                    <div class="panel panel-yellow list-group-item">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <i class="fa fa-shopping-cart fa-2x"></i>
-                                </div>
-                                <div class="col-xs-10 text-right">
-                                    <div class="huge">{{countBookings}}</div>
-                                    <div>Lịch đặt</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a routerLink="/admin/bookings">
-                            <div class="panel-footer">
-                                <span class="pull-left">Xem chi tiết</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="panel panel-green list-group-item">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-address-book fa-2x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">{{countCustomers}}</div>
-                                    <div>Khách hàng</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a routerLink="/admin/customers">
-                            <div class="panel-footer">
-                                <span class="pull-left">Xem chi tiết</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="panel panel-primary list-group-item">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-female fa-2x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">{{countStylists}}</div>
-                                    <div>Stylists</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a routerLink="/admin/stylists">
-                            <div class="panel-footer">
-                                <span class="pull-left">Xem chi tiết</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

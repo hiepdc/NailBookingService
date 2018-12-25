@@ -298,4 +298,14 @@ class ShiftController extends Controller
         $updateStatus = trim($updateStatus, ",");
         return $updateStatus;
     }
+
+    public function getAllShiftThisWeek(){
+        try {
+            $shift = new Shift();
+            $shiftThisWeek = $shift->getAllShiftThisWeek();
+            return response()->success($shiftThisWeek, 'successfully');
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
 }

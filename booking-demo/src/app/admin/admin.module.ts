@@ -53,6 +53,8 @@ import { DeleteGalleryImageComponent } from './gallery-image/delete-gallery-imag
 import { EditServiceComponent } from './service/edit-service/edit-service.component';
 import { GalleryService } from './gallery/gallery.service';
 import { ServicesService } from './service/services.service';
+import { AddShiftComponent } from './shift/add-shift/add-shift.component';
+import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -101,7 +103,9 @@ import { ServicesService } from './service/services.service';
     AddGalleryImageComponent,
     EditGalleryImageComponent,
     DeleteGalleryImageComponent,
-    EditServiceComponent
+    EditServiceComponent,
+    AddShiftComponent,
+    EditShiftComponent
   ],
   entryComponents: [
     AddDialogComponent,

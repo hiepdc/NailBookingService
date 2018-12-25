@@ -67,6 +67,7 @@ Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
 //display shift of stylist
 Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBooking');
+Route::get('shifts-this-week','ShiftController@getAllShiftThisWeek');
 //display shift default
 //Route::get('shifts/stylist/{service_id}/{date}','ShiftController@getAvailableBookingTimeWithoutStylist');
 

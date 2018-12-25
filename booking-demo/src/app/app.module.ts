@@ -1,5 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
@@ -14,6 +13,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { AdminModule } from './admin/admin.module';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { SideNavComponent } from './side-nav/side-nav.component';
 // import { PreLoaderComponent } from './pre-loader/pre-loader.component';
 // import { PageContentComponent } from './page-content/page-content.component';
@@ -60,7 +61,9 @@ import { AdminModule } from './admin/admin.module';
     BrowserAnimationsModule,
     MaterialModule,
     LightboxModule,
-    BrowserModule
+    BrowserModule,
+    ToastModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     // StylistService,

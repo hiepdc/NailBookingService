@@ -1,3 +1,44 @@
-<p>
-  add-shift works!
-</p>
+<h2 mat-dialog-title>Thêm lịch làm việc</h2>
+<form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+    <div class="form">
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="form">
+        <mat-form-field>
+            Lệ Thủy
+            <select matNativeControl required [(ngModel)]="data.name">
+              <option value="volvo">sáng</option>
+              <option value="saab">BST GIÁNG SINH</option>
+            </select>
+            <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+      </div>
+      <div class="form">
+          <mat-form-field>
+              Thúy Na
+              <select matNativeControl required [(ngModel)]="data.name">
+                <option value="volvo">cả ngày</option>
+                <option value="saab">BST GIÁNG SINH</option>
+              </select>
+              <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form">
+            <mat-form-field>
+                Ngọc ánh
+                <select matNativeControl required [(ngModel)]="data.name">
+                  <option value="volvo">chiều</option>
+                  <option value="saab">BST GIÁNG SINH</option>
+                </select>
+                <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+          </div>
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="data">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>  
+  </form>

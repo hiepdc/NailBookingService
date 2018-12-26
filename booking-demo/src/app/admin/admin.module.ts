@@ -8,7 +8,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { PusherService } from './pusher.service';
 import { ServiceComponent } from './service/service.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatListModule, MatNativeDateModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 // import { ToastModule } from 'ng2-toastr/ng2-toastr';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -55,6 +55,9 @@ import { GalleryService } from './gallery/gallery.service';
 import { ServicesService } from './service/services.service';
 import { AddShiftComponent } from './shift/add-shift/add-shift.component';
 import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
+import { DeleteShiftComponent } from './shift/delete-shift/delete-shift.component';
+import { ShiftService } from './shift/shift.service';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 @NgModule({
   imports: [
     CommonModule,
@@ -70,7 +73,7 @@ import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
     MatCheckboxModule,
     MatChipsModule,
     MatDialogModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule,
-    MatTableModule, MatToolbarModule
+    MatTableModule, MatToolbarModule, MatDatepickerModule, MatListModule, MatNativeDateModule
     // ToastModule.forRoot(),
     // BrowserAnimationsModule
   ],
@@ -105,7 +108,8 @@ import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
     DeleteGalleryImageComponent,
     EditServiceComponent,
     AddShiftComponent,
-    EditShiftComponent
+    EditShiftComponent,
+    DeleteShiftComponent
   ],
   entryComponents: [
     AddDialogComponent,
@@ -121,7 +125,10 @@ import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
     AddGalleryImageComponent,
     EditGalleryImageComponent,
     DeleteGalleryImageComponent,
-    EditServiceComponent
+    EditServiceComponent,
+    AddShiftComponent,
+    EditShiftComponent,
+    DeleteShiftComponent
   ],
   providers: [
     PusherService,
@@ -130,7 +137,8 @@ import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
     BookingService,
     StylistService,
     GalleryService,
-    ServicesService
+    ServicesService,
+    ShiftService
   ]
 })
 export class AdminModule { }

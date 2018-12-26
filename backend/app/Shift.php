@@ -88,11 +88,11 @@ class Shift extends Model
             ->get();
         foreach ($shifts as $shift){
             if($shift->start_time == 0 && $shift->end_time == 23){
-                $shift->status= 1;
+                $shift->status= 'sáng';
             }else if($shift->start_time == 24 && $shift->end_time == 47){
-                $shift->status= 2;
+                $shift->status= 'chiều';
             }else{
-                $shift->status = 3;
+                $shift->status = 'cả ngày';
             }
         }
         return $shifts;

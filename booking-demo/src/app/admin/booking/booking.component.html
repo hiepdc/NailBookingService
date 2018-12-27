@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="panel panel-success">
     <div class="panel-heading">{{customerName}}</div>
     <div class="panel-body">
@@ -13,4 +14,21 @@
     [enableFilter]="true" [rowData]="bookings" [columnDefs]="columnDefs" [enableColResize]="true" [pagination]="true"
     [paginationPageSize]="paginationPageSize" [floatingFilter]="true" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
     (firstDataRendered)="onFirstDataRendered($event)" (gridReady)="onGridReady($event)">
+=======
+<div class="panel panel-success">
+    <div class="panel-heading">{{customerName}}</div>
+    <div class="panel-body">
+        <!-- <button mat-raised-button color="primary" (click)="checkIn(id)" [disabled]="checkInDisable">Check in</button>
+        <button mat-raised-button color="accent" (click)="checkOut(id)" [disabled]="checkOutDisbale">Check out</button> -->
+        <button mat-raised-button color="warn" (click)="deleteBooking(id)" [disabled]="deleteDisable">Delete</button>
+        <!-- <button mat-raised-button color="primary" (click)="useCoin(id)" [disabled]="useCoinDisable">Use coin</button> -->
+        <button class="pull-right" mat-stroked-button color="primary" (click)="clearFilters()">Clear filters</button>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<ag-grid-angular #agGrid id="myGrid" style="width: 100%; height: 400px" class="ag-theme-balham" [enableSorting]="true"
+    [enableFilter]="true" [rowData]="bookings" [columnDefs]="columnDefs" [enableColResize]="true" [pagination]="true"
+    [paginationPageSize]="paginationPageSize" [floatingFilter]="true" [rowSelection]="rowSelection" (selectionChanged)="onSelectionChanged($event)"
+    (firstDataRendered)="onFirstDataRendered($event)" (gridReady)="onGridReady($event)">
+>>>>>>> 888bb916c6c038f01c74e0c20e194f371d4a6a7b
 </ag-grid-angular>

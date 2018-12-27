@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use TomLingham\Searchy\Facades\Searchy;
 
@@ -145,6 +146,15 @@ class CustomerController extends Controller
             return response()->success($customer);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+    public function checkExistCustomer($phone_number){
+        $customer = new Customer();
+        $existCustomer = $customer->getCustomer($phone_number);
+        if($existCustomer){
+            return response()->success($existCustomer);
+        }else{
+            return response()->success(null);
         }
     }
 }

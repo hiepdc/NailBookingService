@@ -76,7 +76,7 @@ Route::get('customers', 'CustomerController@index');
 Route::post('customers/{id}', 'CustomerController@update');
 Route::delete('customers/{id}', 'CustomerController@destroy');
 Route::post('customers/search','CustomerController@search');
-
+Route::get('customers/check/{phone_number}', 'CustomerController@checkExistCustomer');
 // @@@Admin@@@
 Route::post('auth/login', 'AuthController@login');
 Route::post('auth/register', 'AuthController@register');

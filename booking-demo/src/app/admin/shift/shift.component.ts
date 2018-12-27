@@ -48,11 +48,11 @@ export class ShiftComponent implements OnInit {
       }
     );
   }
-  addNew(shift: Shift) {
+  addNew(shifts: Shift[]) {
     const dialogRef = this.dialog.open(AddShiftComponent,
       {
         width: '500px',
-        data: {shift: shift}
+        data: {shifts: shifts}
       }
     );
 

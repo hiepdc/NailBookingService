@@ -8,7 +8,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { PusherService } from './pusher.service';
 import { ServiceComponent } from './service/service.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatListModule, MatNativeDateModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 // import { ToastModule } from 'ng2-toastr/ng2-toastr';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -73,7 +73,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatCheckboxModule,
     MatChipsModule,
     MatDialogModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule,
-    MatTableModule, MatToolbarModule, MatDatepickerModule
+    MatTableModule, MatToolbarModule, MatDatepickerModule, MatListModule, MatNativeDateModule
     // ToastModule.forRoot(),
     // BrowserAnimationsModule
   ],

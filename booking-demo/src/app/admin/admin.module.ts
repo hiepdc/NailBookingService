@@ -58,6 +58,8 @@ import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
 import { DeleteShiftComponent } from './shift/delete-shift/delete-shift.component';
 import { ShiftService } from './shift/shift.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -73,7 +75,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatCheckboxModule,
     MatChipsModule,
     MatDialogModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule,
-    MatTableModule, MatToolbarModule, MatDatepickerModule, MatListModule, MatNativeDateModule
+    MatTableModule, MatToolbarModule, MatDatepickerModule, MatListModule, MatNativeDateModule,
+    MatSelectModule
     // ToastModule.forRoot(),
     // BrowserAnimationsModule
   ],

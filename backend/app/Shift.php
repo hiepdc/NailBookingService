@@ -73,6 +73,7 @@ class Shift extends Model
 
     }
     public function getAllShiftThisWeek(){
+        date_default_timezone_set("Asia/Ho_Chi_Minh");
         $carbon = Carbon::now();
         $from = $carbon->format('Y-m-d');
         $to = $carbon->addDays(7);

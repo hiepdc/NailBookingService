@@ -15,7 +15,8 @@ class NewsSeeder extends Seeder
         $faker = Faker\Factory::create();
         foreach (range(1, 10) as $index) {
             DB::table('news')->insert([
-                'content' => $faker->paragraph($nbSentences = 1),
+                'title' => $faker->paragraph($nbSentences = 1),
+                'content' => $faker->paragraph($nbSentences = 3),
                 'image_link' => str_random(5).".png",
             ]);
         }

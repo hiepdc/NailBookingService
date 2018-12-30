@@ -34,6 +34,7 @@ class Image extends Model
         $images = DB::table('images')
                           ->join('galleries', 'galleries.id', '=', 'images.gallery_id')
                           ->select('images.id',
+                              'images.gallery_id',
                               'galleries.name',
                               'images.caption',
                               'images.thumb_link',

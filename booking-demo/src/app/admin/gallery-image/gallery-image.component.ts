@@ -35,10 +35,10 @@ export class GalleryImageComponent implements OnInit {
     this.toastr.setRootViewContainerRef(_vcr);
   }
   ngOnInit() {
-    this.getGalleriesFromService();
+    this.getImagesFromService();
   }
   // CRUD function
-  getGalleriesFromService() {
+  getImagesFromService() {
     this.galleryService.getImages().subscribe(
       api => {
         this.images = api.data;
@@ -54,24 +54,29 @@ export class GalleryImageComponent implements OnInit {
         data: {image: image}
       }
     );
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.stylistService.addStylist(result.stylist_name, result.phone_number, result.information, result.image_link).subscribe(
-    //     api => {
-    //       if (api.data === null) {
-    //         this.getStylistFromService();
-    //         this.toastr.error(api.message);
-    //       } else {
-    //         this.getStylistFromService();
-    //         this.toastr.success('Thêm stylist thành công');
-    //       }
-    //     },
-    //     error => {
-    //       console.log(error);
-    //       return;
-    //     }
-    //   );
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (!result.caption) {
+          result.caption = '';
+        }
+        this.galleryService.addImage(result.gallery_id, result.caption, result.thumb_link, result.image_link).subscribe(
+          api => {
+            console.log(api);
+            if (api.data === null) {
+              this.getImagesFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getImagesFromService();
+              this.toastr.success('Thêm ảnh thành công');
+            }
+          },
+          error => {
+            this.toastr.error(error);
+            return;
+          }
+        );
+      }
+    });
   }
 
   EditItem(id: number, name: string, caption: string, thumb_link: string, image_link: string) {
@@ -87,25 +92,28 @@ export class GalleryImageComponent implements OnInit {
         }
       }
     );
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.stylistService.editStylist(result.id, result.stylist_name, result.phone_number,
-    //     result.information, result.image_link).subscribe(
-    //       api => {
-    //         if (api.data === null) {
-    //           this.getStylistFromService();
-    //           this.toastr.error(api.message);
-    //         } else {
-    //           this.getStylistFromService();
-    //           this.toastr.success('Chỉnh sửa stylist thành công');
-    //         }
-    //       },
-    //       error => {
-    //         console.log(error);
-    //         return;
-    //       }
-    //     );
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (!result.caption) {
+          result.caption = '';
+        }
+        this.galleryService.editImage(result.id, result.gallery_id, result.caption, result.thumb_link, result.image_link).subscribe(
+          api => {
+            if (api.data === null) {
+              this.getImagesFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getImagesFromService();
+              this.toastr.success('Chỉnh sửa ảnh thành công');
+            }
+          },
+          error => {
+            console.log(error);
+            return;
+          }
+        );
+      }
+    });
   }
 
   deleteItem(id: number) {
@@ -118,19 +126,19 @@ export class GalleryImageComponent implements OnInit {
       }
     );
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result === 1) {
-    //     this.stylistService.delelteStylist(id).subscribe(
-    //       api => {
-    //         this.getStylistFromService();
-    //         this.toastr.warning('Xóa stylist thành công');
-    //       },
-    //       error => {
-    //         console.log(error);
-    //         return;
-    //       }
-    //     );
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.galleryService.deleteImage(id).subscribe(
+          api => {
+            this.getImagesFromService();
+            this.toastr.warning('Xóa ảnh thành công');
+          },
+          error => {
+            console.log(error);
+            return;
+          }
+        );
+      }
+    });
   }
 }

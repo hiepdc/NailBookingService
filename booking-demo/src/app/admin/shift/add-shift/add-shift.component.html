@@ -1,43 +1,43 @@
 <h2 mat-dialog-title>Thêm lịch làm việc</h2>
 <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
     <div class="form">
-    <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+      <!-- <mat-form-field> -->
+        <input matInput [matDatepicker]="picker" placeholder="Chọn 1 ngày" [(ngModel)]="data.selectedDate" 
+        [ngModelOptions]="{standalone: true}" readonly>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+      <!-- </mat-form-field> -->
     </div>
-    <div class="form">
-        <mat-form-field>
-            Lệ Thủy
-            <select matNativeControl required [(ngModel)]="data.name">
-              <option value="volvo">sáng</option>
-              <option value="saab">BST GIÁNG SINH</option>
-            </select>
-            <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-          </mat-form-field>
-      </div>
-      <div class="form">
-          <mat-form-field>
-              Thúy Na
-              <select matNativeControl required [(ngModel)]="data.name">
-                <option value="volvo">cả ngày</option>
-                <option value="saab">BST GIÁNG SINH</option>
-              </select>
-              <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="form">
-            <mat-form-field>
-                Ngọc ánh
-                <select matNativeControl required [(ngModel)]="data.name">
-                  <option value="volvo">chiều</option>
-                  <option value="saab">BST GIÁNG SINH</option>
+    <table class="table table-striped">
+      <thead>
+          <tr>
+              <th>STT</th>
+              <th>Tên</th>
+              <th>Thời gian làm việc</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let addShift of data.addShifts; let i= index">
+              <td>{{i + 1}}</td>
+              <td>{{ addShift.stylist_name }}
+                <!-- <input matInput class="form-control" placeholder="Tên dịch vụ" [(ngModel)]="addstylist[i].name" name="name" required
+                formControlName="name"> -->
+              </td>
+              <td>
+                <select matNativeControl required [(ngModel)]="addShift.status" [ngModelOptions]="{standalone: true}">
+                  <option value="1">sáng</option>
+                  <option value="2">chiều</option>
+                  <option value="3">cả ngày</option>
+                  <option value="0">nghỉ</option>
                 </select>
-                <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-              </mat-form-field>
-          </div>
-    <div mat-dialog-actions>
+              </td>
+              <td>
+                  <!-- <input class="form-control" placeholder="ngày" [(ngModel)]="date.value"> -->
+              </td>
+          </tr>
+      </tbody>
+  </table>
+   <div mat-dialog-actions>
       <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="data">Save</button>
       <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
     </div>  

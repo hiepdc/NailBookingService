@@ -10,20 +10,20 @@
 
   <div class="form">
     <mat-form-field color="primary">
-      <input matInput placeholder="Mô tả" [(ngModel)]="data.description" name="description">
+      <input matInput placeholder="Mô tả" [(ngModel)]="data.description" name="description" required>
     </mat-form-field>
   </div>
   <div class="form">
     <mat-form-field color="primary">
-      <input matInput #inputstate class="form-control" placeholder="Thời gian thực hiện" [(ngModel)]="data.time_service"
-        name="time_service" minlength="10" maxlength="10" required>
+      <input type="number" matInput #inputstate class="form-control" placeholder="Thời gian thực hiện" [(ngModel)]="data.time_service"
+        name="time_service" min="0.25" max="5" step="0.25" required>
       <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>
   <div class="form">
     <mat-form-field color="primary">
-      <input matInput #inputstate class="form-control" placeholder="Điểm tích lũy nhận được khỉ sử dụng dịch vụ"
-        [(ngModel)]="data.coin_service" name="coin_service" minlength="10" maxlength="10" required>
+      <input type="number" matInput #inputstate class="form-control" placeholder="Điểm tích lũy nhận được khỉ sử dụng dịch vụ"
+        [(ngModel)]="data.coin_service" name="coin_service" required>
       <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>

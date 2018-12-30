@@ -1,15 +1,60 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatFormFieldControl } from '@angular/material';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { ServiceItem } from '../../models/serviceItem';
+import { ServicesService } from '../../service/services.service';
+import { Service } from '../../models/service';
 @Component({
   selector: 'app-add-service-item',
   templateUrl: './add-service-item.component.html',
   styleUrls: ['./add-service-item.component.css']
-})
+  })
 export class AddServiceItemComponent implements OnInit {
-
-  constructor() { }
+  services: Service[];
+  public ownerForm: FormGroup;
+  // formControl = new FormControl('', [
+  //   Validators.required
+  //   // Validators.email,
+  // ]);
+  constructor(public dialogRef: MatDialogRef<AddServiceItemComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ServiceItem,
+    private servicesService: ServicesService
+  ) { }
 
   ngOnInit() {
+    this.ownerForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      service: new FormControl('',
+        [
+          Validators.required,
+          // Validators.pattern('(03|09|07|08|05)+([0-9]{8})\b')
+        ]),
+      price: new FormControl('', [Validators.required])
+    });
+    this.getServiceFromService();
+  }
+  public hasError = (controlName: string, errorName: string) => {
+    return this.ownerForm.controls[controlName].hasError(errorName);
+  }
+  // getErrorMessage() {
+  //   return this.formControl.hasError('required') ? 'Required field' :
+  //     this.formControl.hasError('email') ? 'Not a valid email' :
+  //       '';
+  // }
+
+  submit() {
+    // emppty stuff
   }
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  getServiceFromService() {
+    this.servicesService.getServices().subscribe(
+      api => {
+        this.services = api.data;
+      }
+    );
+  }
 }

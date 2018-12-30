@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Stylist } from '../../../models/stylist';
 import { StylistService } from '../../stylist.service';
 @Component({
@@ -9,23 +9,28 @@ import { StylistService } from '../../stylist.service';
   styleUrls: ['./add-dialog.component.css']
 })
 export class AddDialogComponent implements OnInit {
+  public ownerForm: FormGroup;
   file: File;
-  formControl = new FormControl('', [
-    Validators.required
-    // Validators.email,
-  ]);
+  url: string;
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Stylist,
     private stylistService: StylistService
   ) { }
 
   ngOnInit() {
+    this.ownerForm = new FormGroup({
+      stylist_name: new FormControl('', [Validators.required]),
+      phone_number: new FormControl('',
+        [
+          Validators.required,
+          // Validators.pattern('(03|09|07|08|05)+([0-9]{8})\b')
+        ]),
+      information: new FormControl('', []),
+      image_link: new FormControl('', [Validators.required]),
+    });
   }
-
-  getErrorMessage() {
-    return this.formControl.hasError('required') ? 'Required field' :
-      this.formControl.hasError('email') ? 'Not a valid email' :
-        '';
+  public hasError = (controlName: string, errorName: string) => {
+    return this.ownerForm.controls[controlName].hasError(errorName);
   }
 
   submit() {
@@ -38,6 +43,13 @@ export class AddDialogComponent implements OnInit {
   getFiles(event) {
     //  this.data.image_link = event.srcElement.files[0];
     if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+         this.url = event.target.result;
+      }
       const file = event.target.files[0];
       this.data.image_link = file;
     }

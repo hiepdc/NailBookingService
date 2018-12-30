@@ -55,23 +55,25 @@ export class ServiceItemComponent implements OnInit {
       }
     );
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.stylistService.addStylist(result.stylist_name, result.phone_number, result.information, result.image_link).subscribe(
-    //     api => {
-    //       if (api.data === null) {
-    //         this.getStylistFromService();
-    //         this.toastr.error(api.message);
-    //       } else {
-    //         this.getStylistFromService();
-    //         this.toastr.success('Thêm stylist thành công');
-    //       }
-    //     },
-    //     error => {
-    //       console.log(error);
-    //       return;
-    //     }
-    //   );
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.servicesService.addServiceItem(result.name, result.service_id, result.price).subscribe(
+            api => {
+              if (api.data === null) {
+                this.getServiceItemsFromService();
+                this.toastr.error(api.message);
+              } else {
+                this.getServiceItemsFromService();
+                this.toastr.success('Tạo mới dịch vụ thành công');
+              }
+            },
+            error => {
+              console.log(error);
+              return;
+            }
+          );
+      }
+    });
   }
 
   EditItem(id: number, name: string, service_name: string, price: number) {
@@ -86,25 +88,25 @@ export class ServiceItemComponent implements OnInit {
         }
       }
     );
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   this.stylistService.editStylist(result.id, result.stylist_name, result.phone_number,
-    //     result.information, result.image_link).subscribe(
-    //       api => {
-    //         if (api.data === null) {
-    //           this.getStylistFromService();
-    //           this.toastr.error(api.message);
-    //         } else {
-    //           this.getStylistFromService();
-    //           this.toastr.success('Chỉnh sửa stylist thành công');
-    //         }
-    //       },
-    //       error => {
-    //         console.log(error);
-    //         return;
-    //       }
-    //     );
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.servicesService.editServiceItem(result.id, result.name, result.service_id, result.price).subscribe(
+            api => {
+              if (api.data === null) {
+                this.getServiceItemsFromService();
+                this.toastr.error(api.message);
+              } else {
+                this.getServiceItemsFromService();
+                this.toastr.success('Thay đổi dịch vụ thành công');
+              }
+            },
+            error => {
+              console.log(error);
+              return;
+            }
+          );
+      }
+    });
   }
 
   deleteItem(id: number) {
@@ -117,19 +119,20 @@ export class ServiceItemComponent implements OnInit {
       }
     );
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result === 1) {
-    //     this.stylistService.delelteStylist(id).subscribe(
-    //       api => {
-    //         this.getStylistFromService();
-    //         this.toastr.warning('Xóa stylist thành công');
-    //       },
-    //       error => {
-    //         console.log(error);
-    //         return;
-    //       }
-    //     );
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1 ) {
+        console.log(result.id);
+        this.servicesService.delelteServiceItem(id).subscribe(
+            api => {
+                this.getServiceItemsFromService();
+                this.toastr.warning('Xóa dịch vụ thành công');
+            },
+            error => {
+              console.log(error);
+              return;
+            }
+          );
+      }
+    });
   }
 }

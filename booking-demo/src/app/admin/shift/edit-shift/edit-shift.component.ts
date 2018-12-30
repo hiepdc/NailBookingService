@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-edit-shift',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditShiftComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<EditShiftComponent>) { }
 
   ngOnInit() {
   }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 
 }

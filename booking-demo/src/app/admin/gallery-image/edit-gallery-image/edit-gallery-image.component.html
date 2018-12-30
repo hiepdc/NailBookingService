@@ -1,36 +1,32 @@
-<h3 mat-dialog-title>Chỉnh sửa ảnh cho bộ sưu tập</h3>
-<form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+<h3 mat-dialog-title>Thay đổi ảnh cho bộ sưu tập</h3>
+<form [formGroup]="ownerForm" novalidate class="mat-dialog-content" (ngSubmit)="submit">
     <div class="form">
         <mat-form-field>
-            <p>Chọn bộ sưu tập</p>
-            <select matNativeControl required [(ngModel)]="data.name">
-              <option value="volvo">BST HALLOWEEN</option>
-              <option value="saab">BST GIÁNG SINH</option>
-            </select>
-            <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
-          </mat-form-field>
-      </div>
+      <mat-select placeholder="Chọn bộ sưu tập" [(ngModel)]="data.gallery_id" required formControlName="gallery_id">
+        <mat-option *ngFor="let gallery of galleries" [value]="gallery.id">
+          {{gallery.name}}
+        </mat-option>
+      </mat-select>
+      </mat-form-field>
+    </div>
   <div class="form">
     <mat-form-field color="primary">
-      <input matInput #input class="form-control" placeholder="Caption" [(ngModel)]="data.caption" name="caption"
-        required>
-      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      <input matInput class="form-control" placeholder="Caption" [(ngModel)]="data.caption" name="caption"
+       formControlName="caption">
     </mat-form-field>
   </div>
-    <div class="form">
-      <!-- <mat-form-field color="primary"> -->
-        <p>Ảnh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-        <input type="file" class="form-control" required (change)="getFiles($event)">
-      <!-- </mat-form-field> -->
-    </div>  
-    <div class="form">
-        <!-- <mat-form-field color="primary"> -->
-          <p>Ảnh(Thumb)&nbsp;</p>
-          <input type="file" class="form-control" required (change)="getFiles($event)">
-        <!-- </mat-form-field> -->
-      </div>
+  <div class="hint">Ảnh thumb</div>
+  <div class="form">
+      <img *ngIf="thumb_url" [src]="thumb_url" style="width: 50px; height: 50px;" />
+      <input formControlName="thumb_link" type="file" placeholder="Ảnh Thumb" class="form-control" (change)="getFilesThumb($event)">
+  </div>  
+  <div class="hint">Ảnh</div>
+  <div class="form">
+      <img *ngIf="image_url" [src]="image_url" style="width: 50px; height: 50px;" />
+      <input formControlName="image_link" type="file" placeholder="Ảnh" class="form-control" (change)="getFilesImage($event)">
+  </div>  
     <div mat-dialog-actions>
-      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="data">Save</button>
+      <button mat-button [type]="submit" [disabled]="!ownerForm.valid" [mat-dialog-close]="data">Save</button>
       <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
     </div>  
   </form>

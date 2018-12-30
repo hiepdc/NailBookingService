@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->integer('gallery_id')->unsigned();
             $table->foreign('gallery_id')->references('id')->on('galleries');
-            $table->string('caption');
+            $table->string('caption')->nullable();
             $table->string('thumb_link');
             $table->string('image_link');
         });

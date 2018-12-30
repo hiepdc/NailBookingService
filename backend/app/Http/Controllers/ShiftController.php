@@ -6,8 +6,7 @@ use App\Shift;
 use App\Stylist;
 use App\Service;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\BookingController;
-
+use Illuminate\Http\Request;
 class ShiftController extends Controller
 {
     //
@@ -47,7 +46,7 @@ class ShiftController extends Controller
                 }
                 $sts = $status->status;
                 $shiftDefaultByStylistID = $this->getAvailableBookingTime($sts, $sizeOfTime);
-                return response()->success($status);
+                return response()->success($shiftDefaultByStylistID);
             }else{
                 $service = new Service();
                 $sizeOfTime = $service->getTimeService($serviceID);
@@ -162,17 +161,19 @@ class ShiftController extends Controller
     {
         //
         try {
-            $numberOfStylist = sizeof(Stylist::all());
-            for($i = 0; $i < $numberOfStylist; $i++) {
-                $shift = Shift::create([
-                    'stylist_id' => $request->stylist_id."$i",
-                    'date' => $request->date."$i",
-                    'start_time' => $request->start_time."$i",
-                    'end_time' => $request->end_time."$i",
-                    'status' => $request->status."$i"
-                ]);
-            }
-            return response()->success($shift, 'Bạn đã tạo thành công lịch làm việc');
+//            $numberOfStylist = sizeof(Stylist::all());
+//            $arr = Array();
+            $arr =  $request->input('array');
+//            for($i = 0; $i < $numberOfStylist; $i++) {
+//                $shift = Shift::create([
+//                    'stylist_id' => $arr[$i]['stylist_id'],
+//                    'date' => $arr[$i]['date'],
+//                    'start_time' => $arr[$i]['start_time'],
+//                    'end_time' => $arr[$i]['end_time'],
+//                    'status' => getStautusFromNumber($arr[$i]['start_time'], $arr[$i]['end_time'])
+//                ]);
+//            }
+            return response()->success($arr[0], 'Bạn đã tạo thành công lịch làm việc');
 
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -205,7 +206,7 @@ class ShiftController extends Controller
         try {
             $deletebyid = Shift::find($id);
             if (!$deletebyid) {
-                return response()->notFound("news does not exist");
+                return response()->notFound("shift does not exist");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);
@@ -307,5 +308,16 @@ class ShiftController extends Controller
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
+    }
+    public function getStautusFromNumber($startNumber, $endNumber) {
+        if($startNumber > $endNumber)
+            return "";
+        $status = $startNumber;
+
+        for($i=$startNumber+1; $i <= $endNumber; $i++) {
+            $status = $status.","."$i";
+        }
+        $status = trim($status, ",");
+        return $status;
     }
 }

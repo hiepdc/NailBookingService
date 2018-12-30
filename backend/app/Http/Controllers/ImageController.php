@@ -42,12 +42,22 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         try {
-            $image = Image::create([
-                'gallery_id' => $request->gallery_id,
-                'caption' => $request->caption,
-                'thumb_link' => $request->thumb_link,
-                'image_link' => $request->image_link
-            ]);
+            if($request->hasFile('image_link') && $request->hasFile('thumb_link')){
+                $file = $request->image_link;
+                $image_name = time(). '-' . $file->getClientOriginalName();
+                $file->move('upload/collection/', $image_name);
+                $image_link = 'http://api.chamtramnail.com/public/upload/collection/'. $image_name;
+                $file1 = $request->thumb_link;
+                $image_name1 = time(). '-' . $file1->getClientOriginalName();
+                $file1->move('upload/collection/', $image_name1);
+                $thumb_link = 'http://api.chamtramnail.com/public/upload/collection/'. $image_name1;
+                $image = Image::create([
+                    'gallery_id' => $request->gallery_id,
+                    'caption' => $request->caption,
+                    'thumb_link' => $thumb_link,
+                    'image_link' => $image_link
+                ]);
+            }
             return response()->success($image);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -98,8 +108,27 @@ class ImageController extends Controller
             if (!$image) {
                 return response()->notFound("Image does not exist");
             }
-            $updatedGallery = $image->update($request->only(['gallery_id', 'caption', 'thumb_link', 'image_link']));
-            return response()->success($updatedGallery);
+            $image_link = $image->image_link;
+            $thumb_link = $image->thumb_link;
+            if($request->hasFile('image_link')){
+                $file = $request->image_link;
+                $image_name = time(). '-' . $file->getClientOriginalName();
+                $file->move('upload/stylists/', $image_name);
+                $image_link = 'http://api.chamtramnail.com/public/upload/collection/'. $image_name;
+            }
+            if($request->hasFile('thumb_link')){
+                $file1 = $request->thumb_link;
+                $image_name1 = time(). '-' . $file1->getClientOriginalName();
+                $file1->move('upload/stylists/', $image_name1);
+                $thumb_link = 'http://api.chamtramnail.com/public/upload/collection/'. $image_name1;
+            }
+            $updatedImage = $image->update(
+                ['gallery_id' => $request->gallery_id,
+                 'caption' => $request->caption,
+                 'thumb_link' => $thumb_link,
+                 'image_link' => $image_link
+                ]);
+            return response()->success($updatedImage);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

@@ -1,21 +1,20 @@
 <h3 mat-dialog-title>Chỉnh sửa bộ sưu tập</h3>
-<form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+<form [formGroup]="ownerForm" novalidate class="mat-dialog-content" (ngSubmit)="submit">
   <div class="form">
     <mat-form-field color="primary">
-      <input matInput #input class="form-control" placeholder="Tên bộ sưu tập" [(ngModel)]="data.name" name="stylist_name"
-        required>
-      <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      <input matInput class="form-control" placeholder="Tên bộ sưu tập" [(ngModel)]="data.name" name="name"
+        required formControlName="name">
+        <mat-error *ngIf="hasError('name', 'required')">Vui lòng điền tên</mat-error>
     </mat-form-field>
   </div>
 
-    <div class="form">
-      <!-- <mat-form-field color="primary"> -->
-        <label>Ảnh&nbsp;&nbsp;&nbsp;</label>
-        <input type="file" class="form-control" required (change)="getFiles($event)">
-      <!-- </mat-form-field> -->
-    </div>  
+  <div class="hint">Ảnh đại diện</div>
+  <div class="form">
+      <img *ngIf="url" [src]="url" style="width: 100px; height: 100px;" />
+      <input formControlName="image_link" type="file" placeholder="Ảnh đại diện" class="form-control" (change)="getFiles($event)">
+  </div>  
     <div mat-dialog-actions>
-      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="data">Save</button>
+      <button mat-button [type]="submit" [disabled]="!ownerForm.valid" [mat-dialog-close]="data">Save</button>
       <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
     </div>  
   </form>

@@ -45,10 +45,17 @@ class GalleryController extends Controller
     {
         //
         try {
-            $gallery = Gallery::create([
-                'name' => $request->name,
-                'image_link' => $request->image_link
-            ]);
+            if($request->hasFile('image_link')){
+                $file = $request->image_link;
+                $image_name = time(). '-' . $file->getClientOriginalName();
+                $file->move('upload/collection/', $image_name);
+                $image_link = 'http://api.chamtramnail.com/public/upload/collection/'. $image_name;
+                $gallery = Gallery::create([
+                    'name' => $request->name,
+                    'image_link' => $image_link
+                ]);
+            }
+
             return response()->success($gallery);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -104,7 +111,17 @@ class GalleryController extends Controller
             if (!$gallery) {
                 return response()->notFound("gallery does not exist");
             }
-            $updatedGallery = $gallery->update($request->only(['name', 'image_link']));
+            $image_link = $gallery->image_link;
+            if($request->hasFile('image_link')){
+                $file = $request->image_link;
+                $image_name = time(). '-' . $file->getClientOriginalName();
+                $file->move('upload/collection/', $image_name);
+                $image_link = 'http://api.chamtramnail.com/public/upload/collection/'. $image_name;
+            }
+            $updatedGallery = $gallery->update([
+                'name'=> $request->name,
+                'image_link' => $image_link
+            ]);
             return response()->success($updatedGallery);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());

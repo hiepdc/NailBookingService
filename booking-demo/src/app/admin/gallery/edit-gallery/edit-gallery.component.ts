@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Gallery } from '../../models/gallery';
 import { GalleryService } from '../gallery.service';
 @Component({
@@ -10,22 +10,22 @@ import { GalleryService } from '../gallery.service';
 })
 export class EditGalleryComponent implements OnInit {
 
-  formControl = new FormControl('', [
-    Validators.required
-    // Validators.email,
-  ]);
+  public ownerForm: FormGroup;
+  file: File;
+  url: string;
   constructor(public dialogRef: MatDialogRef<EditGalleryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Gallery,
     private galleryService: GalleryService
   ) { }
 
   ngOnInit() {
+    this.ownerForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      image_link: new FormControl('', []),
+    });
   }
-
-  getErrorMessage() {
-    return this.formControl.hasError('required') ? 'Required field' :
-      this.formControl.hasError('email') ? 'Not a valid email' :
-        '';
+  public hasError = (controlName: string, errorName: string) => {
+    return this.ownerForm.controls[controlName].hasError(errorName);
   }
 
   submit() {
@@ -34,6 +34,20 @@ export class EditGalleryComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  getFiles(event) {
+    //  this.data.image_link = event.srcElement.files[0];
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+         this.url = event.target.result;
+      }
+      const file = event.target.files[0];
+      this.data.image_link = file;
+    }
   }
 
 }

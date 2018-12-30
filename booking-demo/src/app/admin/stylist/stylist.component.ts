@@ -44,6 +44,10 @@ export class StylistComponent implements OnInit {
         this.stylists = api.data;
         this.dataSource = new MatTableDataSource<Stylist>(this.stylists);
         this.dataSource.paginator = this.paginator;
+      },
+      error => {
+        console.log(error);
+        return;
       }
     );
   }
@@ -52,26 +56,31 @@ export class StylistComponent implements OnInit {
     const dialogRef = this.dialog.open(AddDialogComponent,
       {
         width: '500px',
-        data: {stylist: stylist}
+        data: { stylist: stylist }
       }
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.stylistService.addStylist(result.stylist_name, result.phone_number, result.information, result.image_link).subscribe(
-        api => {
-          if (api.data === null) {
-            this.getStylistFromService();
-            this.toastr.error(api.message);
-          } else {
-            this.getStylistFromService();
-            this.toastr.success('Thêm stylist thành công');
-          }
-        },
-        error => {
-          console.log(error);
-          return;
+      if (result) {
+        if (!result.information) {
+          result.information = '';
         }
-      );
+        this.stylistService.addStylist(result.stylist_name, result.phone_number, result.information, result.image_link).subscribe(
+          api => {
+            if (api.data === null) {
+              this.getStylistFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getStylistFromService();
+              this.toastr.success('Thêm stylist thành công');
+            }
+          },
+          error => {
+            console.log(error);
+            return;
+          }
+        );
+      }
     });
   }
 
@@ -90,22 +99,27 @@ export class StylistComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.stylistService.editStylist(result.id, result.stylist_name, result.phone_number,
-        result.information, result.image_link).subscribe(
-          api => {
-            if (api.data === null) {
-              this.getStylistFromService();
-              this.toastr.error(api.message);
-            } else {
-              this.getStylistFromService();
-              this.toastr.success('Chỉnh sửa stylist thành công');
+      if (result) {
+        if (!result.information) {
+          result.information = '';
+        }
+        this.stylistService.editStylist(result.id, result.stylist_name, result.phone_number,
+          result.information, result.image_link).subscribe(
+            api => {
+              if (api.data === null) {
+                this.getStylistFromService();
+                this.toastr.error(api.message);
+              } else {
+                this.getStylistFromService();
+                this.toastr.success('Chỉnh sửa stylist thành công');
+              }
+            },
+            error => {
+              console.log(error);
+              return;
             }
-          },
-          error => {
-            console.log(error);
-            return;
-          }
-        );
+          );
+      }
     });
   }
 

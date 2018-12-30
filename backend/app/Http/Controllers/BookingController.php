@@ -434,6 +434,7 @@ class BookingController extends Controller
 
     public function getBookingToday(){
         try {
+//            date_default_timezone_set("Asia/Ho_Chi_Minh");
             $carbon = Carbon::now();
             $date = $carbon->format('Y-m-d');
             $booking = new Booking();

@@ -17,8 +17,12 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 //service
-Route::resource('services', 'ServiceController');
-//api for stylists
+//Route::post('services','ServiceController@store');
+Route::post('services/{id}','ServiceController@update');
+Route::get('services','ServiceController@index');
+Route::get('services/{id}','ServiceController@show');
+//Route::delete('services/{id}','ServiceController@destroy');
+//api for stylists11
 Route::post('stylists','StylistController@store');
 Route::post('stylists/{id}','StylistController@update');
 Route::get('stylists','StylistController@index');
@@ -65,6 +69,7 @@ Route::get('bookings/count-total', 'BookingController@getCountTotal');
 //show shift
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
+Route::post('shifts','ShiftController@store');
 //display shift of stylist
 Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBooking');
 Route::get('shifts-this-week','ShiftController@getAllShiftThisWeek');
@@ -92,7 +97,14 @@ Route::get('notifications/mark-all-read', 'NotificationController@markAllRead');
 
 Route::get('galleries', 'GalleryController@index');
 Route::get('galleries/{id}', "GalleryController@show");
+Route::post('galleries','GalleryController@store');
+Route::post('galleries/{id}','GalleryController@update');
+Route::delete('galleries/{id}','GalleryController@destroy');
+
 Route::get('images', 'ImageController@index');
+Route::post('images','ImageController@store');
+Route::post('images/{id}','ImageController@update');
+Route::delete('images/{id}','ImageController@destroy');
 //Route::apiResource('service-items', 'ServiceItemController');
 //api for stylists
 Route::post('service-items','ServiceItemController@store');

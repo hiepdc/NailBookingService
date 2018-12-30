@@ -24,7 +24,7 @@ class StylistController extends Controller
     public function index()
     {
         try {
-            $listStylist = Stylist::orderBy('id', 'desc')->get();
+            $listStylist = Stylist::orderBy('id', 'asc')->get();
             return response()->success($listStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
@@ -55,23 +55,19 @@ class StylistController extends Controller
             if($checkStylist >0){
                 return response()->success(null, 'Số điện thoại đã được sử dụng, vui lòng kiểm tra lại số điện thoại.');
             }
-            $file = $request->image_link;
             if($request->hasFile('image_link')){
+                $file = $request->image_link;
                 $image_name = time(). '-' . $file->getClientOriginalName();
                 $file->move('upload/stylists/', $image_name);
-                $image_link = 'http://localhost:8000/upload/stylists/'. $image_name;
-//                $image = Image::make(sprintf('uploads/stylists/%s', $image_name))->resize(351, 355)->save();
-//                return($file);
-            }else{
-                $image_link = 'http://localhost:8000/upload/stylists/'. 'default.png';
+                $image_link = 'http://api.chamtramnail.com/public/upload/stylists/'. $image_name;
+                $stylist = Stylist::create([
+                    'stylist_name' => $request->stylist_name,
+                    'phone_number' => $request->phone_number,
+                    'information' => $request->information,
+                    'image_link' =>  $image_link,
+                ]);
             }
-            $stylist = Stylist::create([
-                'stylist_name' => $request->stylist_name,
-                'phone_number' => $request->phone_number,
-                'information' => $request->information,
-                'image_link' =>  $image_link,
-//                'image_link' => 'http://localhost:8000/upload/'.$request->image_link,
-            ]);
+
 //            $checkStylist = Stylist::where('phone_number', $request->phone_number)
 //                                     ->count();
 //            if($checkStylist >0){
@@ -146,7 +142,7 @@ class StylistController extends Controller
             if($request->hasFile('image_link')){
                 $image_name = time(). '-' . $file->getClientOriginalName();
                 $file->move('upload/stylists/', $image_name);
-                $image_link = 'http://localhost:8000/upload/stylists/'. $image_name;
+                $image_link = 'http://api.chamtramnail.com/public/upload/stylists/'. $image_name;
                 $updatedStylist = $stylist->update([
                     'stylist_name' => $request->stylist_name,
                     'phone_number' => $request->phone_number,

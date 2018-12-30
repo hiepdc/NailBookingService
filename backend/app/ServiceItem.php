@@ -20,6 +20,7 @@ class ServiceItem extends Model
                       ->join('services', 'services.id', '=', 'service_items.service_id')
             ->select('service_items.id',
                 'service_items.name',
+                'service_items.service_id',
                 'services.service_name',
                 'service_items.price')
             ->get();

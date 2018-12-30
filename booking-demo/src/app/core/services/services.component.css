@@ -1,0 +1,10 @@
+.text-line{
+    color: darkslategray;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.btn:hover{
+    background: #d68189;
+}

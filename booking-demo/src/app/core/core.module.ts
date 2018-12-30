@@ -25,6 +25,8 @@ import { PricesComponent } from './prices/prices.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ConfirmedBookingComponent } from './confirmed-booking/confirmed-booking.component';
 import { CollectionComponent } from './collection/collection.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { StylistComponent } from './stylist/stylist.component';
 
 import { BookingService } from './booking.service';
 import { ConfirmBookingService } from './confirm-booking.service';
@@ -60,7 +62,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ConfirmedBookingComponent,
     CollectionComponent,
     SideNavComponent,
-    PreLoaderComponent
+    PreLoaderComponent,
+    FeedbackComponent,
+    StylistComponent
   ],
   providers: [
     BookingService,

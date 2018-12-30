@@ -5,14 +5,14 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { GalleryApi } from './models/galleryApi';
 import { CollectionApi } from './models/collectionApi';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable()
 export class GalleryService {
   private galleryUrl = `${environment.api_url}/galleries`;
 
   //get all stylist from db
-  getAllGalleries(){
+  getAllGalleries(): Observable<any>{
     return this.http.get<GalleryApi>(this.galleryUrl).pipe(
       tap(receivedGalleries => console.log(receivedGalleries)),
       catchError(error => of(new GalleryApi()))

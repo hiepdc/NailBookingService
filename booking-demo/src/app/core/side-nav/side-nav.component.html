@@ -20,27 +20,31 @@
                 <div class="collapse navbar-collapse " id="navbarDiv" [ngClass]="{'in': navbarOpen}">
                     <ul class="nav navbar-nav" id="sidenav01">
                         <li routerLinkActive="active">
-                            <a routerLink="/home" (click)="closeNavbar()" >TRANG CHỦ</a>
+                            <a routerLink="/home" (click)="closeNavbar()">TRANG CHỦ</a>
                         </li>
                         <li routerLinkActive="active">
                             <a routerLink="/services" (click)="closeNavbar()">DỊCH VỤ</a>
                         </li>
-                        <li routerLinkActive="active">
+                        <!-- <li routerLinkActive="active">
                             <a routerLink="/booking" [routerLinkActive]="['active']"  
                             (click)="closeNavbar()">ĐẶT LỊCH</a>
-                            </li>
-                        <li [routerLinkActive]="['active']">
-                            <a routerLink="/gallery" [routerLinkActive]="['active']" 
-                            (click)="closeNavbar()">ALBUM
+                            </li> -->
+                        <li routerLinkActive="active">
+                            <a routerLink="/stylist" [routerLinkActive]="['active']" (click)="closeNavbar()">STYLIST</a>
+                        </li>
+                        <li routerLinkActive="active">
+                            <a routerLink="/gallery" [routerLinkActive]="['active']" (click)="closeNavbar()">ALBUM
                                 ẢNH</a></li>
-                        <li [routerLinkActive]="['active']">
+                        <li routerLinkActive="active">
                             <a routerLink="/prices" [routerLinkActive]="['active']" (click)="closeNavbar()">BẢNG
                                 GIÁ</a></li>
                         <!-- <li [routerLinkActive]="['active']"><a routerLink="/blog" [routerLinkActive]="['active']" (click)="closeNavbar()">BLOG</a></li> -->
-                        <li [routerLinkActive]="['active']"><a routerLink="/aboutus" [routerLinkActive]="['active']" (click)="closeNavbar()">GIỚI
+                        <li [routerLinkActive]="['active']"><a routerLink="/aboutus" [routerLinkActive]="['active']"
+                                (click)="closeNavbar()">GIỚI
                                 THIỆU</a></li>
-                        <!-- <li [routerLinkActive]="['active']"><a routerLink="/contact" [routerLinkActive]="['active']" (click)="closeNavbar()">LIÊN
-                                HỆ</a></li> -->
+                        <li routerLinkActive="active">
+                            <a routerLink="/feedback" [routerLinkActive]="['active']" (click)="closeNavbar()">PHẢN HỒI</a>
+                        </li>
                     </ul>
                     <!-- navbar-nav -->
                 </div>

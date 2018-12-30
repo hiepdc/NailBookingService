@@ -1,0 +1,122 @@
+<div id="content" class="col-md-10 split">
+  <!-- ===== Contact section starts  ===== -->
+  <div id="contact">
+    <div class="content-wrapper">
+      <div class="content-box container">
+        <div class="inside-wrapper container">
+          <!-- section-heading -->
+          <div class="section-heading">
+            <h2>PHẢN HỒI</h2>
+          </div>
+          <!-- /section-heading -->
+          <div class="col-md-10 col-md-offset-1">
+            <!-- contact info -->
+            <div class="contact-info">
+              <!-- Form Starts -->
+              <div id="contact_form">
+                <form #feedbackForm="ngForm">
+                  <!-- row -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Tên Khách Hàng<span class="required"></span></label>
+                        <input type="text" class="form-control input-field" 
+                        [(ngModel)]="customerName"  name="name">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Số Điện Thoại<span class="required"></span></label>
+                        <input type="text"class="form-control input-field" 
+                        [(ngModel)]="phoneNumber"  name="phone">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /row -->
+                  <!-- row -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Chủ Đề<span class="required">*</span></label>
+                        <input type="text" name="subject" class="form-control input-field" 
+                         [(ngModel)]="subject" required>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Message<span class="required">*</span></label>
+                        <textarea name="message" id="message" class="textarea-field form-control" rows="10"
+                        [(ngModel)]="messages" required></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /row -->
+                  <button type="submit" class="btn" [disabled]="!feedbackForm.form.valid" (click)="addFeedBack(); feedbackForm.reset()">Send
+                    message</button>
+
+                </form>
+              </div>
+              <!-- /contact-form -->
+            </div>
+            <!-- /contact-info -->
+          </div>
+          <!-- /col-md-10 -->
+        </div>
+        <!-- /inside-wrapper-->
+        <div class="bg-color1 col-md-12">
+      
+        </div>
+        <!-- /bg-color1 -->
+        <div class="col-md-12 margin1">
+          <div class="inside-wrapper container">
+            <div class="col-md-4">
+              <div class="contact-icon">
+                <!---icon-->
+                <i class="fa fa-envelope top-icon"></i>
+                <!-- contact-icon info-->
+                <div class="contact-icon-info">
+                  <h6>Email</h6>
+                  <p>Email address: <a href="mailto:tungnxse04170@fpt.edu.vn">tungnxse04170@fpt.edu.vn</a></p>
+                </div>
+              </div>
+            </div>
+            <!-- /contact-icon-->
+            <div class="col-md-4">
+              <div class="contact-icon">
+                <!---icon-->
+                <i class="fa fa-map-marker top-icon"></i>
+                <!-- contact-icon info-->
+                <div class="contact-icon-info">
+                  <h6>Địa Chỉ</h6>
+                  <p>35 Ngô Sĩ Liên - Hà Nội <br>
+                  Thứ Hai - Chủ Nhật: 9am-9pm 
+                </p>
+                </div>
+              </div>
+            </div>
+            <!-- /contact-icon-->
+            <div class="col-md-4">
+              <div class="contact-icon">
+                <!---icon-->
+                <i class="fa fa-phone top-icon"></i>
+                <!-- contact-icon info -->
+                <div class="contact-icon-info">
+                  <h6>Liên Hệ</h6>
+                  <p>SĐT: 0974372618</p>
+                </div>
+              </div>
+              <!-- /contact-icon-->
+            </div>
+            <!-- /col-md-4-->
+          </div>
+          <!-- /row -->
+        </div>
+        <!-- /col-md-12 -->
+      </div>
+      <!-- /content-box -->
+    </div>
+    <!-- /content-wrapper -->
+  </div>
+  <!-- /contact ends -->
+</div>
+<!-- /content -->

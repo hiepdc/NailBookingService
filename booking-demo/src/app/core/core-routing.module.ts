@@ -9,6 +9,9 @@ import { PricesComponent } from './prices/prices.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ConfirmedBookingComponent } from './confirmed-booking/confirmed-booking.component';
 import { CollectionComponent } from './collection/collection.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { StylistComponent } from './stylist/stylist.component';
+
 import { CoreComponent } from './core.component'
 
 const routes: Routes = [
@@ -24,7 +27,9 @@ const routes: Routes = [
             { path: 'prices', component: PricesComponent },
             { path: 'aboutus', component: AboutusComponent },
             { path: 'booking/:phone/:customerName/:hour/:date/:stylistName', component: ConfirmedBookingComponent },
-            { path: 'gallery/:collectionId/:collectionName', component: CollectionComponent }
+            { path: 'gallery/:collectionId/:collectionName', component: CollectionComponent },
+            { path: 'feedback', component: FeedbackComponent },
+            { path: 'stylist', component: StylistComponent }
         ]
     },
 

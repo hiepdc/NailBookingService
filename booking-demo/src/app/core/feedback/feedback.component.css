@@ -1,0 +1,57 @@
+.btn{
+    float: right;
+    margin: 40px 2px 0 2px;
+    /* background-color: #87314e; */
+  }
+
+  .section-heading{
+      margin-bottom: 60px;
+  }
+
+  
+ .ng-valid[required], .ng-valid.required  {
+    border-bottom: 2px solid #42A948; /* green */
+  }
+  
+  .ng-invalid:not(form)  {
+    border-bottom: 2px solid /*#af2624*/ #87314e; 
+  }
+
+  .contact-icon {
+    text-align: center;
+    padding: 30px 10px 30px 10px;
+    min-height: 210px;
+    border: 2px solid #d68189;
+   }
+   .contact-icon-info {
+    margin-top: 30px;
+   }
+   .contact-icon-info p {
+    font-weight: 700;
+   }
+   .contact-icon .top-icon {
+    transition: all .3s ease-out;
+    font-size: 30px;
+    top: -30px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: 100px;
+    margin: auto;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    color: #fff;
+   }
+   .contact-icon:hover .top-icon {
+    top: -40px;
+   }
+   .margin-icon {
+    margin-right: 10px;
+   }
+
+   .bg-color1{
+     border: 1px solid #d68189;
+   }
+  

@@ -1,0 +1,98 @@
+<div *ngIf="loaderService.isLoading | async">
+   <app-pre-loader></app-pre-loader>
+</div>
+
+<div id="content" class="col-md-10 split" *ngIf="!(loaderService.isLoading | async)">
+   <!-- ===== Service section starts  ===== -->
+   <div id="services">
+      <div class="content-wrapper">
+         <div class="content-box container">
+            <div class="inside-wrapper container">
+               <!-- section-heading -->
+               <div class="section-heading">
+                  <h2>STYLISTS</h2>
+               </div>
+               <!-- /section-heading -->
+               <div class="stylist">
+                  <swiper [config]="config1" [(index)]="index">
+                     <!-- <div class="serviceBox">
+                          <div class="service-icon">
+                            <img class="img-responsive img-circle" [ngClass]="{'border': stylistId == -1}" src="../../assets/img/services/service1.jpg"
+                              alt="">
+                          </div>
+                          <div class="service-content">
+                            <h5>Châm trâm chọn cho bạn</h5>
+                          </div>
+                        </div> -->
+
+                     <div class="serviceBox" *ngFor="let eachStylist of stylists" (click)="displayInformation(eachStylist.id, eachStylist.information)">
+                        <div class="service-icon">
+                           <img class="img-responsive img-circle" [ngClass]="{'border': stylistId==eachStylist.id}"
+                              [src]="eachStylist.image_link" alt="">
+                        </div>
+                        <div class="service-content">
+                           <h5>{{eachStylist.stylist_name}}</h5>
+                        </div>
+                     </div>
+                  </swiper>
+               </div>
+               <div class="col-lg-12" [ngStyle]="{'display':displayStylist}">
+                  <h3>High Quality Services</h3>
+                  <p>Aliquam erat volutpat In id fermentum augue, ut pellentesque leo. Maecenas at arcu risus. Donec
+                     commodo sodales ex, scelerisque laoreet nibh hendrerit id. In aliquet magna nec lobortis maximus.
+                     Etiam rhoncus leo a dolor placerat, nec elementum ipsum convall.</p>
+                  <p><strong>{{information}}</strong></p>
+               </div>
+               <div></div>
+               <!-- alert box -->
+               <div class="alert alert-info col-md-12 margin1 text-center">
+                  <div class="submit-form">
+                     <form #bookingForm="ngForm">
+                        <h4>Đặt Lịch tại đây</h4>
+                        <p>Hệ thống sẽ đặt lịch với stylist bạn đã chọn và số điện thoại bạn điền bên dưới !
+                        </p>
+                        <div class="input-phone">
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fas fa-phone"></i></span>
+                              <input type="tel" placeholder="" class="form-control phone" maxlength="10" pattern="(03|09|07|08|05)+([0-9]{8})\b"
+                                 [(ngModel)]="phoneNumber" name="phone_number" required>
+                           </div>
+                        </div>
+                        <button type="button" class="btn btn-booking" [disabled]="bookingForm.form.invalid" (click)="submitFormBooking()">Đặt
+                           Lịch Giữ Chỗ
+                           <img src="../../../assets/img/home/arrow right.png">
+                        </button>
+                     </form>
+                  </div>
+               </div>
+               <!-- /alert -->
+            </div>
+            <!-- /inside-wrapper -->
+         </div>
+         <!-- /content-box -->
+      </div>
+      <!-- / content-wrapper -->
+   </div>
+   <!-- /services ends -->
+</div>
+<!-- /content -->
+
+<!-- Modal Confirm Change Booking-->
+<div class="backdrop" [ngStyle]="{'display':displayChangeBooking}"></div>
+<div id="modalChangeBooking" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayChangeBooking}">
+   <div class="modal-dialog changeBoooking" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" aria-label="Close" (click)="closeChangeBooking()"><span aria-hidden="true">&times;</span></button>
+         </div>
+         <div class="modal-body">
+            <h4 class="modal-title">Anh/chị có muốn đổi lịch hay hủy lịch</h4>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-a" (click)="closeChangeBooking()">Đóng</button>
+            <button type="button" class="btn btn-a" (click)="deleteBooking()">Hủy Lịch</button>
+            <button type="button" class="btn btn-a" (click)="changeBooking()">Đổi Lịch</button>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal !-->

@@ -12,7 +12,7 @@ export class GalleryService {
   private galleryUrl = `${environment.api_url}/galleries`;
 
   //get all stylist from db
-  getAllGalleries(){
+  getAllGalleries(): Observable<any>{
     return this.http.get<GalleryApi>(this.galleryUrl).pipe(
       tap(receivedGalleries => console.log(receivedGalleries)),
       catchError(error => of(new GalleryApi()))

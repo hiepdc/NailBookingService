@@ -36,8 +36,7 @@ export class BookingComponent implements OnInit {
   constructor(
     private bookingService: BookingService,
     public toastr: ToastsManager,
-    _vcr: ViewContainerRef
-  ) {
+    _vcr: ViewContainerRef) {
     this.columnDefs = [
       // {headerName: 'ID', field: 'id'},
       {

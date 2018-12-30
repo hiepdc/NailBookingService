@@ -11,6 +11,8 @@ export class ConfirmBookingService {
   private phoneNumber = new BehaviorSubject('');
   private customerName = new BehaviorSubject('');
   private notifiDeleteBooking = new BehaviorSubject('');
+  private stylistId = new BehaviorSubject('');
+  private existCustomer = new BehaviorSubject(false);
   //currentMessage = this.messageSource.asObservable();
   currentHour = this.selectedHour.asObservable();
   currentDate = this.selectedDate.asObservable();
@@ -18,6 +20,8 @@ export class ConfirmBookingService {
   currentPhoneNumber = this.phoneNumber.asObservable();
   currentCustomerName = this.customerName.asObservable();
   currentNotifiDeleteBooking = this.notifiDeleteBooking.asObservable();
+  currentStylistId = this.stylistId.asObservable();
+  currentExistCustomer = this.existCustomer.asObservable();
 
   constructor() { }
 
@@ -36,9 +40,14 @@ export class ConfirmBookingService {
   changeCustomerName(customerName: string) {
     this.customerName.next(customerName)
   }
-
   changeNotifiDeleteBooking(notifiDeleteBooking: string){
     this.notifiDeleteBooking.next(notifiDeleteBooking);
+  }
+  changeStylistId(stylistId:string){
+    this.stylistId.next(stylistId);
+  }
+  changeExistCustomer(existCustomer:boolean){
+    this.existCustomer.next(existCustomer);
   }
 
 }

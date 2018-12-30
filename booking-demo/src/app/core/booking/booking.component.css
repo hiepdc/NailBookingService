@@ -102,7 +102,7 @@
     padding: 10px 20px 3px 96px;  
    }
    #choose-stylist img{
-    width: 50%;
+    width: 56%;
    }
   
    #choose-stylist h5{
@@ -312,6 +312,11 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 150px
 }
 
+.navigate-stylist{
+  text-align: center;
+    font-size: 18px;
+    padding-left: 78px;
+}
 
 /*=========================== Media queries ============================ */
 /* Small devices (landscape phones, 544px) */
@@ -323,7 +328,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 60%;
   }
   #choose-stylist img{
-    width: 58%;
+    width: 90%;
    }
    #choose-stylist h5{
      font: 18px normal;

@@ -47,7 +47,7 @@ class ShiftController extends Controller
                 }
                 $sts = $status->status;
                 $shiftDefaultByStylistID = $this->getAvailableBookingTime($sts, $sizeOfTime);
-                return response()->success($status);
+                return response()->success($shiftDefaultByStylistID);
             }else{
                 $service = new Service();
                 $sizeOfTime = $service->getTimeService($serviceID);

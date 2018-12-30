@@ -1,7 +1,7 @@
-<!-- <div *ngIf="loaderService.isLoading | async">
-    <app-pre-loader></app-pre-loader>
-  </div> -->
-<div id="content" class="col-md-10 split">   <!--*ngIf="!(loaderService.isLoading | async)"-->
+<div *ngIf="loaderService.isLoading | async">
+  <app-pre-loader></app-pre-loader>
+</div>
+<div id="content" class="col-md-10 split" *ngIf="!(loaderService.isLoading | async)"> 
   <!-- ===== Booking section starts  ===== -->
   <div class="content-wrapper">
     <div class="content-box container"> 
@@ -23,7 +23,7 @@
             <h4><i class="fas fa-female margin-icon"></i>  {{stylistName}}</h4>
             <h4>MỖI SĐT ĐẶT CHỈ DÀNH CHO 1 NGƯỜI</h4>
             <p>(*) Nếu làm nail cho nhiều người, anh/chị vui lòng dùng SĐT khác để đặt thêm 1 lần nữa hoặc gọi tới
-              hotline để được sắp xếp giúp em!</p>
+              hotline <strong>0976420019</strong> để được sắp xếp giúp em!</p>
             <button type="button" class="btn" (click)="openChangeBooking()">Đổi Lịch</button>
             <!-- <button type="button" [routerLink]="['/home']" (click)="backToHome()" class="btn">Hủy Lịch</button> -->
             <button type="button" (click)="openConfirmDeleteBooking()" class="btn">Hủy Lịch</button>

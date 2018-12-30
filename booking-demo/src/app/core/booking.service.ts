@@ -14,6 +14,8 @@ import { StylistApi } from './models/stylistApi';
 import { PinApi } from './models/pinApi';
 import { ServiceApi} from './models/serviceApi';
 import { ServiceItemApi} from './models/serviceItemApi';
+import { API } from './models/API';
+
 import { environment } from '../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -107,9 +109,9 @@ export class BookingService {
   }
 
     //kiem tra xem khach hang da co lich dat nao chua
-    checkExistBooking(phoneNumber: string){
+    checkExistBooking(phoneNumber: string): Observable<any>{
       const url = `${this.bookingURL}/check-exist-booking`;
-      var body = {
+      const body = {
         phone_number: phoneNumber,
       };
       return this.http.post<BookingApi>(url, body, httpOptions).pipe(
@@ -118,9 +120,18 @@ export class BookingService {
       );
     }
 
+    //check exist customer
+    checkExistCustomer(phoneNumber:string): Observable<any>{
+      const url = `${this.customerURL}/check/${phoneNumber}`;
+      return this.http.get<API>(url).pipe(
+        tap(customerAPI => console.log(customerAPI)),
+        catchError(error => of(new API()))
+      );
+    }
+
   addNewBooking(phoneNumber: string,
     stylist_id: number, date: string,
-    start_time: number, service_id: number, customerName: string) {
+    start_time: number, service_id: number, customerName: string): Observable<any> {
     const url = `${this.bookingURL}/add-new-booking`;
     var body = {
       phone_number: phoneNumber,
@@ -138,7 +149,7 @@ export class BookingService {
 
   editBooking(phoneNumber: string,
     stylist_id: number, date: string,
-    start_time: number, service_id: number) {
+    start_time: number, service_id: number): Observable<any> {
     const url = `${this.bookingURL}/edit-booking`;
     var body = {
       phone_number: phoneNumber,
@@ -158,7 +169,7 @@ export class BookingService {
     return this.http.delete<BookingApi>(url, httpOptions).pipe(
       tap((bookingApi: BookingApi) => {
         console.log(`message = ${bookingApi.message}`);
-        console.log(`Deleted movie with phone number = ${phoneNumber}`);
+        console.log(`Deleted movie with phone number = 0${phoneNumber}`);
       }),
       catchError(error => of(new BookingApi()))
     )

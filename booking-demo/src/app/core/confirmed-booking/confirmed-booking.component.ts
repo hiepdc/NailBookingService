@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { Router, Routes} from '@angular/router';
+import { Router, Routes } from '@angular/router';
 
 import { BookingService } from '../booking.service';
 import { ConfirmBookingService } from '../confirm-booking.service'
+import { LoaderService } from '../http-handle';
+import { ToastsManager } from 'ng2-toastr';
 
 import { Stylist } from '../models/stylist';
 import { BookingApi } from '../models/bookingApi';
@@ -20,10 +22,11 @@ export class ConfirmedBookingComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private bookingService: BookingService,
-    //private loaderService:LoaderService,
     private confirmBookingService: ConfirmBookingService,
-    private router:Router
-  ) { }
+    private router: Router ,
+    public loaderService: LoaderService,
+    public toastr: ToastsManager,
+    public _vcr: ViewContainerRef) {this.toastr.setRootViewContainerRef(_vcr) }
 
   customerId: number;
   customerName: string;
@@ -34,7 +37,7 @@ export class ConfirmedBookingComponent implements OnInit {
   stylist: Stylist;
 
   displayChangeBooking: string = 'none';
-  displayConfirmDeleteBooking:string = 'none';
+  displayConfirmDeleteBooking: string = 'none';
 
   ngOnInit() {
     // this.confirmBookingService.currentDate.subscribe(date => this.selectedDate = date);
@@ -51,8 +54,8 @@ export class ConfirmedBookingComponent implements OnInit {
     this.selectedHour = this.activatedRoute.snapshot.paramMap.get('hour');
     this.stylistName = this.activatedRoute.snapshot.paramMap.get('stylistName');
     this.selectedDate = this.activatedRoute.snapshot.paramMap.get('date');
-    console.log("this.route.snapshot.paramMap: "+JSON.stringify(this.activatedRoute.snapshot.paramMap));
-    console.log("this.route.snapshot.paramMap:phone "+this.phoneNumber);
+    console.log("this.route.snapshot.paramMap: " + JSON.stringify(this.activatedRoute.snapshot.paramMap));
+    console.log("this.route.snapshot.paramMap:phone " + this.phoneNumber);
 
     // this.route.queryParams.subscribe(params => {
     //   this.phoneNumber = params['startdate'];
@@ -60,28 +63,41 @@ export class ConfirmedBookingComponent implements OnInit {
     // });
   }
 
-
-
   backToHome() {
+    this.closeConfirmDeleteBooking();
+    //1. delete booking 
+    this.bookingService.deleteBooking(+this.phoneNumber).subscribe(
+      (bookingApi: BookingApi) => {
+        this.confirmBookingService.changeNotifiDeleteBooking("block");
+        this.router.navigate(['/home']);
+      },
+      error => { console.log(error); return }
+    )
+    //2. set variable 
+    this.setValueAfterDeleteBooking();
+
+    //bcak to home
+    // this.router.navigate(['/home']);
+  }
+
+  setValueAfterDeleteBooking() {
+    this.confirmBookingService.changePhoneNumber("");
+    this.confirmBookingService.changeDate("");
+    this.confirmBookingService.changeHour("");
+    this.confirmBookingService.changeStylistName("");
+    this.confirmBookingService.changeCustomerName("");
+    this.confirmBookingService.changeStylistId("");
+    this.confirmBookingService.changeNotifiDeleteBooking("none");
+  }
+
+  goBack(): void {
+    this.closeChangeBooking();
     //1. delete booking 
     this.bookingService.deleteBooking(+this.phoneNumber).subscribe(
       (bookingApi: BookingApi) => {
       },
       error => { console.log(error); return }
     )
-    //2. set variable 
-    this.confirmBookingService.changePhoneNumber("");
-    this.confirmBookingService.changeDate("");
-    this.confirmBookingService.changeHour("");
-    this.confirmBookingService.changeStylistName("");
-    this.confirmBookingService.changeCustomerName("");
-    this.confirmBookingService.changeNotifiDeleteBooking("block");
-    
-    //bcak to home
-    this.router.navigate(['/home']);
-  }
-
-  goBack(): void {
     this.addPhoneNumberToConfirmBookingService();
     this.location.back();
   }
@@ -126,15 +142,5 @@ export class ConfirmedBookingComponent implements OnInit {
     }
   }
 
-  // formatDate(date: Date): string {
-  //   var d = new Date(date),
-  //     month = '' + (d.getMonth() + 1),
-  //     day = '' + d.getDate(),
-  //     year = d.getFullYear();
-
-  //   if (month.length < 2) month = '0' + month;
-  //   if (day.length < 2) day = '0' + day;
-  //   return [day, month, year].join('-');
-  // }
   //#endregion
 }

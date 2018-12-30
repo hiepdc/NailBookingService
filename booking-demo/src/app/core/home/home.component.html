@@ -16,7 +16,7 @@
     <div class="content-wrapper">
       <div class="content-box home text-center container">
         <div class="inside-wrapper home col-md-12">
-          <h3>Welcome to Châm Trâm</h3>
+          <h3>Châm Trâm Nail hân hạnh phục vụ Quý Khách</h3>
           <div class="input_sdt">
             <form #bookingForm="ngForm">
               <div class="input-phone">
@@ -27,7 +27,7 @@
                   <!-- <p>{{phoneNumber}}</p> -->
                 </div>
               </div>
-              <button type="button" class="btn btn-booking" [disabled]="bookingForm.form.invalid" (click)="checkExistBooking()">Đặt
+              <button type="button" class="btn btn-booking" [disabled]="bookingForm.form.invalid" (click)="submitFormBooking()">Đặt
                 Lịch Giữ Chỗ
                 <img src="../../../assets/img/home/arrow right.png">
               </button>

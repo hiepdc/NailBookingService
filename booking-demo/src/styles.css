@@ -562,22 +562,22 @@
      margin-bottom: 10px;
    }
    .alert-info:before {
-    content: "\f128";
+    content: "\f10d";
     z-index: 0;
     opacity: 0.8;
     font-size: 40px;
-    font-family: "flaticon";
+    font-family: "Font Awesome 5 Free";
     z-index: 0;
     left: -10px;
     position: absolute;
     top: -20px;
    }
    .alert-info:after {
-    content: "\f128";
+    content: "\f10d";
     z-index: 0;
     transform: rotate(-180deg);
     font-size: 40px;
-    font-family: "flaticon";
+    font-family: "Font Awesome 5 Free";
     z-index: 0;
     right: -10px;
     position: absolute;

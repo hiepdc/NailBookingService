@@ -53,8 +53,8 @@ import { DeleteGalleryImageComponent } from './gallery-image/delete-gallery-imag
 import { EditServiceComponent } from './service/edit-service/edit-service.component';
 import { GalleryService } from './gallery/gallery.service';
 import { ServicesService } from './service/services.service';
-import { AddShiftComponent } from './shift/add-shift/add-shift.component';
-import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
+// import { AddShiftComponent } from './shift/add-shift/add-shift.component';
+// import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
 import { DeleteShiftComponent } from './shift/delete-shift/delete-shift.component';
 import { ShiftService } from './shift/shift.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -110,8 +110,8 @@ import {MatSelectModule} from '@angular/material/select';
     EditGalleryImageComponent,
     DeleteGalleryImageComponent,
     EditServiceComponent,
-    AddShiftComponent,
-    EditShiftComponent,
+    // AddShiftComponent,
+    // EditShiftComponent,
     DeleteShiftComponent
   ],
   entryComponents: [
@@ -129,8 +129,8 @@ import {MatSelectModule} from '@angular/material/select';
     EditGalleryImageComponent,
     DeleteGalleryImageComponent,
     EditServiceComponent,
-    AddShiftComponent,
-    EditShiftComponent,
+    // AddShiftComponent,
+    // EditShiftComponent,
     DeleteShiftComponent
   ],
   providers: [

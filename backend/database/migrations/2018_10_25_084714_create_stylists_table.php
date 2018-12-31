@@ -18,7 +18,7 @@ class CreateStylistsTable extends Migration
             Schema::create('stylists', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('stylist_name', 50);
-                $table->char('phone_number');
+                $table->char('phone_number')->unique();
                 $table->string('information')->nullable();
                 $table->string('image_link');
                 $table->softDeletes();

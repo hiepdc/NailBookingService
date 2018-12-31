@@ -6,17 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feedback.component.css']
 })
 export class FeedbackComponent implements OnInit {
+  customerName: string;
+  phoneNumber: string;
+  subject: string;
+  messages: string;
 
   constructor() { }
 
   ngOnInit() {
   }
-  // customerName:string;
-  // phoneNumber:string;
-  // subject:string;
-  // messages:string;
+  addFeedBack() {
 
-  // addFeedBack(){
-
-  // }
+  }
 }

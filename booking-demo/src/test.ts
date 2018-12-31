@@ -15,8 +15,8 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.
-const context = require.context('./', true, /\.spec\.ts$/);
-
+// const context = require.context('./', true, /component\.spec\.ts$/);
+const context = require.context('./', true, /component\.spec\.ts$/)
 // Then we find one component test.
 //const context = require.context('./', true, /booking.service\.spec\.ts$/);
 

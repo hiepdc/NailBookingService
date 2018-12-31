@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
+import { AdminModule } from '../admin.module';
+import { APP_BASE_HREF } from '@angular/common';
+import { AppModule } from '../../app.module';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -8,7 +11,8 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
+      imports: [ AppModule, AdminModule ],
+      providers: [ {provide: APP_BASE_HREF, useValue: '/'} ]
     })
     .compileComponents();
   }));

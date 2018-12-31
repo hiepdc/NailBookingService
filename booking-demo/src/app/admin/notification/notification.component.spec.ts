@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotificationComponent } from './notification.component';
+import { AdminModule } from '../admin.module';
+import { APP_BASE_HREF } from '@angular/common';
+import { AppModule } from '../../app.module';
 
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
@@ -8,7 +11,8 @@ describe('NotificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationComponent ]
+      imports: [ AppModule, AdminModule ],
+      providers: [ {provide: APP_BASE_HREF, useValue: '/'} ]
     })
     .compileComponents();
   }));

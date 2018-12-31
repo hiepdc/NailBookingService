@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GalleryImageComponent } from './gallery-image.component';
+import { AdminModule } from '../admin.module';
+import { APP_BASE_HREF } from '@angular/common';
+import { AppModule } from '../../app.module';
 
 describe('GalleryImageComponent', () => {
   let component: GalleryImageComponent;
@@ -8,7 +11,8 @@ describe('GalleryImageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GalleryImageComponent ]
+      imports: [ AppModule, AdminModule ],
+      providers: [ {provide: APP_BASE_HREF, useValue: '/'} ]
     })
     .compileComponents();
   }));

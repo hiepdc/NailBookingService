@@ -28,6 +28,6 @@ export class EditShiftComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-
+  submit() {
+  }
 }

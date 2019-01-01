@@ -44,7 +44,7 @@ export class AddShiftComponent implements OnInit {
     _vcr: ViewContainerRef,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<AddShiftComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AddDialog[],
+    @Inject(MAT_DIALOG_DATA) public data: AddDialog,
     private stylistService: StylistService
   ) {
     this.toastr.setRootViewContainerRef(_vcr);

@@ -9,4 +9,5 @@ class Feedback extends Model
     protected $fillable = [
         'title', 'content'
     ];
+    public $timestamps = false;
 }

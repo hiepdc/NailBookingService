@@ -12,6 +12,7 @@ const httpOptions = {
 export class BookingService {
 
   private bookingURL = `${environment.api_url}/bookings`;
+  private feedbackURL = `${environment.api_url}/feedbacks`;
 
   constructor(private http: HttpClient) { }
 
@@ -81,5 +82,15 @@ export class BookingService {
       tap(api => console.log(api)),
       catchError(error => of(new Api()))
     )
+  }
+
+  getFeedbacks(): Observable<Api> {
+    return this.http.get<Api>(this.feedbackURL).pipe(
+      tap(receivedFeedbacks => {
+        console.log(receivedFeedbacks);
+      }),
+      catchError(error => of(new Api())
+      )
+    );
   }
 }

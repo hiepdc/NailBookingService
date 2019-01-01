@@ -45,8 +45,10 @@ class Notification extends Model
             }else{
                 $typeNotification = 'đã hủy lịch đặt';
             }
+            $formatdate = new Carbon($notificaion->date);
+            $date = $formatdate->format('d/m/Y');
             $result['message'] = $typeNotification . ' vào lúc ' . $this->convertTime($notificaion->start_time) .
-                                 ' ngày ' . $notificaion->date .
+                                 ' ngày ' . $date .
                                  ' dịch vụ ' . $notificaion->service_name .
                                  ' phục vụ bởi stylist ' . $notificaion->stylist_name;
             $results [] = $result;

@@ -74,7 +74,7 @@ class ServiceItemController extends Controller
         try {
             $serviceItem = ServiceItem::find($id);
             if(!$serviceItem) {
-                return response()->notFound('service does not exist');
+                return response()->success(null, "Không tồn tại dịch vụ");
             }
             return response()->success($serviceItem);
         } catch (Exception $e) {
@@ -86,7 +86,7 @@ class ServiceItemController extends Controller
         try {
             $service = Service::find($id);
             if(!$service){
-                return response()->notFound("service does not exist");
+                return response()->success(null, "Không tồn tại dịch vụ");
             }
             $serviceItem = new ServiceItem();
             $result = $serviceItem->getServiceItemByService($id);
@@ -122,7 +122,7 @@ class ServiceItemController extends Controller
         try {
             $serviceItem = ServiceItem::find($id);
             if (!$serviceItem) {
-                return response()->notFound("Service does not exist");
+                return response()->success(null, "Không tồn tại dịch vụ");
             }
             $updatedGallery = $serviceItem->update($request->only(['name', 'service_id', 'price']));
             return response()->success($updatedGallery);
@@ -142,7 +142,7 @@ class ServiceItemController extends Controller
         try {
             $deletebyid = ServiceItem::find($id);
             if (!$deletebyid) {
-                return response()->notFound("Service does not exist");
+                return response()->success(null, "Không tồn tại dịch vụ");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);

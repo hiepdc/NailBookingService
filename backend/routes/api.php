@@ -70,6 +70,8 @@ Route::get('bookings/count-total', 'BookingController@getCountTotal');
 Route::get('shifts','ShiftController@index');
 Route::get('shifts/{id}','ShiftController@show');
 Route::post('shifts','ShiftController@store');
+Route::post('shifts/{id}','ShiftController@update');
+Route::delete('shifts/{id}', 'ShiftController@destroy');
 //display shift of stylist
 Route::get('shifts/stylist/{service_id}/{stylist_id}/{date}','ShiftController@getAvailableBooking');
 Route::get('shifts-this-week','ShiftController@getAllShiftThisWeek');
@@ -115,3 +117,8 @@ Route::delete('service-items/{id}','ServiceItemController@destroy');
 
 Route::get('services/{id}/service-items', 'ServiceItemController@showServiceItems');
 Route::get('service-items-all', 'ServiceItemController@getAll');
+
+//admin customers
+Route::get('feedbacks', 'FeedbackController@index');
+Route::post('feedbacks', 'FeedbackController@store');
+Route::delete('feedbacks/{id}', 'FeedbackController@destroy');

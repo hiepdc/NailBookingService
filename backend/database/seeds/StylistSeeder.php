@@ -27,7 +27,7 @@ class StylistSeeder extends Seeder
             ],
             [
                 'stylist_name' => 'Thị Thắm',
-                'phone_number' => '0967488456',
+                'phone_number' => '0367488456',
                 'information' => $faker->paragraph($nbSentences = 1),
                 'image_link' => "http://api.chamtramnail.com/public/upload/stylists/team3.jpg",
             ],
@@ -51,9 +51,15 @@ class StylistSeeder extends Seeder
             ],
             [
                 'stylist_name' => 'Thủy Tiên',
-                'phone_number' => '0966420496',
+                'phone_number' => '0366420496',
                 'information' => $faker->paragraph($nbSentences = 1),
                 'image_link' => "http://api.chamtramnail.com/public/upload/stylists/team7.jpg",
+            ],
+            [
+                'stylist_name' => 'Chị Trâm',
+                'phone_number' => '0366420411',
+                'information' => $faker->paragraph($nbSentences = 1),
+                'image_link' => "http://api.chamtramnail.com/public/upload/stylists/team8.jpg",
             ]
         ]);
     }

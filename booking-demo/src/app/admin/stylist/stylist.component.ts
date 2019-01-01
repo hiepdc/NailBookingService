@@ -72,7 +72,7 @@ export class StylistComponent implements OnInit {
               this.toastr.error(api.message);
             } else {
               this.getStylistFromService();
-              this.toastr.success('Thêm stylist thành công');
+              this.toastr.success(api.message);
             }
           },
           error => {
@@ -111,7 +111,7 @@ export class StylistComponent implements OnInit {
                 this.toastr.error(api.message);
               } else {
                 this.getStylistFromService();
-                this.toastr.success('Chỉnh sửa stylist thành công');
+                this.toastr.success(api.message);
               }
             },
             error => {
@@ -126,7 +126,7 @@ export class StylistComponent implements OnInit {
   deleteItem(id: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent,
       {
-        width: '300px',
+        width: '500px',
         data: {
           id: id
         }
@@ -137,8 +137,13 @@ export class StylistComponent implements OnInit {
       if (result === 1) {
         this.stylistService.delelteStylist(id).subscribe(
           api => {
-            this.getStylistFromService();
-            this.toastr.warning('Xóa stylist thành công');
+            if (api.data === null) {
+              this.getStylistFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getStylistFromService();
+              this.toastr.success(api.message);
+            }
           },
           error => {
             console.log(error);

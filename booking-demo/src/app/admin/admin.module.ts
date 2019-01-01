@@ -53,12 +53,14 @@ import { DeleteGalleryImageComponent } from './gallery-image/delete-gallery-imag
 import { EditServiceComponent } from './service/edit-service/edit-service.component';
 import { GalleryService } from './gallery/gallery.service';
 import { ServicesService } from './service/services.service';
-// import { AddShiftComponent } from './shift/add-shift/add-shift.component';
-// import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
+import { AddShiftComponent } from './shift/add-shift/add-shift.component';
+import { EditShiftComponent } from './shift/edit-shift/edit-shift.component';
 import { DeleteShiftComponent } from './shift/delete-shift/delete-shift.component';
 import { ShiftService } from './shift/shift.service';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
+import { DeleteFeedbackComponent } from './feedback/delete-feedback/delete-feedback.component';
+import { FeedbackService } from './feedback/feedback.service';
 
 @NgModule({
   imports: [
@@ -110,9 +112,10 @@ import {MatSelectModule} from '@angular/material/select';
     EditGalleryImageComponent,
     DeleteGalleryImageComponent,
     EditServiceComponent,
-    // AddShiftComponent,
-    // EditShiftComponent,
-    DeleteShiftComponent
+    AddShiftComponent,
+    EditShiftComponent,
+    DeleteShiftComponent,
+    DeleteFeedbackComponent
   ],
   entryComponents: [
     AddDialogComponent,
@@ -129,9 +132,10 @@ import {MatSelectModule} from '@angular/material/select';
     EditGalleryImageComponent,
     DeleteGalleryImageComponent,
     EditServiceComponent,
-    // AddShiftComponent,
-    // EditShiftComponent,
-    DeleteShiftComponent
+    AddShiftComponent,
+    EditShiftComponent,
+    DeleteShiftComponent,
+    DeleteFeedbackComponent
   ],
   providers: [
     PusherService,
@@ -141,7 +145,8 @@ import {MatSelectModule} from '@angular/material/select';
     StylistService,
     GalleryService,
     ServicesService,
-    ShiftService
+    ShiftService,
+    FeedbackService
   ]
 })
 export class AdminModule { }

@@ -124,8 +124,13 @@ export class ServiceItemComponent implements OnInit {
         console.log(result.id);
         this.servicesService.delelteServiceItem(id).subscribe(
             api => {
+              if (api.data === null) {
                 this.getServiceItemsFromService();
-                this.toastr.warning('Xóa dịch vụ thành công');
+                this.toastr.error(api.message);
+              } else {
+                this.getServiceItemsFromService();
+                this.toastr.success('Xóa dịch vụ thành công');
+              }
             },
             error => {
               console.log(error);

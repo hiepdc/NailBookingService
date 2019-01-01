@@ -130,8 +130,13 @@ export class GalleryImageComponent implements OnInit {
       if (result === 1) {
         this.galleryService.deleteImage(id).subscribe(
           api => {
-            this.getImagesFromService();
-            this.toastr.warning('Xóa ảnh thành công');
+            if (api.data === null) {
+              this.getImagesFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getImagesFromService();
+              this.toastr.success('Chỉnh sửa ảnh thành công');
+            }
           },
           error => {
             console.log(error);

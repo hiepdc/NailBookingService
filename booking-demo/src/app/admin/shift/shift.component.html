@@ -23,18 +23,23 @@
 
       <ng-container matColumnDef="status">
           <mat-header-cell *matHeaderCellDef mat-sort-header>Ca làm việc</mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.status}}</mat-cell>
+          <mat-cell *matCellDef="let row">
+              <div *ngIf="row.status === 1">sáng</div>
+              <div *ngIf="row.status === 2">chiều</div>
+              <div *ngIf="row.status === 3">cả ngày</div>
+              <div *ngIf="row.status === 0">nghỉ</div>
+            </mat-cell>
       </ng-container>
       <!-- actions -->
       <ng-container matColumnDef="actions">
           <mat-header-cell *matHeaderCellDef>
-              <button mat-raised-button color="primary" (click)="addNew(shifts)">
+              <button mat-raised-button color="primary" (click)="addNew()">
                   <i class="fas fa-plus-circle"></i>Tạo mới
               </button>
           </mat-header-cell>
 
           <mat-cell *matCellDef="let row; let i=index;">
-              <!-- <button mat-button (click)="EditItem(row.id, row.stylist_name, row.date, row.status)">
+              <button mat-button (click)="EditItem(row.id, row.stylist_name, row.date, row.status)">
                   <span style="color: Dodgerblue;">
                       <i class="fa fa-edit"></i>Sửa
                   </span>
@@ -43,7 +48,7 @@
                   <span style="color: Tomato;">
                       <i class="far fa-trash-alt"></i>Xóa
                   </span>
-              </button> -->
+              </button>
           </mat-cell>
       </ng-container>
 

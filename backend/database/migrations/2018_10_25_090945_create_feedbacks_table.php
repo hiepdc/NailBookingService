@@ -13,8 +13,8 @@ class CreateFeedbacksTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('feedbacks')) {
-            Schema::create('feedbacks', function (Blueprint $table) {
+        if (!Schema::hasTable('feedback')) {
+            Schema::create('feedback', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('title');
                 $table->text('content');

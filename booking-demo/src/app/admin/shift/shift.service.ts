@@ -25,14 +25,30 @@ export class ShiftService {
       );
   }
 
-  addShift(array: Array<AddShift>): Observable<Api>  {
-      let body = {
-        array: array,
+  editShift(id: number, startTime: number, endTime: number): Observable<Api>  {
+      const body = {
+        start_time: startTime,
+        end_time: endTime
       };
-      return this.http.post<Api>(this.shiftURL, body, httpOptions).pipe(
-        tap((bookingApi) => console.log(bookingApi)),
+      return this.http.post<Api>(`${this.shiftURL}/${id}`, body, httpOptions).pipe(
+        tap(api => console.log(api)),
         catchError(error => of(new Api()))
       );
+  }
+  addShift(array: Array<AddShift>): Observable<Api>  {
+    const body = {
+      array: array,
+    };
+    return this.http.post<Api>(this.shiftURL, body, httpOptions).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
+}
+  delelteShift(id: number): Observable<Api> {
+    return this.http.delete<Api>(`${this.shiftURL}/${id}`, httpOptions).pipe(
+      tap(api => console.log(api)),
+      catchError(error => of(new Api()))
+    );
   }
 
 }

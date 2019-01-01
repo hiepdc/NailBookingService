@@ -75,7 +75,7 @@ class ImageController extends Controller
         try {
             $image = Image::find($id);
             if(!$image) {
-                return response()->notFound('Image does not exist');
+                return response()->success(null, 'Ảnh không tồn tại');
             }
             return response()->success($image);
         } catch (Exception $e) {
@@ -106,7 +106,7 @@ class ImageController extends Controller
         try {
             $image = Image::find($id);
             if (!$image) {
-                return response()->notFound("Image does not exist");
+                return response()->success(null, 'Ảnh không tồn tại');
             }
             $image_link = $image->image_link;
             $thumb_link = $image->thumb_link;
@@ -145,7 +145,7 @@ class ImageController extends Controller
         try {
             $deletebyid = Image::find($id);
             if (!$deletebyid) {
-                return response()->notFound("Image does not exist");
+                return response()->success(null, 'Ảnh không tồn tại');
             }
             $deletebyid->delete();
             return response()->success($deletebyid);

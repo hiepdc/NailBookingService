@@ -123,8 +123,13 @@ export class GalleryComponent implements OnInit {
       if (result === 1) {
         this.galleryService.delelteGallery(id).subscribe(
           api => {
-            this.getGalleriesFromService();
-            this.toastr.warning('Xóa bộ sưu tập thành công');
+            if (api.data === null) {
+              this.getGalleriesFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getGalleriesFromService();
+              this.toastr.warning('Xóa bộ sưu tập thành công');
+            }
           },
           error => {
             console.log(error);

@@ -75,7 +75,7 @@ class GalleryController extends Controller
         try {
             $gallery = Gallery::find($id);
             if (!$gallery) {
-                return response()->notFound("gallery does not exist");
+                return response()->success(null, "Không tồn tại bộ sưu tập");
             }
             $image = new Image();
             $results = $image->getImages($id);
@@ -109,7 +109,7 @@ class GalleryController extends Controller
         try {
             $gallery = Gallery::find($id);
             if (!$gallery) {
-                return response()->notFound("gallery does not exist");
+                return response()->success(null, "Không tồn tại bộ sưu tập");
             }
             $image_link = $gallery->image_link;
             if($request->hasFile('image_link')){
@@ -140,7 +140,7 @@ class GalleryController extends Controller
         try {
             $deletebyid = Gallery::find($id);
             if (!$deletebyid) {
-                return response()->notFound("gallery does not exist");
+                return response()->success(null, "Không tồn tại bộ sưu tập");
             }
             $deletebyid->delete();
             return response()->success($deletebyid);

@@ -58,8 +58,15 @@ export class CustomerComponent implements OnInit {
       if (result === 1) {
         this.stylistService.delelteCustomer(id).subscribe(
           api => {
-            this.getCustomerFromService();
-            this.toastr.warning('Xóa khách hàng thành công');
+            console.log(api);
+            console.log(api.message);
+            if (api.data === null) {
+              this.getCustomerFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getCustomerFromService();
+              this.toastr.warning('Xóa khách hàng thành công');
+            }
           },
           error => {
             this.toastr.error(error);

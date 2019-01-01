@@ -1,0 +1,34 @@
+<h3 mat-dialog-title>Thay đổi lịch làm việc</h3>
+<form [formGroup]="ownerForm" novalidate class="mat-dialog-content">
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput class="form-control" placeholder="Tên stylist" [(ngModel)]="data.stylist_name" name="stylist_name"
+        required formControlName="stylist_name" readonly>
+        <mat-error *ngIf="hasError('stylist_name', 'required')">Vui lòng điền tên</mat-error>     
+    </mat-form-field>
+  </div>
+
+  <div class="form">
+    <mat-form-field color="primary">
+      <input matInput class="form-control" placeholder="Ngày" [(ngModel)]="data.date"
+        name="date" minlength="10" maxlength="10" required formControlName="date" readonly>
+      <mat-error *ngIf="hasError('date', 'required')">Vui lòng chọn ngày</mat-error>  
+    </mat-form-field>
+  </div>
+<div class="form">
+  <!-- <mat-form-field> -->
+    <p>Nhóm dịch vụ</p>
+    <select matNativeControl required [(ngModel)]="data.status" formControlName="status">
+      <option value="1">sáng</option>
+      <option value="2">chiều</option>
+      <option value="3">cả ngày</option>
+      <option value="0">nghỉ</option>
+    </select>
+    <mat-error *ngIf="hasError('status', 'required')">Vui lòng chọn ca</mat-error>  
+  <!-- </mat-form-field> -->
+</div>
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!ownerForm.valid" [mat-dialog-close]="data">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>  
+  </form>

@@ -18,13 +18,74 @@ use Pusher\Pusher;
 
 class BookingController extends Controller
 {
+    function getAvailableBookingTimeWithStylist($serviceID, $stylistID, $date)
+    {
+        try {
+            $service = new Service();
+            //sizeoftime bội số của 15'
+            $sizeOfTime = $service->getTimeService($serviceID) * 4;
+            $shift = new Shift();
+            $status = $shift->getStatusByStylistID($stylistID, $date);
+            $sts = $status->status;
+            $shiftDefaultByStylistID = $this->getAvailableBookingTime($sts, $sizeOfTime);
+            return $shiftDefaultByStylistID;
+        } catch (Exception $e) {
+            return response()->exception($e->getMessage(), $e->getCode());
+        }
+    }
+
+    function getAvailableBookingTime($status, $sizeOfTime)
+    {
+        $arr = explode(',', $status);
+        sort($arr);
+        $arr2chieu = array();
+
+        for ($i = 0; $i <= sizeof($arr) - 1; $i++) {
+            $arr1chieu = array();
+            array_push($arr1chieu, $arr[$i]);
+            //@long trường hợp ko có giá trị nào
+            //@long xóa dấu ","
+            while ($i < sizeof($arr) - 1 && $arr[$i + 1] == $arr[$i] + 1) {
+                array_push($arr1chieu, $arr[$i + 1]);
+                $i++;
+            }
+            array_push($arr2chieu, $arr1chieu);
+            unset($arr1chieu);
+        }
+
+
+        $statusArr = array();
+        foreach ($arr2chieu as $key => $value) {
+            if (sizeof($value) >= $sizeOfTime) {
+                for ($i = 0; $i <= sizeof($value) - $sizeOfTime; $i++) {
+                    array_push($statusArr, $value[$i]);
+                }
+            }
+        }
+        return $statusArr;
+    }
+
+
     public function addNewBooking(Request $request)
     {
         try {
-            //1.check booking is exist
+            //1.1 check booking is exist
             $booking = new Booking();
             if ($booking->getStatusBookedByPhonenumber($request->phone_number) > 0) {
                 return response()->success(null, 'Bạn có chắc chắn muốn đổi lịch');
+            }
+            //1.2 check available shift
+            if($request->stylist_id != -1){
+                $availableShift = $this->getAvailableBookingTimeWithStylist($request->service_id, $request->stylist_id, $request->date);
+                $stylistBooked = 1;
+                for($i =0 ; $i< count($availableShift); $i++){
+                    if($availableShift[$i] == $request->start_time){
+                        $stylistBooked = 0;
+                    }
+                }
+                if($stylistBooked == 1){
+                    return response()->success(1, 'Thời gian làm việc của stylist này đã được đặt, bạn vui lòng chọn thời gian hoặc stylist khác.');
+                }
             }
             //add customer
             $customer = new Customer();
@@ -61,7 +122,7 @@ class BookingController extends Controller
                        ' được phục vụ bởi ' . $stylist_name .
                        '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop (0976420019).';
             // gửi tin nhắn to customer
-//            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
             //5.add new booking
             $newBooking = $booking->addNewBooking($shift_id, $service_id, $customer_id, $start_time);
             //6.update status of shift
@@ -75,7 +136,7 @@ class BookingController extends Controller
             $notification = new Notification();
             $notification->addNotificaion($newBooking->id, 'new');
             $data = $this->sendMessageToAdmin();
-            return response()->success($data, 'Bạn đã đặt lịch thành công');
+            return response()->success($newBooking, 'Bạn đã đặt lịch thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -93,11 +154,11 @@ class BookingController extends Controller
             if ($request->stylist_id == -1) {
                 //nếu ko chọn thì random
                 $shift = $this->randomShift($request->start_time, $request->service_id, $request->date);
-                //$shift_id = $shift->id;
+//                $shift_id = $shift->id;
                 $stylist_id = $shift->stylist_id;
             } else {
                 $shift_id_arr = $shift->getShiftIDByStylistID($request->stylist_id, $request->date);
-                //$shift_id = $shift_id_arr->id;
+//                $shift_id = $shift_id_arr->id;
                 $stylist_id = $request->stylist_id;
             }
             $shift_id_arr = $shift->getShiftIDByStylistID($stylist_id, $request->date);
@@ -131,7 +192,7 @@ class BookingController extends Controller
                        ' được phục vụ bởi ' . $stylist_name .
                        '. Mọi thắc mắc vui lòng liên hệ với chị chủ shop (0976420019).';
 
-//            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
+            $sentMessage = $this->sendMessageToCustomer($message, $request->phone_number);
 
             //add notification
             $notification = new Notification();
@@ -297,6 +358,11 @@ class BookingController extends Controller
         $bookedTime = $this->getBookingTime($startTime, $sizeOfTime);
         $shiftList = array();
         $shiftList = Shift::where("date", $date)->get();
+//        $shiftList = DB::table('shifts')
+//            ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
+//            ->whereNull('stylists.deleted_at')
+//            ->where('shifts.date', '=', $date)
+//            ->get();
         $availableShiftList = array();
         foreach ($shiftList as $key => $value) {
             # code...
@@ -526,11 +592,13 @@ class BookingController extends Controller
                 $morningMonth[$i] = DB::table('bookings')->select('id')
                                       ->whereIn('shift_id', $shiftOnMonthArr[$i])
                                       ->whereBetween('start_time', [0,23])
+                                        ->whereNull('deleted_at')
                                       ->count();
 
                 $eveningMonth[$i] = DB::table('bookings')->select('id')
                                       ->whereIn('shift_id', $shiftOnMonthArr[$i])
                                       ->whereBetween('start_time', [24,47])
+                    ->whereNull('deleted_at')
                                       ->count();
 
                 $wholeMonth[$i] = $morningMonth[$i] + $eveningMonth[$i];
@@ -618,11 +686,13 @@ class BookingController extends Controller
                 $morningWeek[$i] = DB::table('bookings')->select('id')
                                      ->whereIn('shift_id', $shiftOnWeekArr[$i])
                                      ->whereBetween('start_time', [0,23])
+                    ->whereNull('deleted_at')
                                      ->count();
 
                 $eveningWeek[$i] = DB::table('bookings')->select('id')
                                      ->whereIn('shift_id', $shiftOnWeekArr[$i])
                                      ->whereBetween('start_time', [24,47])
+                    ->whereNull('deleted_at')
                                      ->count();
 
                 $wholeWeek[$i] = $morningWeek[$i] + $eveningWeek[$i];

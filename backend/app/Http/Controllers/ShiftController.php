@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Shift;
 use App\Stylist;
 use App\Service;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BookingController;
 
@@ -25,7 +27,7 @@ class ShiftController extends Controller
         try {
             $shift = Shift::find($id);
             if (!$shift) {
-                return response()->notFound("Shift does not exist");
+                return response()->success(null, "Lịch làm việc không tồn tại");
             }
             return response()->success($shift);
         } catch (Exception $e) {
@@ -163,13 +165,21 @@ class ShiftController extends Controller
         //
         try {
             $numberOfStylist = sizeof(Stylist::all());
+            $arr = $request->array;
+            $addDate = $arr[0]["date"];
+            $checkExitDate = Shift::where('date', $addDate)->count();
+            if($checkExitDate > 0){
+                return response()->success(null, 'Bạn đã tạo lịch làm việc cho toàn bộ nhân viên vào ngày '
+                .$addDate.'. Vui lòng thay đổi lịch làm việc cho từng nhân viên.');
+            }
             for($i = 0; $i < $numberOfStylist; $i++) {
-                $shift = Shift::create([
-                    'stylist_id' => $request->stylist_id."$i",
-                    'date' => $request->date."$i",
-                    'start_time' => $request->start_time."$i",
-                    'end_time' => $request->end_time."$i",
-                    'status' => $request->status."$i"
+                $status = $this->getStautusFromNumber($arr[$i]["start_time"], $arr[$i]["end_time"]);
+                 $shift = Shift::create([
+                    'stylist_id' => $arr[$i]["stylist_id"],
+                    'date' => $arr[$i]["date"],
+                    'start_time' => $arr[$i]["start_time"],
+                    'end_time' => $arr[$i]["end_time"],
+                    'status' => $status,
                 ]);
             }
             return response()->success($shift, 'Bạn đã tạo thành công lịch làm việc');
@@ -189,11 +199,26 @@ class ShiftController extends Controller
         //
         try {
             $shift = Shift::find($id);
-            if (!$shift) {
-                return response()->notFound("shift does not exist");
+            $carbon = Carbon::now();
+            $from = $carbon->format('Y-m-d');
+            $to = $carbon->addDays(2);
+            $checkDate = Shift::where([
+                ['id', '=', $id],
+            ]) ->whereBetween('date', [$from, $to])
+                              ->count();
+            if($checkDate>0){
+                return response()->success(null, "Bạn không thể thay đổi lịch làm việc này! Lịch làm việc đang được sử dụng.");
             }
-            $updatedShift = $shift->update($request->only(['start_time', 'end_time']));
-            return response()->success($updatedShift, 'Update thành công lịch làm việc');
+            if (!$shift) {
+                return response()->success(null, "Lịch làm việc không tồn tại");
+            }
+            $status = $this->getStautusFromNumber($request->start_time, $request->end_time);
+            $updatedShift = $shift->update([
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'status' => $status
+            ]);
+            return response()->success($updatedShift, 'Thay đổi thành công lịch làm việc');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -205,10 +230,20 @@ class ShiftController extends Controller
         try {
             $deletebyid = Shift::find($id);
             if (!$deletebyid) {
-                return response()->notFound("shift does not exist");
+                return response()->success(null, "Lịch làm việc không tồn tại");
+            }
+            $carbon = Carbon::now();
+            $from = $carbon->format('Y-m-d');
+            $to = $carbon->addDays(2);
+            $checkDate = Shift::where([
+                ['id', '=', $id],
+            ]) ->whereBetween('date', [$from, $to])
+                ->count();
+            if($checkDate>0){
+                return response()->success(null, "Bạn không thể xóa! Lịch làm việc đang được sử dụng.");
             }
             $deletebyid->delete();
-            return response()->success($deletebyid);
+            return response()->success($deletebyid, "Xóa lịch làm việc thành công");
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
@@ -307,5 +342,17 @@ class ShiftController extends Controller
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }
+    }
+
+     function getStautusFromNumber($startNumber, $endNumber) {
+        if($startNumber > $endNumber)
+            return "";
+        $status = $startNumber;
+
+        for($i=$startNumber+1; $i <= $endNumber; $i++) {
+            $status = $status.","."$i";
+        }
+        $status = trim($status, ",");
+        return $status;
     }
 }

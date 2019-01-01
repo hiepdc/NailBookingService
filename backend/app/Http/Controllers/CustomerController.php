@@ -121,10 +121,10 @@ class CustomerController extends Controller
         try {
             $deletebyCustomer = Customer::find($id);
             if (!$deletebyCustomer) {
-                return response()->notFound("customer does not exist");
+                return response()->success(null, "khách hàng không tồn tại");
             }
             $deletebyCustomer->delete();
-            return response()->success($deletebyCustomer);
+            return response()->success($deletebyCustomer, 'đã xóa khách hàng thành công');
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

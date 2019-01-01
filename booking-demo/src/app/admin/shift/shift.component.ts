@@ -3,12 +3,13 @@ import { ShiftService } from './shift.service';
 import { ToastsManager } from 'ng2-toastr';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Shift } from '../models/shift';
-// import { AddShiftComponent } from './add-shift/add-shift.component';
-// import { EditShiftComponent } from './edit-shift/edit-shift.component';
+import { AddShiftComponent } from './add-shift/add-shift.component';
+import { EditShiftComponent } from './edit-shift/edit-shift.component';
 import { DeleteShiftComponent } from './delete-shift/delete-shift.component';
 import { AddShift } from '../models/addShift';
 import { StylistService } from '../stylist/stylist.service';
 import { Stylist } from '../models/stylist';
+import { removeSummaryDuplicates } from '@angular/compiler';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class ShiftComponent implements OnInit {
   shift: Shift;
   addShifts: Array<AddShift> = [];
   stylists: Stylist[];
+  today = new Date();
+  date = new Date(this.today.setDate(this.today.getDate() + 3));
   // init material
   displayedColumns = ['id', 'stylist_name', 'date', 'status', 'actions'];
   dataSource = new MatTableDataSource<Shift>(this.shifts);
@@ -67,7 +70,6 @@ export class ShiftComponent implements OnInit {
           addShift.start_time = 0;
           addShift.end_time = 0;
           addShift.status = 0;
-          console.log(addShift);
           this.addShifts.push(addShift);
         }
       },
@@ -89,89 +91,103 @@ export class ShiftComponent implements OnInit {
     return [year, month, day].join('-');
   }
 
-  // addNew() {
-  //   const dialogRef = this.dialog.open(AddShiftComponent,
-  //     {
-  //       width: '500px',
-  //       data: {
-  //         addShifts: this.addShifts,
-  //         date: new Date()
-  //       }
-  //     }
-  //   );
+  addNew() {
+    const dialogRef = this.dialog.open(AddShiftComponent,
+      {
+        width: '500px',
+        data: {
+          addShifts: this.addShifts,
+          date: this.date
+        }
+      }
+    );
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     result.date = this.formatDateYYYYmmdd(result.date);
-  //     for (let addShift of result.addShifts) {
-  //       if (addShift.status === '0') {
-  //         addShift.start_time = 0;
-  //         addShift.end_time = -1;
-  //         addShift.date = result.date;
-  //       } else if (addShift.status === '1') {
-  //         addShift.start_time = 0;
-  //         addShift.end_time = 23;
-  //         addShift.date = result.date;
-  //       } else if (addShift.status === '2') {
-  //         addShift.start_time = 24;
-  //         addShift.end_time = 47;
-  //         addShift.date = result.date;
-  //       } else {
-  //         addShift.start_time = 0;
-  //         addShift.end_time = 47;
-  //         addShift.date = result.date;
-  //       }
-  //     }
-  //     console.log(result.addShifts);
-  //     this.shiftService.addShift(result.addShifts).subscribe(
-  //       api => {
-  //         if (api.data === null) {
-  //           this.getShiftsFromService();
-  //           this.toastr.error(api.message);
-  //         } else {
-  //           this.getShiftsFromService();
-  //           this.toastr.success('Thêm lịch làm việc thành công');
-  //         }
-  //       },
-  //       error => {
-  //         console.log(error);
-  //         return;
-  //       }
-  //     );
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe(result => {
+      const date = this.formatDateYYYYmmdd(result.date);
+      for (let addShift of result.addShifts) {
+        if (addShift.status === '0') {
+          addShift.start_time = 0;
+          addShift.end_time = -1;
+          addShift.date = date;
+        } else if (addShift.status === '1') {
+          addShift.start_time = 0;
+          addShift.end_time = 23;
+          addShift.date = date;
+        } else if (addShift.status === '2') {
+          addShift.start_time = 24;
+          addShift.end_time = 47;
+          addShift.date = date;
+        } else {
+          addShift.start_time = 0;
+          addShift.end_time = 47;
+          addShift.date = date;
+        }
+      }
+      this.shiftService.addShift(result.addShifts).subscribe(
+        api => {
+          if (api.data === null) {
+            this.getShiftsFromService();
+            this.toastr.error(api.message);
+          } else {
+            this.getShiftsFromService();
+            this.toastr.success('Thêm lịch làm việc thành công');
+          }
+        },
+        error => {
+          console.log(error);
+          return;
+        }
+      );
+    });
+  }
 
-  // EditItem(id: number, stylist_name: string, date: string, status: string) {
-  //   const dialogRef = this.dialog.open(EditShiftComponent,
-  //     {
-  //       width: '500px',
-  //       data: {
-  //         id: id,
-  //         stylist_name: stylist_name,
-  //         date: date,
-  //         status: status
-  //       }
-  //     }
-  //   );
+  EditItem(id: number, stylist_name: string, date: string, status: string) {
+    const dialogRef = this.dialog.open(EditShiftComponent,
+      {
+        width: '500px',
+        data: {
+          id: id,
+          stylist_name: stylist_name,
+          date: date,
+          status: status
+        }
+      }
+    );
 
-  //   // dialogRef.afterClosed().subscribe(result => {
-  //   //   this.stylistService.editStylist(result.id, result.stylist_name, result.phone_number,
-  //   //     result.information, result.image_link).subscribe(
-  //   //       api => {
-  //   //         if (api.data === null) {
-  //   //           this.getStylistFromService();
-  //   //           this.toastr.error(api.message);
-  //   //         } else {
-  //   //           this.getStylistFromService();
-  //   //           this.toastr.success('Chỉnh sửa stylist thành công');
-  //   //         }
-  //   //       },
-  //   //       error => {
-  //   //         console.log(error);
-  //   //         return;
-  //   //       }
-  //   //     );
-  //   // });
-  // }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if(result.status === '1'){
+          result.start_time = 0;
+          result.end_time = 23;
+        }else if(result.status === '2'){
+          result.start_time = 24;
+          result.end_time = 47;
+        }else if(result.status === '3'){
+          result.start_time = 0;
+          result.end_time = 47;
+        }else{
+          result.start_time = 0;
+          result.end_time = -1;
+        }
+        console.log(result);
+        this.shiftService.editShift(result.id, result.start_time, result.end_time).subscribe(
+          api => {
+            if (api.data === null) {
+              this.getShiftsFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getShiftsFromService();
+              this.toastr.success(api.message);
+            }
+          },
+          error => {
+            console.log(error);
+            return;
+          }
+        );
+      }
+    });
+  }
 
   deleteItem(id: number) {
     const dialogRef = this.dialog.open(DeleteShiftComponent,
@@ -183,19 +199,24 @@ export class ShiftComponent implements OnInit {
       }
     );
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result === 1) {
-    //     this.stylistService.delelteStylist(id).subscribe(
-    //       api => {
-    //         this.getStylistFromService();
-    //         this.toastr.warning('Xóa stylist thành công');
-    //       },
-    //       error => {
-    //         console.log(error);
-    //         return;
-    //       }
-    //     );
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.shiftService.delelteShift(id).subscribe(
+          api => {
+            if (api.data === null) {
+              this.getShiftsFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getShiftsFromService();
+              this.toastr.success(api.message);
+            }
+          },
+          error => {
+            console.log(error);
+            return;
+          }
+        );
+      }
+    });
   }
 }

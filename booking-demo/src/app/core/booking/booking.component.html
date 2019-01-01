@@ -30,7 +30,7 @@
                           [(ngModel)]="phoneNumber" name="phone_number" required> -->
                           <span class="input-group-addon"> <i class="fas fa-user"></i></span>
                           <input type="tel" placeholder="" class="form-control" maxlength="20" [(ngModel)]="customerName"
-                        name="name" [disabled]="existCustomer" required>
+                        name="name" [disabled]="existCustomer" minlength="2" required>
                     </div>
                   </div>
                 </div>
@@ -70,7 +70,7 @@
                             alt="">
                         </div>
                         <div class="service-content">
-                          <h5>Châm trâm chọn cho bạn</h5>
+                          <h5>Châm Trâm chọn cho bạn</h5>
                         </div>
                       </div>
 
@@ -165,7 +165,7 @@
             Pin</button>
           <button type="button" class="btn" (click)="getPinCode()" [style.display]="verified ? 'block' : 'none'">Get
             Pin</button>
-        </div>
+        </div> 
       </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -201,10 +201,8 @@
 <div id="modalErrorMessage" class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayErrorMessage}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <!-- <form (ngSubmit)="onSubmitChangeBooking(changeBookingForm)" #changeBookingForm="ngForm"> -->
       <div class="modal-header">
         <button type="button" class="close" aria-label="Close" (click)="closeErrorMessage()"><span aria-hidden="true">&times;</span></button>
-        <!-- <h4 class="modal-title">Verify Pin Number</h4> -->
       </div>
       <div class="modal-body">
         <h4 class="modal-title">Đã xảy ra lỗi. Anh/Chị vui lòng thực hiện lại</h4>
@@ -212,10 +210,9 @@
       <div class="modal-footer">
         <button type="button" class="btn" (click)="closeErrorMessage()">Đóng</button>
       </div>
-      <!-- </form> -->
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal !-->
+    </div>
+  </div>
+</div>
 
 <!-- Modal Booking Form-->
 <div class="backdrop" [ngStyle]="{'display':displayBookingForm2}"></div>
@@ -267,6 +264,6 @@
             Lịch</button>
         </div>
       </form>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal !-->
+    </div>
+  </div>
+</div>

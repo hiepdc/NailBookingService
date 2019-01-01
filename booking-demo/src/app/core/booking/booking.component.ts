@@ -52,12 +52,12 @@ export class BookingComponent implements OnInit {
     slidesPerView: 5,
     spaceBetween: 0,
     navigation: true,
-    // scrollbar: true,
+    loop: true,
+    centeredSlides: true,
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
     },
-    centeredSlides: true
   };
 
   //radio button
@@ -172,12 +172,9 @@ export class BookingComponent implements OnInit {
     }
     this.getStylistFromService();
     this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
-
-    //this.openBookingForm2();
-    //this.openVerifyPin();
   }
 
-  /*------  Put data to service ---------*/
+  /*------  Add data to confirm service ---------*/
   addDataToConfirmBookingService() {
     this.confirmBookingService.changeHour(this.selectedHour);
     this.confirmBookingService.changeDate(this.selectedDate);
@@ -185,13 +182,14 @@ export class BookingComponent implements OnInit {
     this.confirmBookingService.changeStylistName(this.stylistName);
   }
 
-  /*------  Get data from db --------*/
+  /*------  Get stylist from db --------*/
   getStylistFromService(): void {
     this.bookingService.getStylists().subscribe(
       stylistsApi => this.stylists = stylistsApi.data
     );
   }
 
+  /*------  Get shift from db --------*/
   getShiftByStylist(serviceId: string, stylistId: number, date: string, stylistName: string): void {
     this.selectedHour = "";
     this.bookingService.getShiftByStylist(serviceId, stylistId, date).subscribe(
@@ -227,6 +225,7 @@ export class BookingComponent implements OnInit {
     );
   }
 
+  /*------  Get spin code --------*/
   getPinCode() {
     var body = { phone_number: this.phoneNumber };
     this.bookingService.checkPhoneOfCustomer(body).subscribe(
@@ -239,6 +238,7 @@ export class BookingComponent implements OnInit {
 
   }
 
+  /*------  Send form booking --------*/
   onSubmitBooking(form: NgForm): void {
     console.log(form.value);
     if (this.existCustomer) {
@@ -264,14 +264,17 @@ export class BookingComponent implements OnInit {
         this.toastr.warning('Số Điện Thoại của Quý Khách không chính xác');
       }
     } else {
-      this.bookingService.checkPhoneOfCustomer(form.value).subscribe(
+      const body = { phone_number: this.phoneNumber };
+      this.bookingService.checkPhoneOfCustomer(body).subscribe(
         (checkPhoneApi: CheckPhoneApi) => {
-          this.checkPhoneApi = checkPhoneApi; console.log("checkPhoneApi message" + this.checkPhoneApi.message);
+          this.checkPhoneApi = checkPhoneApi; 
+          console.log("checkPhoneApi message" + this.checkPhoneApi.message);
+          console.log("sdt" + this.phoneNumber);
           if (this.checkPhoneApi.data.check == false) {
             //khách hàng đã có trong hệ thống
           }else{
              //khach hang chua co trong he thong
-      //verify pin
+            //verify pin
             console.log(this.displayVerifyPin);
             this.openVerifyPin();
           }
@@ -282,6 +285,7 @@ export class BookingComponent implements OnInit {
 
   }
 
+  /*------  Check Pin--------*/
   onSubmitCheckPin() {
     // console.log(form.value);
     this.bookingService.checkPinCode(this.phoneNumber, +this.inputPinNumber).subscribe(
@@ -331,6 +335,7 @@ export class BookingComponent implements OnInit {
     )
   }
 
+  /*------  Edit Booking--------*/
   onSubmitChangeBooking() {
     //edit booking rồi chuyển sang confirm booking
     this.bookingService.editBooking(this.phoneNumber,
@@ -352,15 +357,8 @@ export class BookingComponent implements OnInit {
       );
   }
 
+  /*------  Form xac nhan lại booking--------*/
   onSubmitBookingForm2() {
-    //1. tạo customer mới
-    // this.bookingService.addNewCustomer(this.customerName, this.phoneNumber).subscribe(
-    //   (customerApi: CustomerApi) => {
-    //     console.log(customerApi.data);
-    //   },
-    //   error => { console.log(error); return }
-    // );
-
     this.bookingService.addNewBooking(this.phoneNumber,
       this.stylistId, this.selectedDate, +this.selectedHour,
       +this.selectedService, this.customerName).subscribe(
@@ -390,6 +388,7 @@ export class BookingComponent implements OnInit {
     this.router.navigate(['stylist']);
   }
 
+  /*------  Select date từ html--------*/
   selectDate(dateTime: DateTime): void {
     //this.dateTime = dateTime;
     this.selectedDate = this.formatDateYYYYmmdd(dateTime.date);
@@ -398,11 +397,13 @@ export class BookingComponent implements OnInit {
     this.selectedHour = "";
   }
 
+  /*------  Click hour từ html--------*/
   click_hour(hour: string): void {
     this.selectedHour = hour;
     console.log(`selected hour: ${this.selectedHour}`);
   }
 
+  /*------  Click service từ html--------*/
   clickService(event: any) {
     this.selectedService = event.target.value;
     this.service = this.changeSelectedServiceToServiceName(this.selectedService);

@@ -15,15 +15,15 @@
                <!-- /section-heading -->
                <div class="stylist">
                   <swiper [config]="config1" [(index)]="index">
-                     <!-- <div class="serviceBox">
-                          <div class="service-icon">
-                            <img class="img-responsive img-circle" [ngClass]="{'border': stylistId == -1}" src="../../assets/img/services/service1.jpg"
-                              alt="">
-                          </div>
-                          <div class="service-content">
-                            <h5>Châm trâm chọn cho bạn</h5>
-                          </div>
-                        </div> -->
+                     <div class="serviceBox" (click)="displayInformation(-1, 'Châm Trâm Nail sẽ lựa chọn stylist tốt nhất cho chị')">
+                        <div class="service-icon">
+                          <img class="img-responsive img-circle" [ngClass]="{'border': stylistId == -1}" src="../../assets/img/services/service1.jpg"
+                            alt="">
+                        </div>
+                        <div class="service-content">
+                          <h5>Châm Trâm chọn cho bạn</h5>
+                        </div>
+                      </div>
 
                      <div class="serviceBox" *ngFor="let eachStylist of stylists" (click)="displayInformation(eachStylist.id, eachStylist.information)">
                         <div class="service-icon">
@@ -86,7 +86,7 @@
             <button type="button" class="close" aria-label="Close" (click)="closeChangeBooking()"><span aria-hidden="true">&times;</span></button>
          </div>
          <div class="modal-body">
-            <h4 class="modal-title">Anh/chị có muốn đổi lịch hay hủy lịch</h4>
+            <h4 class="modal-title">Chị có muốn đổi lịch hay hủy lịch</h4>
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-a" (click)="closeChangeBooking()">Đóng</button>

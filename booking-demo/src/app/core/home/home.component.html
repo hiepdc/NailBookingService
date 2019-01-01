@@ -16,7 +16,7 @@
     <div class="content-wrapper">
       <div class="content-box home text-center container">
         <div class="inside-wrapper home col-md-12">
-          <h3>Châm Trâm Nail hân hạnh phục vụ Quý Khách</h3>
+          <h3>Châm Trâm Nail hân hạnh phục vụ Quý khách</h3>
           <div class="input_sdt">
             <form #bookingForm="ngForm">
               <div class="input-phone">
@@ -56,6 +56,9 @@
         <button type="button" class="close" aria-label="Close" (click)="closeChangeBooking()"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
+          <h5 class="modal-title">Anh/chị đã đặt gói {{bookingServiceName}},
+              stylist {{bookingStylistName}}, ngày {{bookingDate}}
+              lúc {{bookingTime}}</h5>
         <h4 class="modal-title">Anh/chị có muốn đổi lịch hay hủy lịch</h4>
       </div>
       <div class="modal-footer">

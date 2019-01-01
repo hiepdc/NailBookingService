@@ -34,6 +34,7 @@ export class StylistComponent implements OnInit {
     slidesPerView: 5,
     spaceBetween: 0,
     navigation: true,
+    loop: true,
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
@@ -49,14 +50,14 @@ export class StylistComponent implements OnInit {
   //     clickable: true,
   //   },
   // };
-  index = 0;
+  index = 2;
   indexstr:string="";
   //stylist
   stylist: Stylist;
   stylists: Stylist[];
-  stylistId:number=1;
+  stylistId:number=-1;
   displayStylist:boolean=true;
-  information:string="Nhanh nhẹn, xinh xắn, khóe léo";
+  information:string="Châm Trâm Nail sẽ lựa chọn stylist tốt nhất cho chị";
 
   phoneNumber:string="";
   bookingApi: BookingApi;
@@ -70,7 +71,7 @@ export class StylistComponent implements OnInit {
     this.confirmBookingService.currentStylistId.subscribe(stylistId => this.indexstr = stylistId);
     if(this.indexstr.length > 0){
       this.stylistId = +this.indexstr;
-      this.index = +this.indexstr-1
+      this.index = +this.indexstr
     }
   }
   getStylistFromService(): void {

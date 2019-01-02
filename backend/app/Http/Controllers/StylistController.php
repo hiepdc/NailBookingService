@@ -210,7 +210,16 @@ class StylistController extends Controller
                 $this->sendMessageToCustomer($message, $booking->phone_number);
                 $testMessage[] = $message;
             }
-//            return response()->success($testMessage, "Xóa stylist thành công");
+        //xoa notification
+            $notifications = DB::table('notifications')
+                            ->join('bookings', 'notifications.booking_id', '=', 'bookings.id')
+                          ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
+                          ->join('stylists', 'stylists.id', '=', 'shifts.stylist_id')
+                          ->where([
+                              ['stylists.id', '=', $id],
+                              ['date', '>=', $carbon]
+                          ])
+                          ->delete();
             $bookings = Booking::join('services', 'services.id', '=', 'bookings.service_id')
                           ->join('customers', 'customers.id', '=', 'bookings.customer_id')
                           ->join('shifts', 'shifts.id', '=', 'bookings.shift_id')
@@ -224,17 +233,17 @@ class StylistController extends Controller
                           ->where([
                               ['stylists.id', '=', $id],
                               ['date', '>=', $carbon]
-                          ])->whereNull('bookings.deleted_at')
-                ->delete();
+                          ])
+                ->forceDelete();
             //xóa stylist
-            Shift::where([
+            $shifts = DB::table('shifts')->where([
                 ['stylist_id', $id],
                 ['date', '>=', $carbon]
-            ])
-                ->delete();
+            ])->delete();
+//                ->delete();
             // xóa stylist
             $deletebyid->delete();
-            return response()->success($deletebyid, "Xóa stylist thành công");
+            return response()->success($shifts, "Xóa stylist thành công");
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
         }

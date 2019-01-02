@@ -3,302 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="09bbc1c0-7418-4535-aa74-cfc9cfc40df0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Booking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Feedback.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Feedback.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BookingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BookingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CustomerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/GalleryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/GalleryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ImageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ImageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReportController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServiceItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServiceItemController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ShiftController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ShiftController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StylistController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StylistController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Shift.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Shift.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2018_10_25_084304_create_customers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_10_25_084304_create_customers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2018_10_25_084714_create_stylists_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_10_25_084714_create_stylists_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2018_10_25_090945_create_feedbacks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_10_25_090945_create_feedbacks_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/BookingSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/BookingSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/FeedbackSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/FeedbackSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/ShiftSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ShiftSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/StylistSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/StylistSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/upload/stylists/default.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/0.b1195e7f68814053c9d6.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/1.1a9b1174ae9450e472b3.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/2.93aef6e173c1a18ed0ed.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/3rdpartylicenses.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/dist/css/sb-admin-2.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/dist/css/sb-admin-2.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/dist/js/sb-admin-2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/dist/js/sb-admin-2.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap-social/bootstrap-social.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap-social/bootstrap-social.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap-social/bootstrap-social.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/css/bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/fonts/glyphicons-halflings-regular.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/js/bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/bootstrap/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables-plugins/dataTables.bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables-plugins/dataTables.bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables-plugins/dataTables.bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables-plugins/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables-responsive/dataTables.responsive.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables-responsive/dataTables.responsive.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables-responsive/dataTables.responsive.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.bootstrap4.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.bootstrap4.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.foundation.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.foundation.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.jqueryui.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.jqueryui.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.material.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.material.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.semanticui.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.semanticui.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.uikit.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/dataTables.uikit.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/jquery.dataTables.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/jquery.dataTables.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/css/jquery.dataTables_themeroller.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/images/Sorting icons.psd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/images/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/images/sort_asc.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/images/sort_asc_disabled.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/images/sort_both.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/images/sort_desc.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/images/sort_desc_disabled.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.bootstrap4.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.bootstrap4.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.foundation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.foundation.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.jqueryui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.jqueryui.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.material.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.material.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.semanticui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.semanticui.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.uikit.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/dataTables.uikit.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/jquery.dataTables.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/jquery.dataTables.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/datatables/js/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot-tooltip/jquery.flot.tooltip.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot-tooltip/jquery.flot.tooltip.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot-tooltip/jquery.flot.tooltip.source.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/excanvas.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/excanvas.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.colorhelpers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.canvas.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.categories.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.crosshair.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.errorbars.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.fillbetween.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.image.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.navigate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.pie.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.resize.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.selection.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.stack.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.symbol.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.threshold.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.flot.time.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/flot/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/HELP-US-OUT.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/css/font-awesome.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/css/font-awesome.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/css/font-awesome.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/fonts/FontAwesome.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/fonts/fontawesome-webfont.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/fonts/fontawesome-webfont.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/fonts/fontawesome-webfont.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/fonts/fontawesome-webfont.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/fonts/fontawesome-webfont.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/animated.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/bordered-pulled.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/core.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/extras.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/fixed-width.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/font-awesome.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/icons.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/larger.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/list.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/mixins.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/path.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/rotated-flipped.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/screen-reader.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/spinning.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/stacked.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/less/variables.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_animated.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_bordered-pulled.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_core.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_extras.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_fixed-width.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_icons.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_larger.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_list.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_mixins.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_path.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_rotated-flipped.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_screen-reader.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_spinning.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_stacked.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/_variables.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/font-awesome/scss/font-awesome.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/jquery/jquery.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/jquery/jquery.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/metisMenu/metisMenu.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/metisMenu/metisMenu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/metisMenu/metisMenu.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/metisMenu/metisMenu.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/morrisjs/morris.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/morrisjs/morris.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/morrisjs/morris.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/raphael/raphael.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/admin/vendor/raphael/raphael.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/css/maincolors.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/flaticon/flaticon.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/css/all.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/css/fontawesome-all.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-brands-400.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-brands-400.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-brands-400.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-brands-400.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-brands-400.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-regular-400.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-regular-400.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-regular-400.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-regular-400.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-regular-400.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-solid-900.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-solid-900.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-solid-900.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-solid-900.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/fonts/fontawesome/webfonts/fa-solid-900.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/admin/admin.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg11.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg12.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/backgrounds/bg9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/blog/blog1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/blog/blog2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/blog/blog3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/blog/blogpopular1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery10.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery11.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery12.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/gallery9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail1_tn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail2_tn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail3_tn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail4_tn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail5_tn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail6_tn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail7_tn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/gallery/nail8_tn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/home/arrow right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/mapmarker.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/prices/price1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/prices/price2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/prices/price3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/services/service1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/services/service2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/services/service3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/services/service4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/services/service5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/services/service6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/slideshow/slide1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/slideshow/slide2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/slideshow/slide3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/slideshow/slide4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/team/default.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/team/team1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/team/team2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/team/team4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/team/team5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/team/team6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/img/team/team7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/js/custom.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/js/plugins.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/vendor/bootstrap/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/assets/vendor/jquery/jquery.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/bg10.08fe8f8c0c8c558286b4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/glyphicons-halflings-regular.448c34a56d699c29117a.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/glyphicons-halflings-regular.89889688147bd7575d63.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/glyphicons-halflings-regular.e18bbf611f2a2e43afc0.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/glyphicons-halflings-regular.f4769f9bdb7466be6508.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/glyphicons-halflings-regular.fa2772327f55d8198301.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/inline.8af019a89227757679dc.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/main.e29a3ddea473dc01834d.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/polyfills.7760b6401dfd25cabf9a.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/scripts.dfbc8c2de497f7e23b8c.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/slide1.baafdad0039be1bafef9.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/slide2.9ac610c655f6fb2c0b6d.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/slide3.fb74f1552943bffe6def.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/slide4.d2e3160db975581476a2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/styles.45b5d4f56829881777dd.bundle.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/dist/web.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/admin.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/admin.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/booking/booking.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/booking/booking.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/customer/customer.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/customer/customer.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/dashboard/dashboard.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/dashboard/dashboard.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/feedback/feedback.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/feedback/feedback.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/feedback/feedback.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/feedback/feedback.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/feedback/feedback.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/feedback/feedback.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/gallery-image/gallery-image.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/gallery-image/gallery-image.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/gallery/gallery.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/gallery/gallery.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/service-item/service-item.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/service-item/service-item.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/shift/shift.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/shift/shift.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/shift/shift.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/shift/shift.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/shift/shift.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/shift/shift.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/stylist/dialogs/delete-dialog/delete-dialog.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/stylist/dialogs/delete-dialog/delete-dialog.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/admin/stylist/stylist.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/admin/stylist/stylist.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/core/aboutus/aboutus.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/core/aboutus/aboutus.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/core/booking/booking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/core/booking/booking.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/app/core/booking/booking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/app/core/booking/booking.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../booking-demo/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../booking-demo/dist.rar" beforeDir="false" afterPath="$PROJECT_DIR$/../booking-demo/dist.rar" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.idea/httpRequests/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -335,7 +41,7 @@
           <entry key="project.open.time.14" value="3" />
           <entry key="project.open.time.15" value="3" />
           <entry key="project.open.time.16" value="2" />
-          <entry key="project.open.time.17" value="3" />
+          <entry key="project.open.time.17" value="4" />
           <entry key="project.open.time.18" value="3" />
           <entry key="project.open.time.19" value="4" />
           <entry key="project.open.time.2" value="1" />
@@ -346,14 +52,14 @@
           <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.28" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="33" />
+          <entry key="project.opened" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key=".env file" value="1" />
           <entry key="HTTP Request" value="1" />
-          <entry key="PHP" value="209" />
+          <entry key="PHP" value="211" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -361,7 +67,7 @@
       <usages-collector id="statistics.php.rename.constructor" />
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="7942" />
+          <entry key="PHP" value="8174" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.php.composer.command.options" />
@@ -372,12 +78,12 @@
         <counts>
           <entry key="env" value="1" />
           <entry key="http" value="1" />
-          <entry key="php" value="209" />
+          <entry key="php" value="211" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="php" value="7942" />
+          <entry key="php" value="8174" />
         </counts>
       </usages-collector>
     </session>
@@ -387,7 +93,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ShiftController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1190">
+            <state relative-caret-position="3933">
               <caret line="200" column="18" selection-start-line="200" selection-start-column="12" selection-end-line="200" selection-end-column="18" />
               <folding>
                 <element signature="e#40#54#0#PHP" expanded="true" />
@@ -414,19 +120,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Image.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="759">
+            <state relative-caret-position="373">
               <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FeedbackController.php">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StylistController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+            <state relative-caret-position="300">
+              <caret line="220" column="28" selection-start-line="220" selection-start-column="28" selection-end-line="220" selection-end-column="28" />
               <folding>
-                <element signature="e#40#57#0#PHP" expanded="true" />
+                <element signature="e#39#55#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -435,7 +141,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ServiceController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
+            <state relative-caret-position="2806">
               <caret line="123" column="9" selection-start-line="114" selection-start-column="7" selection-end-line="123" selection-end-column="9" />
             </state>
           </provider>
@@ -503,7 +209,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/GalleryController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ImageController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/StylistController.php" />
         <option value="$PROJECT_DIR$/database/seeds/ShiftSeeder.php" />
         <option value="$PROJECT_DIR$/database/seeds/BookingSeeder.php" />
         <option value="$PROJECT_DIR$/database/seeds/StylistSeeder.php" />
@@ -520,6 +225,7 @@
         <option value="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" />
         <option value="$PROJECT_DIR$/database/seeds/FeedbackSeeder.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FeedbackController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/StylistController.php" />
       </list>
     </option>
   </component>
@@ -834,16 +540,18 @@
       <workItem from="1546269860524" duration="8371000" />
       <workItem from="1546329403832" duration="11614000" />
       <workItem from="1546351075134" duration="11518000" />
+      <workItem from="1546444384786" duration="3107000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155634000" />
+    <option name="totallyTimeSpent" value="158741000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33207262" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33736762" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -858,7 +566,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32885906" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.18624161" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.18624161" />
       <window_info anchor="bottom" id="REST Client" order="12" weight="0.5671141" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -866,12 +574,12 @@
       <window_info anchor="right" id="Database" order="3" weight="0.32980332" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.38880485" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.33736762" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32885906" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.54697984" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -881,7 +589,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32885906" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32885906" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.18624161" />
       <window_info anchor="bottom" id="REST Client" order="12" weight="0.5671141" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1085,16 +793,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StylistController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="186" column="54" lean-forward="true" selection-start-line="186" selection-start-column="39" selection-end-line="186" selection-end-column="54" />
-          <folding>
-            <element signature="e#39#55#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ServiceItemController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
@@ -1106,16 +804,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="231" column="42" selection-start-line="231" selection-start-column="42" selection-end-line="231" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Notification.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="56" column="23" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
-          <folding>
-            <element signature="e#23#41#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1136,24 +824,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ShiftController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1190">
-          <caret line="200" column="18" selection-start-line="200" selection-start-column="12" selection-end-line="200" selection-end-column="18" />
-          <folding>
-            <element signature="e#40#54#0#PHP" expanded="true" />
-            <element signature="e#4595#5547#0#PHP" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="3" lean-forward="true" selection-start-line="9" selection-start-column="3" selection-end-line="59" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ReportController.php" />
     <entry file="file://$PROJECT_DIR$/app/Shift.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="668">
@@ -1175,23 +846,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/News.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Image.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ServiceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="123" column="9" selection-start-line="114" selection-start-column="7" selection-end-line="123" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/seeds/FeedbackSeeder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
@@ -1203,9 +857,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="38" column="9" selection-start-line="13" selection-start-column="8" selection-end-line="38" selection-end-column="9" />
-          <folding>
-            <element signature="e#268#1185#0#PHP" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1223,6 +874,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ShiftController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3933">
+          <caret line="200" column="18" selection-start-line="200" selection-start-column="12" selection-end-line="200" selection-end-column="18" />
+          <folding>
+            <element signature="e#40#54#0#PHP" expanded="true" />
+            <element signature="e#4595#5547#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Feedback.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -1230,12 +892,49 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/News.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ServiceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2806">
+          <caret line="123" column="9" selection-start-line="114" selection-start-column="7" selection-end-line="123" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FeedbackController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+        <state relative-caret-position="144">
+          <caret line="29" column="6" lean-forward="true" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
           <folding>
             <element signature="e#40#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Image.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Notification.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1288">
+          <caret line="56" column="23" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
+          <folding>
+            <element signature="e#23#41#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StylistController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="220" column="28" selection-start-line="220" selection-start-column="28" selection-end-line="220" selection-end-column="28" />
+          <folding>
+            <element signature="e#39#55#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

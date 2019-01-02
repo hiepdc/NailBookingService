@@ -53,11 +53,11 @@ export class BookingComponent implements OnInit {
     spaceBetween: 0,
     navigation: true,
     loop: true,
-    centeredSlides: true,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
+    // centeredSlides: true,
+    // pagination: {
+    //   el: '.swiper-pagination',
+    //   clickable: true,
+    // },
   };
 
   //radio button
@@ -69,7 +69,7 @@ export class BookingComponent implements OnInit {
   stylists: Stylist[];
   stylistId: number = -1;
   stylistName: string = "Châm Trâm Nail đã xếp stylist tốt nhất cho anh/chị";
-  index: number = 2;
+  index: number = 0;
   indexstr: string = "";
 
   // shift

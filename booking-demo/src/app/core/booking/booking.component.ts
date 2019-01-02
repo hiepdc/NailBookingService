@@ -258,7 +258,11 @@ export class BookingComponent implements OnInit {
               var date = this.formatDateToDDMMYYYY(this.selectedDate);
               this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
             },
-            error => { console.log(error); return }
+            error => { 
+              console.log(error);
+              this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng thử lại'); 
+              return;
+            }
           );
       } else {
         this.toastr.warning('Số Điện Thoại của Quý Khách không chính xác');
@@ -310,7 +314,10 @@ export class BookingComponent implements OnInit {
                   var date = this.formatDateToDDMMYYYY(this.selectedDate);
                   this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
                 },
-                error => { console.log(error); return }
+                error => { 
+                  console.log(error);
+                  this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng thử lại'); 
+                  return; }
               );
             this.closeVerifyPin();
             //this.openBookingForm2();
@@ -377,7 +384,10 @@ export class BookingComponent implements OnInit {
             this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
           }
         },
-        error => { console.log(error); return }
+        error => {
+          console.log(error);
+          this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng thử lại'); 
+          return;}
       );
 
   }

@@ -402,6 +402,10 @@ input[type=number]::-webkit-outer-spin-button {
 .modal{
   overflow-y: scroll;
 }
+.radio-inline+.radio-inline {
+  margin-top: 0;
+  margin-left: 0;
+}
 
 }
 

@@ -5,6 +5,7 @@ import { Booking } from '../models/booking';
 import { AgGridNg2 } from 'ag-grid-angular';
 import { Customer } from '../models/customer';
 import { ToastsManager } from 'ng2-toastr';
+import { AlertPromise } from 'selenium-webdriver';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,14 +16,14 @@ export class DashboardComponent implements OnInit {
   dataPointsMonthMorning = [];
   dataPointsMonthNoon = [];
   chart: any;
-  years = [2019, 2018];
+  years = [2019];
   showComboboxMonth: any;
   //week
   dataPointsWeekDate = [];
   dataPointsWeekMorning = [];
   dataPointsWeekNoon = [];
   chartWeek: any;
-  months = ['2019-01', '2018-12', '2018-11'];
+  months = ['2019-01'];
   showComboboxWeek: any;
 
   //count total
@@ -200,7 +201,12 @@ export class DashboardComponent implements OnInit {
         dataPoints: this.dataPointsWeekDate
       }]
     });
-    this.getChartWeekFromService(`${(new Date()).getFullYear()}-${(new Date()).getMonth()}`);
+    const currentMonth = (new Date().getMonth()) + 1;
+    let currentMonthString = currentMonth.toString();
+    if (currentMonth < 10) {
+      currentMonthString = '0' + currentMonth.toString();
+    }
+    this.getChartWeekFromService(`${(new Date()).getFullYear()}-${currentMonthString}`);
 
     // for booking <---------------------->
     this.checkInDisable = true;

@@ -39,6 +39,7 @@ class Image extends Model
                               'images.caption',
                               'images.thumb_link',
                               'images.image_link')
+            ->whereNull('galleries.deleted_at')
                           ->get();
         return $images;
     }

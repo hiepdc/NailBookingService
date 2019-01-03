@@ -35,6 +35,7 @@ export class ConfirmedBookingComponent implements OnInit {
   selectedDate: string;
   stylistName: string;
   stylist: Stylist;
+  
 
   displayChangeBooking: string = 'none';
   displayConfirmDeleteBooking: string = 'none';
@@ -88,6 +89,7 @@ export class ConfirmedBookingComponent implements OnInit {
     this.confirmBookingService.changeCustomerName("");
     this.confirmBookingService.changeStylistId("");
     this.confirmBookingService.changeNotifiDeleteBooking("none");
+    this.confirmBookingService.changeExistCustomer(false);
   }
 
   goBack(): void {
@@ -98,13 +100,15 @@ export class ConfirmedBookingComponent implements OnInit {
       },
       error => { console.log(error); return }
     )
-    this.addPhoneNumberToConfirmBookingService();
+    this.confirmBookingService.changePhoneNumber(this.phoneNumber);
+    this.confirmBookingService.changeCustomerName(this.customerName);
+    this.confirmBookingService.changeExistCustomer(true);
     this.location.back();
   }
 
-  addPhoneNumberToConfirmBookingService() {
-    this.confirmBookingService.changePhoneNumber(this.phoneNumber);
-  }
+  // addPhoneNumberToConfirmBookingService() {
+  //   this.confirmBookingService.changePhoneNumber(this.phoneNumber);
+  // }
 
   openChangeBooking() {
     this.displayChangeBooking = 'block';

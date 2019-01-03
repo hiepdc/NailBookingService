@@ -15,13 +15,13 @@ class StylistSeeder extends Seeder
         $faker = Faker\Factory::create();
         DB::table('stylists')->insert([[
             'stylist_name' => 'Lệ Thủy',
-            'phone_number' => '0976420019',
+            'phone_number' => '09336420019',
             'information' => $faker->paragraph($nbSentences = 1),
             'image_link' => "http://api.chamtramnail.com/public/upload/stylists/team1.jpg",
         ],
             [
                 'stylist_name' => 'Thúy Vân',
-                'phone_number' => '0966808080',
+                'phone_number' => '0996808080',
                 'information' => $faker->paragraph($nbSentences = 1),
                 'image_link' => "http://api.chamtramnail.com/public/upload/stylists/team2.jpg",
             ],
@@ -45,13 +45,13 @@ class StylistSeeder extends Seeder
             ],
             [
                 'stylist_name' => 'Thúy Na',
-                'phone_number' => '0967420456',
+                'phone_number' => '0927420456',
                 'information' => $faker->paragraph($nbSentences = 1),
                 'image_link' => "http://api.chamtramnail.com/public/upload/stylists/team6.jpg",
             ],
             [
                 'stylist_name' => 'Thủy Tiên',
-                'phone_number' => '0366420496',
+                'phone_number' => '0316420496',
                 'information' => $faker->paragraph($nbSentences = 1),
                 'image_link' => "http://api.chamtramnail.com/public/upload/stylists/team7.jpg",
             ],

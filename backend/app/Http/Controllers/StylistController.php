@@ -205,7 +205,7 @@ class StylistController extends Controller
             $testMessage = array();
             foreach($bookings as $booking){
                 $message = 'Xin lỗi anh/chị '.$booking->customer_name.' vì sự bất tiện này ! Vì lý do cá nhân nên stylist: '.
-                           $booking->stylist_name. ' đã nghỉ làm . Quý khách vui lòng đặt lại lịch ở trang web: http://chamtramnail.com hoặc liên hệ với chị chủ shop (0976420019).';
+                           $booking->stylist_name. ' đã nghỉ làm . Quý khách vui lòng đặt lại lịch ở trang web: http://chamtramnail.com hoặc liên hệ với chị chủ shop (0963148246).';
                 $this->sendMessageToCustomer($message, $booking->phone_number);
                 $testMessage[] = $message;
             }

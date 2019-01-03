@@ -31,6 +31,7 @@ import { StylistComponent } from './stylist/stylist.component';
 import { BookingService } from './booking.service';
 import { ConfirmBookingService } from './confirm-booking.service';
 import { GalleryService } from './gallery.service';
+import { FeedbackService } from './feedback.service';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -74,6 +75,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
     },
+    FeedbackService
   ],
 })
 export class CoreModule { }

@@ -14,29 +14,29 @@ class GallerySeeder extends Seeder
 //        foreach (range(1, 12) as $index) {
         DB::table('galleries')->insert([
             [
-                'name' => "BST HALLOWEEN",
-                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery1.jpg',
+                'name' => "BST HALLOWEEN 2018",
+                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/halloween.jpeg',
             ],
             [
-                'name' => "BST hoa-lá-cành",
-                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery2.jpg',
+                'name' => "ICON FACEBOOK 2018",
+                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/icon_facebook.jpg',
             ],
-            [
-                'name' => "BST biển",
-                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery3.jpg',
-            ],
-            [
-                'name' => "BST tết",
-                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery4.jpg',
-            ],
-            [
-                'name' => "BST trung thu",
-                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery5.jpg',
-            ],
-            [
-                'name' => "BST giáng sinh",
-                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery6.jpg',
-            ]
+//            [
+//                'name' => "BST biển",
+//                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery3.jpg',
+//            ],
+//            [
+//                'name' => "BST tết",
+//                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery4.jpg',
+//            ],
+//            [
+//                'name' => "BST trung thu",
+//                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery5.jpg',
+//            ],
+//            [
+//                'name' => "BST giáng sinh",
+//                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/gallery6.jpg',
+//            ]
         ]);
 //        }
     }

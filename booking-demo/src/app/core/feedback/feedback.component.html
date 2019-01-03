@@ -1,4 +1,7 @@
-<div id="content" class="col-md-10 split">
+<div *ngIf="loaderService.isLoading | async">
+  <app-pre-loader></app-pre-loader>
+</div>
+<div id="content" class="col-md-10 split" *ngIf="!(loaderService.isLoading | async)">
   <!-- ===== Contact section starts  ===== -->
   <div id="contact">
     <div class="content-wrapper">
@@ -16,7 +19,7 @@
               <div id="contact_form">
                 <form #feedbackForm="ngForm">
                   <!-- row -->
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Tên Khách Hàng<span class="required"></span></label>
@@ -31,7 +34,7 @@
                         [(ngModel)]="phoneNumber"  name="phone">
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- /row -->
                   <!-- row -->
                   <div class="row">
@@ -39,21 +42,20 @@
                       <div class="form-group">
                         <label>Chủ Đề<span class="required">*</span></label>
                         <input type="text" name="subject" class="form-control input-field" 
-                         [(ngModel)]="subject" required>
+                         [(ngModel)]="title" required>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Message<span class="required">*</span></label>
                         <textarea name="message" id="message" class="textarea-field form-control" rows="10"
-                        [(ngModel)]="messages" required></textarea>
+                        [(ngModel)]="contents" required></textarea>
                       </div>
                     </div>
                   </div>
                   <!-- /row -->
-                  <button type="submit" class="btn" [disabled]="!feedbackForm.form.valid" (click)="addFeedBack(); feedbackForm.reset()">Send
+                  <button class="btn" [disabled]="!feedbackForm.form.valid" (click)="addFeedBack(); feedbackForm.reset()">Send
                     message</button>
-
                 </form>
               </div>
               <!-- /contact-form -->
@@ -102,7 +104,7 @@
                 <!-- contact-icon info -->
                 <div class="contact-icon-info">
                   <h6>Liên Hệ</h6>
-                  <p>SĐT: 0974372618</p>
+                  <p>SĐT: 0963148246</p>
                 </div>
               </div>
               <!-- /contact-icon-->

@@ -13,13 +13,20 @@ class ImageSeeder extends Seeder
     {
         //^_^
         $faker = Faker\Factory::create();
-        foreach (range(1, 100) as $index) {
-            $image = random_int(1,8);
+        foreach (range(1, 12) as $index) {
             DB::table('images')->insert([
-                'gallery_id' => rand(1,6),
+                'gallery_id' => 1,
 //                'caption' => $faker->paragraph($nbSentences = 1),
-                'thumb_link' => 'http://api.chamtramnail.com/public/upload/collection/nail'. $image. "_tn.jpg",
-                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/nail'. $image. ".jpg",
+                'thumb_link' => 'http://api.chamtramnail.com/public/upload/collection/thumbs_nail-đẹp-halloween-'. $index. ".jpeg",
+                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/nail-đẹp-halloween-'. $index. ".jpeg",
+            ]);
+        }
+        foreach (range(1, 9) as $index) {
+            DB::table('images')->insert([
+                'gallery_id' => 2,
+//                'caption' => $faker->paragraph($nbSentences = 1),
+                'thumb_link' => 'http://api.chamtramnail.com/public/upload/collection/thumbs_'. $index. ".jpg",
+                'image_link' => 'http://api.chamtramnail.com/public/upload/collection/'. $index. ".jpg",
             ]);
         }
     }

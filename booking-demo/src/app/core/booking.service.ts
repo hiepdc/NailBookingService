@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+// import { empty } from 'rxjs';
 
 import { StylistsApi } from './models/stylistsApi';
 import { ShiftApi } from './models/shiftApi';
@@ -143,7 +144,9 @@ export class BookingService {
     };
     return this.http.post<BookingApi>(url, body, httpOptions).pipe(
       tap((bookingApi: BookingApi) => console.log(bookingApi)),
-      catchError(error => of(new BookingApi()))
+      catchError((err, caught) => {
+        return null;
+      })
     );
   }
 

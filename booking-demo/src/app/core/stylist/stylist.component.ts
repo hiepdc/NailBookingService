@@ -29,6 +29,7 @@ export class StylistComponent implements OnInit {
   stylistId:number=-1;
   displayStylist:boolean=true;
   information:string="Châm Trâm Nail sẽ lựa chọn stylist tốt nhất cho chị";
+  informationArr:string[]=[];
 
   phoneNumber:string="";
   bookingApi: BookingApi;
@@ -79,7 +80,21 @@ export class StylistComponent implements OnInit {
       this.stylistId = +this.indexstr;
       this.index = +this.indexstr
     }
+
+    if(this.stylistId === -1){
+      this.information = "Châm Trâm Nail sẽ lựa chọn stylist tốt nhất cho chị.";
+      this.informationArr.push("Châm Trâm Nail sẽ lựa chọn stylist tốt nhất cho chị.");
+    }else{
+      this.bookingService.getStylistById(this.stylistId).subscribe(
+        stylistsApi => {
+          this.information = stylistsApi.data.information;
+          this.informationArr = this.information.split('.');
+        },
+        error => { console.log(error); return; }
+      );
+    }
   }
+  
   getStylistFromService(): void {
     this.bookingService.getStylists().subscribe(
       stylistsApi => this.stylists = stylistsApi.data
@@ -90,6 +105,7 @@ export class StylistComponent implements OnInit {
     this.stylistId = stylistId;
     this.displayStylist = true;
     this.information = information;
+    this.informationArr = this.information.split('.');
   }
 
   submitFormBooking(){
@@ -104,6 +120,7 @@ export class StylistComponent implements OnInit {
         if (this.bookingApi.data === null) {
           //chua co booking chuyen den trang booking
           this.confirmBookingService.changePhoneNumber(this.phoneNumber);
+          this.confirmBookingService.changeStylistId(this.stylistId+"");
           this.router.navigate(['booking']);
         } else {
           //hiển thị dialog thông báo Anh/chị doi lich hay huy lich
@@ -114,7 +131,7 @@ export class StylistComponent implements OnInit {
           this.openChangeBooking();
         }
       },
-      error => { console.log(error); return }
+      error => { console.log(error); return; }
     );
   }
 
@@ -132,7 +149,7 @@ export class StylistComponent implements OnInit {
           this.confirmBookingService.changeCustomerName(API.data.customer_name);
         }
       },
-      error => { console.log(error); return }
+      error => { console.log(error); return; }
     );
   }
 
@@ -142,7 +159,7 @@ export class StylistComponent implements OnInit {
       (bookingApi: BookingApi) => {
         this.toastr.success('Hủy Lịch thành công');
       },
-      error => { console.log(error); return }
+      error => { console.log(error); return; }
     )
     //2. set variable 
     this.setValueAfterDeleteBooking()
@@ -168,7 +185,7 @@ export class StylistComponent implements OnInit {
     this.bookingService.deleteBooking(+this.phoneNumber).subscribe(
       (bookingApi: BookingApi) => {
       },
-      error => { console.log(error); return }
+      error => { console.log(error); return; }
     )
     this.confirmBookingService.changePhoneNumber(this.phoneNumber);
     this.router.navigate(['booking']);
@@ -215,4 +232,5 @@ export class StylistComponent implements OnInit {
       case '48': return "21:00"; case '49': return "21:15"; case '50': return "21:30"; case '51': return "21:45";
     }
   }
+
 }

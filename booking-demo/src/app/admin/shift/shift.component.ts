@@ -9,7 +9,6 @@ import { DeleteShiftComponent } from './delete-shift/delete-shift.component';
 import { AddShift } from '../models/addShift';
 import { StylistService } from '../stylist/stylist.service';
 import { Stylist } from '../models/stylist';
-import { removeSummaryDuplicates } from '@angular/compiler';
 
 
 @Component({
@@ -36,11 +35,12 @@ export class ShiftComponent implements OnInit {
   }
   // end init material
   constructor(
-    private shiftService: ShiftService,
     public toastr: ToastsManager,
     _vcr: ViewContainerRef,
     public dialog: MatDialog,
+    private shiftService: ShiftService,
     private stylistService: StylistService
+
   ) {
     this.toastr.setRootViewContainerRef(_vcr);
   }
@@ -103,7 +103,9 @@ export class ShiftComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      const date = this.formatDateYYYYmmdd(result.date);
+      console.log(result);
+      if (result) {
+        const date = this.formatDateYYYYmmdd(result.date);
       for (let addShift of result.addShifts) {
         if (addShift.status === '0') {
           addShift.start_time = 0;
@@ -125,19 +127,20 @@ export class ShiftComponent implements OnInit {
       }
       this.shiftService.addShift(result.addShifts).subscribe(
         api => {
-          if (api.data === null) {
-            this.getShiftsFromService();
-            this.toastr.error(api.message);
-          } else {
-            this.getShiftsFromService();
-            this.toastr.success('Thêm lịch làm việc thành công');
-          }
+           if (api.data === null) {
+              this.getShiftsFromService();
+              this.toastr.error(api.message);
+            } else {
+              this.getShiftsFromService();
+              this.toastr.success(api.message);
+            }
         },
         error => {
           console.log(error);
           return;
         }
       );
+      }
     });
   }
 
@@ -206,6 +209,7 @@ export class ShiftComponent implements OnInit {
             if (api.data === null) {
               this.getShiftsFromService();
               this.toastr.error(api.message);
+              // alert(api.message);
             } else {
               this.getShiftsFromService();
               this.toastr.success(api.message);

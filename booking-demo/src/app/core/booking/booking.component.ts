@@ -52,12 +52,12 @@ export class BookingComponent implements OnInit {
     slidesPerView: 5,
     spaceBetween: 0,
     navigation: true,
-    // scrollbar: true,
+    loop: true,
+    // centeredSlides: true,
     // pagination: {
     //   el: '.swiper-pagination',
     //   clickable: true,
     // },
-    // centeredSlides: true
   };
 
   //radio button
@@ -251,72 +251,66 @@ export class BookingComponent implements OnInit {
             (bookingApi: BookingApi) => {
               this.bookingApi = bookingApi;
               //1.close modal change booking
-              if (bookingApi.data === 1) {
-                this.toastr.warning('Thời gian làm việc của stylist này đã được đặt, bạn vui lòng chọn thời gian hoặc stylist khác.');
-                this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
-                return;
-              } else if(bookingApi.data === null) { 
-                this.toastr.warning('Ban co muon doi lich');
-              } else {
-                this.closeChangeBooking();
-                //2.send data to service
-                this.addDataToConfirmBookingService();
-                var hour = this.changeStatusToStartTime(this.selectedHour);
-                var date = this.formatDateToDDMMYYYY(this.selectedDate);
-                this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
-              }
+              this.closeChangeBooking();
+              //2.send data to service
+              this.addDataToConfirmBookingService();
+              var hour = this.changeStatusToStartTime(this.selectedHour);
+              var date = this.formatDateToDDMMYYYY(this.selectedDate);
+              this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
             },
-      error => { console.log(error); return }
+            error => {
+              console.log(error);
+              this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng thử lại hoặc gọi đến 0963148246');
+              // this.router.navigate(['/home']);
+              return;
+            }
           );
-    } else {
-      this.toastr.warning('Số Điện Thoại của Quý Khách không chính xác');
-    }
-  } else {
-  const body = { phone_number: this.phoneNumber };
-  this.bookingService.checkPhoneOfCustomer(body).subscribe(
-    (checkPhoneApi: CheckPhoneApi) => {
-      this.checkPhoneApi = checkPhoneApi;
-      console.log("checkPhoneApi message" + this.checkPhoneApi.message);
-      console.log("sdt" + this.phoneNumber);
-      if (this.checkPhoneApi.data.check == false) {
-        //khách hàng đã có trong hệ thống
       } else {
-        //khach hang chua co trong he thong
-        //verify pin
-        console.log(this.displayVerifyPin);
-        this.openVerifyPin();
+        this.toastr.warning('Số Điện Thoại của Quý Khách không chính xác');
       }
-    },
-    error => { console.log(error); return }
-  );
-}
+    } else {
+      const body = { phone_number: this.phoneNumber };
+      this.bookingService.checkPhoneOfCustomer(body).subscribe(
+        (checkPhoneApi: CheckPhoneApi) => {
+          this.checkPhoneApi = checkPhoneApi;
+          console.log("checkPhoneApi message" + this.checkPhoneApi.message);
+          console.log("sdt" + this.phoneNumber);
+          if (this.checkPhoneApi.data.check == false) {
+            //khách hàng đã có trong hệ thống
+          } else {
+            //khach hang chua co trong he thong
+            //verify pin
+            console.log(this.displayVerifyPin);
+            this.openVerifyPin();
+          }
+        },
+        error => {
+          console.log(error);
+          this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng thử lại');
+          return;
+          }
+      );
+    }
 
   }
 
-/*------  Check Pin--------*/
-onSubmitCheckPin() {
-  // console.log(form.value);
-  this.bookingService.checkPinCode(this.phoneNumber, +this.inputPinNumber).subscribe(
-    (pinApi: PinApi) => {
-      this.checkPinApi = pinApi; console.log("check pin api: " + JSON.stringify(this.checkPinApi));
-      if (this.checkPinApi.data === null) {
-        console.log("data: " + this.checkPinApi.data);
-      } else {
-        if (this.checkPinApi.data.verified === true) {
-          //1. tao create
-          //2. add booking
-          this.bookingService.addNewBooking(this.phoneNumber,
-            this.stylistId, this.selectedDate, +this.selectedHour,
-            +this.selectedService, this.customerName).subscribe(
-              (bookingApi: BookingApi) => {
-                this.bookingApi = bookingApi;
-                if (bookingApi.data === 1) {
-                  this.toastr.warning('Thời gian làm việc của stylist này đã được đặt, bạn vui lòng chọn thời gian hoặc stylist khác.');
-                  this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
-                  return;
-                }  else if(bookingApi.data === null) { 
-                  this.toastr.warning('Ban co muon doi lich');
-                } else {
+  /*------  Check Pin--------*/
+  onSubmitCheckPin() {
+    // console.log(form.value);
+    this.bookingService.checkPinCode(this.phoneNumber, +this.inputPinNumber).subscribe(
+      (pinApi: PinApi) => {
+        this.checkPinApi = pinApi; console.log("check pin api: " + JSON.stringify(this.checkPinApi));
+        if (this.checkPinApi.data === null) {
+          console.log("data: " + this.checkPinApi.data);
+        } else {
+          if (this.checkPinApi.data.verified === true) {
+            //1. tao create
+            //2. add booking
+            this.bookingService.addNewBooking(this.phoneNumber,
+              this.stylistId, this.selectedDate, +this.selectedHour,
+              +this.selectedService, this.customerName).subscribe(
+                (bookingApi: BookingApi) => {
+                  this.bookingApi = bookingApi;
                   //1.close modal change booking
                   this.closeChangeBooking();
                   //2.send data to service
@@ -324,184 +318,200 @@ onSubmitCheckPin() {
                   var hour = this.changeStatusToStartTime(this.selectedHour);
                   var date = this.formatDateToDDMMYYYY(this.selectedDate);
                   this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
+                },
+                error => {
+                  console.log(error);
+                  this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng quay về Trang Chủ thử lại');
+                  // this.router.navigate(['/home']);
+                  return;
                 }
-              },
-              error => { console.log(error); return }
-            );
-          this.closeVerifyPin();
-          //this.openBookingForm2();
-        } else {
-          if (this.checkPinApi.data.remainingAttempts == 0) {
-            //1. thông báo bạn đã điền sai pin code quá nhiều làn. vui lòng đợi sau 10phut
-            this.flagRemainingAttempts = false;
-            this.verified = true;
-            console.log("current verified: " + this.verified);
-            //thông báo thử bằng snackbar xem
+              );
+            this.closeVerifyPin();
+            //this.openBookingForm2();
           } else {
-            //1. thông báo số lần có thể điền sai còn lại
-            this.verified = false;
-            this.flagRemainingAttempts = true;
-            this.remainingAttempts = this.checkPinApi.data.remainingAttempts;
-            console.log("current remainingAttempts: " + this.remainingAttempts);
+            if (this.checkPinApi.data.remainingAttempts == 0) {
+              //1. thông báo bạn đã điền sai pin code quá nhiều làn. vui lòng đợi sau 10phut
+              this.flagRemainingAttempts = false;
+              this.verified = true;
+              console.log("current verified: " + this.verified);
+              //thông báo thử bằng snackbar xem
+            } else {
+              //1. thông báo số lần có thể điền sai còn lại
+              this.verified = false;
+              this.flagRemainingAttempts = true;
+              this.remainingAttempts = this.checkPinApi.data.remainingAttempts;
+              console.log("current remainingAttempts: " + this.remainingAttempts);
+            }
           }
         }
-      }
-    },
-    error => { console.log(error); return }
-  )
-}
-
-/*------  Edit Booking--------*/
-onSubmitChangeBooking() {
-  //edit booking rồi chuyển sang confirm booking
-  this.bookingService.editBooking(this.phoneNumber,
-    this.stylistId, this.selectedDate, +this.selectedHour,
-    +this.selectedService).subscribe(
-      (bookingApi: BookingApi) => {
-        this.bookingApi = bookingApi;
-        if (this.bookingApi.success == true) {
-          //2.send data to service
-          this.addDataToConfirmBookingService();
-          var hour = this.changeStatusToStartTime(this.selectedHour);
-          var date = this.formatDateToDDMMYYYY(this.selectedDate);
-          this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
-        } else {
-          this.openErrorMessage();
-        }
       },
-      error => { console.log(error); return }
-    );
-}
+      error => { 
+        console.log(error);
+        this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng thử lại');
+        return; }
+    )
+  }
 
-/*------  Form xac nhan lại booking--------*/
-onSubmitBookingForm2() {
-  this.bookingService.addNewBooking(this.phoneNumber,
-    this.stylistId, this.selectedDate, +this.selectedHour,
-    +this.selectedService, this.customerName).subscribe(
-      (bookingApi: BookingApi) => {
-        this.bookingApi = bookingApi;
-        if (this.bookingApi.data === null) {
-          //hiển thị dialog thông báo Anh/chị có chắc chắn muốn đổi lịch không
-          this.openChangeBooking();
-        } else {
-          //1.close BookingForm2
-          this.closeBookingForm2();
-          //2.send data to service
-          this.addDataToConfirmBookingService();
-          var hour = this.changeStatusToStartTime(this.selectedHour);
-          var date = this.formatDateToDDMMYYYY(this.selectedDate);
-          this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
+  /*------  Edit Booking--------*/
+  onSubmitChangeBooking() {
+    //edit booking rồi chuyển sang confirm booking
+    this.bookingService.editBooking(this.phoneNumber,
+      this.stylistId, this.selectedDate, +this.selectedHour,
+      +this.selectedService).subscribe(
+        (bookingApi: BookingApi) => {
+          this.bookingApi = bookingApi;
+          if (this.bookingApi.success == true) {
+            //2.send data to service
+            this.addDataToConfirmBookingService();
+            var hour = this.changeStatusToStartTime(this.selectedHour);
+            var date = this.formatDateToDDMMYYYY(this.selectedDate);
+            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
+          } else {
+            this.openErrorMessage();
+          }
+        },
+        error => { 
+          console.log(error);
+          this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng thử lại');
+          return;
+         }
+      );
+  }
+
+  /*------  Form xac nhan lại booking--------*/
+  onSubmitBookingForm2() {
+    this.bookingService.addNewBooking(this.phoneNumber,
+      this.stylistId, this.selectedDate, +this.selectedHour,
+      +this.selectedService, this.customerName).subscribe(
+        (bookingApi: BookingApi) => {
+          this.bookingApi = bookingApi;
+          if (this.bookingApi.data === null) {
+            //hiển thị dialog thông báo Anh/chị có chắc chắn muốn đổi lịch không
+            this.openChangeBooking();
+          } else {
+            //1.close BookingForm2
+            this.closeBookingForm2();
+            //2.send data to service
+            this.addDataToConfirmBookingService();
+            var hour = this.changeStatusToStartTime(this.selectedHour);
+            var date = this.formatDateToDDMMYYYY(this.selectedDate);
+            this.router.navigate(['booking', this.phoneNumber, this.customerName, hour, date, this.stylistName]);
+          }
+        },
+        error => {
+          console.log(error);
+          this.toastr.error('Đã xảy ra lỗi. Anh/chị vui lòng thử lại');
+          return;
         }
-      },
-      error => { console.log(error); return }
-    );
-}
+      );
 
-navigateToStylist() {
-  this.confirmBookingService.changeStylistId(this.stylistId + "");
-  this.confirmBookingService.changePhoneNumber(this.phoneNumber);
-  this.router.navigate(['stylist']);
-}
-
-/*------  Select date từ html--------*/
-selectDate(dateTime: DateTime): void {
-  //this.dateTime = dateTime;
-  this.selectedDate = this.formatDateYYYYmmdd(dateTime.date);
-  this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
-  console.log("selectedDate" + this.selectedDate);
-  this.selectedHour = "";
-}
-
-/*------  Click hour từ html--------*/
-click_hour(hour: string): void {
-  this.selectedHour = hour;
-  console.log(`selected hour: ${this.selectedHour}`);
-}
-
-/*------  Click service từ html--------*/
-clickService(event: any) {
-  this.selectedService = event.target.value;
-  this.service = this.changeSelectedServiceToServiceName(this.selectedService);
-  console.log("selectedService: " + this.selectedService);
-  this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
-}
-
-openVerifyPin() {
-  this.displayVerifyPin = 'block';
-}
-
-closeVerifyPin() {
-  this.displayVerifyPin = 'none';
-}
-
-openChangeBooking() {
-  this.displayChangeBooking = 'block';
-}
-
-closeChangeBooking() {
-  this.displayChangeBooking = 'none';
-}
-
-openErrorMessage() {
-  this.displayErrorMessage = 'block';
-}
-
-closeErrorMessage() {
-  this.displayErrorMessage = 'none';
-}
-
-openBookingForm2() {
-  this.displayBookingForm2 = 'block';
-}
-
-closeBookingForm2() {
-  this.displayBookingForm2 = 'none';
-}
-
-//#region function support
-
-changeStatusToStartTime(status: string): string {
-  //case bắt đâu từ 1 có thể thêm 1 ô trống nữa
-  switch (status) {
-    case '0': return "9:00"; case '1': return "9:15"; case '2': return "9:30"; case '3': return "9:45";
-    case '4': return "10:00"; case '5': return "10:15"; case '6': return "10:30"; case '7': return "10:45";
-    case '8': return "11:00"; case '9': return "11:15"; case '10': return "11:30"; case '11': return "11:45";
-    case '12': return "12:00"; case '13': return "12:15"; case '14': return "12:30"; case '15': return "12:45";
-    case '16': return "13:00"; case '17': return "13:15"; case '18': return "13:30"; case '19': return "13:45";
-    case '20': return "14:00"; case '21': return "14:15"; case '22': return "14:30"; case '23': return "14:45";
-    case '24': return "15:00"; case '25': return "15:15"; case '26': return "15:30"; case '27': return "15:45";
-    case '28': return "16:00"; case '29': return "16:15"; case '30': return "16:30"; case '31': return "16:45";
-    case '32': return "17:00"; case '33': return "17:15"; case '34': return "17:30"; case '35': return "17:45";
-    case '36': return "18:00"; case '37': return "18:15"; case '38': return "18:30"; case '39': return "18:45";
-    case '40': return "19:00"; case '41': return "19:15"; case '42': return "19:30"; case '43': return "19:45";
-    case '44': return "20:00"; case '45': return "20:15"; case '46': return "20:30"; case '47': return "20:45";
-    case '48': return "21:00"; case '49': return "21:15"; case '50': return "21:30"; case '51': return "21:45";
   }
-}
 
-//transform date by format yyyy-MM-dd
-formatDateYYYYmmdd(date: Date): string {
-  var d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
-
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-  return [year, month, day].join('-');
-}
-
-formatDateToDDMMYYYY(date: string) {
-  var split = date.split('-');
-  return [split[2], split[1], split[0]].join('-');
-}
-
-changeSelectedServiceToServiceName(selectedService: string): string {
-  switch (selectedService) {
-    case "1": return "Cơ Bản";
-    case "2": return "Nâng Cao";
+  navigateToStylist() {
+    this.confirmBookingService.changeStylistId(this.stylistId + "");
+    this.confirmBookingService.changePhoneNumber(this.phoneNumber);
+    this.router.navigate(['stylist']);
   }
-}
+
+  /*------  Select date từ html--------*/
+  selectDate(dateTime: DateTime): void {
+    //this.dateTime = dateTime;
+    this.selectedDate = this.formatDateYYYYmmdd(dateTime.date);
+    this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
+    console.log("selectedDate" + this.selectedDate);
+    this.selectedHour = "";
+  }
+
+  /*------  Click hour từ html--------*/
+  click_hour(hour: string): void {
+    this.selectedHour = hour;
+    console.log(`selected hour: ${this.selectedHour}`);
+  }
+
+  /*------  Click service từ html--------*/
+  clickService(event: any) {
+    this.selectedService = event.target.value;
+    this.service = this.changeSelectedServiceToServiceName(this.selectedService);
+    console.log("selectedService: " + this.selectedService);
+    this.getShiftByStylist(this.selectedService, this.stylistId, this.selectedDate, this.stylistName);
+  }
+
+  openVerifyPin() {
+    this.displayVerifyPin = 'block';
+  }
+
+  closeVerifyPin() {
+    this.displayVerifyPin = 'none';
+  }
+
+  openChangeBooking() {
+    this.displayChangeBooking = 'block';
+  }
+
+  closeChangeBooking() {
+    this.displayChangeBooking = 'none';
+  }
+
+  openErrorMessage() {
+    this.displayErrorMessage = 'block';
+  }
+
+  closeErrorMessage() {
+    this.displayErrorMessage = 'none';
+  }
+
+  openBookingForm2() {
+    this.displayBookingForm2 = 'block';
+  }
+
+  closeBookingForm2() {
+    this.displayBookingForm2 = 'none';
+  }
+
+  //#region function support
+
+  changeStatusToStartTime(status: string): string {
+    //case bắt đâu từ 1 có thể thêm 1 ô trống nữa
+    switch (status) {
+      case '0': return "9:00"; case '1': return "9:15"; case '2': return "9:30"; case '3': return "9:45";
+      case '4': return "10:00"; case '5': return "10:15"; case '6': return "10:30"; case '7': return "10:45";
+      case '8': return "11:00"; case '9': return "11:15"; case '10': return "11:30"; case '11': return "11:45";
+      case '12': return "12:00"; case '13': return "12:15"; case '14': return "12:30"; case '15': return "12:45";
+      case '16': return "13:00"; case '17': return "13:15"; case '18': return "13:30"; case '19': return "13:45";
+      case '20': return "14:00"; case '21': return "14:15"; case '22': return "14:30"; case '23': return "14:45";
+      case '24': return "15:00"; case '25': return "15:15"; case '26': return "15:30"; case '27': return "15:45";
+      case '28': return "16:00"; case '29': return "16:15"; case '30': return "16:30"; case '31': return "16:45";
+      case '32': return "17:00"; case '33': return "17:15"; case '34': return "17:30"; case '35': return "17:45";
+      case '36': return "18:00"; case '37': return "18:15"; case '38': return "18:30"; case '39': return "18:45";
+      case '40': return "19:00"; case '41': return "19:15"; case '42': return "19:30"; case '43': return "19:45";
+      case '44': return "20:00"; case '45': return "20:15"; case '46': return "20:30"; case '47': return "20:45";
+      case '48': return "21:00"; case '49': return "21:15"; case '50': return "21:30"; case '51': return "21:45";
+    }
+  }
+
+  //transform date by format yyyy-MM-dd
+  formatDateYYYYmmdd(date: Date): string {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
+  }
+
+  formatDateToDDMMYYYY(date: string) {
+    var split = date.split('-');
+    return [split[2], split[1], split[0]].join('-');
+  }
+
+  changeSelectedServiceToServiceName(selectedService: string): string {
+    switch (selectedService) {
+      case "1": return "Cơ Bản";
+      case "2": return "Nâng Cao";
+    }
+  }
   //#endregion
 
 }

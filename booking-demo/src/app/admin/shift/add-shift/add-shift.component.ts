@@ -40,14 +40,10 @@ export class AddShiftComponent implements OnInit {
   // end init material
   constructor(
     private shiftService: ShiftService,
-    public toastr: ToastsManager,
-    _vcr: ViewContainerRef,
-    public dialog: MatDialog,
     public dialogRef: MatDialogRef<AddShiftComponent>,
     @Inject(MAT_DIALOG_DATA) public data: AddDialog,
     private stylistService: StylistService
   ) {
-    this.toastr.setRootViewContainerRef(_vcr);
   }
   getErrorMessage() {
     return this.formControl.hasError('required') ? 'Required field' :

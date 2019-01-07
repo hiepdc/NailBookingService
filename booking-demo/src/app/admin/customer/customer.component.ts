@@ -13,7 +13,7 @@ export class CustomerComponent implements OnInit {
   customers: Customer[];
   customer: Customer;
   // init material
-  displayedColumns = ['id', 'customer_name', 'phone_number', 'coin', 'actions'];
+  displayedColumns = ['id', 'customer_name', 'phone_number', 'coin'];
   dataSource = new MatTableDataSource<Customer>(this.customers);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   applyFilter(filterValue: string) {
@@ -44,36 +44,36 @@ export class CustomerComponent implements OnInit {
       }
     );
   }
-  deleteItem(id: number) {
-    const dialogRef = this.dialog.open(DeleteCustomerComponent,
-      {
-        width: '300px',
-        data: {
-          id: id
-        }
-      }
-    );
+  // deleteItem(id: number) {
+  //   const dialogRef = this.dialog.open(DeleteCustomerComponent,
+  //     {
+  //       width: '300px',
+  //       data: {
+  //         id: id
+  //       }
+  //     }
+  //   );
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.stylistService.delelteCustomer(id).subscribe(
-          api => {
-            console.log(api);
-            console.log(api.message);
-            if (api.data === null) {
-              this.getCustomerFromService();
-              this.toastr.error(api.message);
-            } else {
-              this.getCustomerFromService();
-              this.toastr.warning('Xóa khách hàng thành công');
-            }
-          },
-          error => {
-            this.toastr.error(error);
-            return;
-          }
-        );
-      }
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 1) {
+  //       this.stylistService.delelteCustomer(id).subscribe(
+  //         api => {
+  //           console.log(api);
+  //           console.log(api.message);
+  //           if (api.data === null) {
+  //             this.getCustomerFromService();
+  //             this.toastr.error(api.message);
+  //           } else {
+  //             this.getCustomerFromService();
+  //             this.toastr.warning('Xóa khách hàng thành công');
+  //           }
+  //         },
+  //         error => {
+  //           this.toastr.error(error);
+  //           return;
+  //         }
+  //       );
+  //     }
+  //   });
+  // }
 }

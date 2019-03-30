@@ -28,8 +28,8 @@ class StylistController extends Controller
     public function index()
     {
         try {
-//            $listStylist = Stylist::orderBy('id', 'asc')->get();
-            $listStylist = DB::select('select * from stylists where id = ?', [1]);
+            $listStylist = Stylist::orderBy('id', 'asc')->get();
+          //  $listStylist = DB::select('select * from stylists where id = ?', [1]);
             return response()->success($listStylist);
         } catch (Exception $e) {
             return response()->exception($e->getMessage(), $e->getCode());
